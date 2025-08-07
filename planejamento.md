@@ -18,23 +18,26 @@ complexos._
 
 ## *c) Descreva os elementos que irão compor a identidade visual do seu projeto (formas, figuras, cores, tipografia, fotografia, etc.)*
 
-_A identidade visual do nosso projeto vai seguir um estilo mais fofo e acolhedor, com cores em
-tons de roxo e lilás, que transmitem leveza, criatividade e tranquilidade. As formas usadas na
-interface serão arredondadas, como botões com bordas suaves e caixas de pesquisa com
-cantos levemente curvos, para dar uma sensação de conforto visual.
-Vamos usar ícones simples e delicados, relacionados ao mundo da leitura, como livros abertos,
-estrelas e corações, sempre com traços finos e amigáveis. A tipografia será moderna e sem
-serifa, com letras arredondadas que facilitam a leitura e combinam com a proposta jovem e
-acessível do projeto._
+_A identidade visual do projeto é delicada e acolhedora, buscando transmitir uma sensação de
+leveza e magia, combinando com o público jovem e o tema da leitura.<br> A paleta de cores é
+baseada em tons de roxo e lilás, que são suaves e transmitem criatividade e tranquilidade.<br> As formas usadas são arredondadas, com bordas suaves nos botões, caixas e elementos
+gráficos, para tornar a interface amigável e confortável aos olhos. Utilizamos ilustrações em
+estilo flat e cartoon, como a logomarca, que mostra uma raposinha lendo um livro em cima de
+uma nuvem. Essa imagem simboliza a leveza da leitura e a ideia de viajar nas histórias, como
+se estivesse flutuando em sonhos e imaginação.<br>
+A tipografia é moderna, sem serifa e com letras arredondadas, para facilitar a leitura e
+harmonizar com o restante da identidade visual. Ícones delicados relacionados ao universo
+literário complementam o visual, tornando o projeto coeso, fofo e convidativo._
 
 ## *d) Justifique as escolhas do grupo descrevendo de que forma os elementos implementados irão se comunicar com o objetivo do projeto e com seu público-alvo.*
 
-_Todas as escolhas visuais foram pensadas para tornar o projeto mais atrativo e próximo do
-público-alvo, que são principalmente jovens estudantes, leitores iniciantes ou pessoas que
-gostam de ler por lazer. A paleta de cores em roxo e lilás ajuda a criar um clima calmo e
-criativo, estimulando o interesse pela leitura de uma forma mais leve e carinhosa.
-As formas arredondadas e os ícones delicados fazem com que o site pareça mais amigável, o
-que deixa a navegação mais intuitiva e confortável. A tipografia sem serifa também facilita a
-leitura dos textos e combina com a proposta de ser uma plataforma acessível e agradável de usar_
+_As escolhas visuais, incluindo a logomarca da raposinha lendo um livro sobre uma nuvem, foram pensadas para criar uma conexão emocional com o público-alvo, formado por jovens
+estudantes e leitores iniciantes.<br> A raposinha representa curiosidade, esperteza e
+companheirismo, características que incentivam o usuário a explorar o mundo dos livros. A
+nuvem reforça a sensação de leveza, sonho e imaginação que a leitura proporciona.<br>
+O uso das cores roxa e lilás, combinadas com formas arredondadas e tipografia amigável, cria
+um ambiente visual tranquilo e acolhedor, que convida o usuário a navegar com conforto e interesse. Esses elementos ajudam a transformar o ato de buscar livros em uma experiência
+agradável, reforçando o objetivo principal do projeto: tornar a leitura acessível, divertida e
+encantadora para o público jovem._
 
 
