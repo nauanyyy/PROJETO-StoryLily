@@ -41,4 +41,3 @@ agradável, reforçando o objetivo principal do projeto: tornar a leitura acess�
 encantadora para o público jovem._
 
 [ACESSE A LOGO DO PROJETO](https://www.canva.com/design/DAGvaMYOov8/6C0ZfG1W0ZjeGEqwWS2QJQ/edit?utm_content=DAGvaMYOov8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-
