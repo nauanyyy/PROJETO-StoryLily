@@ -4,9 +4,9 @@ A fonte usada é simples e sem serifa, com letras arredondadas que deixam a leit
 imagens realistas, o sistema usa ilustrações, que combinam com a proposta de ser um espaço criativo e lúdico. <br>A logomarca é uma raposinha sentada em cima de uma
 nuvem, lendo um livro, simbolizando bem a ideia do projeto, que é levar o usuário para um “mundo nas nuvens” através da leitura._ <br >
 # VALORES QUE DEVEM SER PASSADOS PELO SISTEMA: #
-O projeto tem como principais valores o acolhimento, a criatividade, a praticidade e o encanto. O acolhimento aparece na escolha das cores suaves, nas formas arredondadas e na disposição dos elementos que facilita a navegação.<br> A
+_O projeto tem como principais valores o acolhimento, a criatividade, a praticidade e o encanto. O acolhimento aparece na escolha das cores suaves, nas formas arredondadas e na disposição dos elementos que facilita a navegação.<br> A
 criatividade é representada pelas ilustrações, pelo nome do projeto e pela própria ideia de misturar o mundo real com a imaginação, como mostra a raposinha na nuvem. <br>
 A praticidade vem de um layout simples, que não deixa o usuário perdido e permite encontrar rapidamente o que procura. O encanto, por sua vez, está nos detalhes, como na combinação harmoniosa das cores, na tipografia delicada e na logomarca que transmite simpatia e uma sensação mágica de entrar em uma história. <br>
-Todos esses elementos visuais se conectam para criar uma experiência agradável e envolvente, tornando a busca de livros mais do que uma tarefa, mas um momento prazeroso.
+Todos esses elementos visuais se conectam para criar uma experiência agradável e envolvente, tornando a busca de livros mais do que uma tarefa, mas um momento prazeroso._
 
 [ACESSE O ESBORÇO DA ESTRUTURA INICIAL DO PROJETO](https://www.canva.com/design/DAGwE0CyKUE/zMQXxiplMf7Hl8b55cvAWA/edit?utm_content=DAGwE0CyKUE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
