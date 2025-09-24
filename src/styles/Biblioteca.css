@@ -1,0 +1,56 @@
+/* Biblioteca.css */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px;
+  background: var(--background); /* mantém o tema */
+}
+
+.page-box {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 800px;
+}
+
+.livros-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.livro-card {
+  background: var(--card-light);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.livro-card:hover {
+  transform: translateY(-3px);
+}
+
+.livro-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.livro-actions button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.livro-actions button:hover {
+  background: var(--primary-dark);
+}
