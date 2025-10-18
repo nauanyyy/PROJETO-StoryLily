@@ -1,56 +1,142 @@
-/* Biblioteca.css */
+/* Container geral (abaixo do menu) */
+
 .page-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 40px;
-  background: var(--background); /* mantém o tema */
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  background: #f5f1fb;
+  padding: 0 60px;
 }
 
-.page-box {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* Caixa principal da biblioteca */
+.biblioteca-box {
   width: 100%;
-  max-width: 800px;
+  max-width: 1600px;
+  text-align: center;
 }
 
-.livros-lista {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* Carrossel de livros */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 80px; /* espaço para as setas laterais */
 }
 
+/* Lista de livros */
+.livros-carousel {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap; /* para fazer scroll horizontal */
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px 0;
+  list-style-type: none; /* Remove as bolinhas pretas */
+  overflow-x: auto; /* para habilitar o scroll horizontal */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.livros-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Opera */
+}
+
+/* Card de livro */
 .livro-card {
-  background: var(--card-light);
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
+  background: #f2e9ff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 280px;
+  flex: 0 0 auto; /* impede que encolha */
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
 
 .livro-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
+/* Botões */
 .livro-actions {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 .livro-actions button {
-  background: var(--primary);
+  background: #7b3fc8;
   color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .livro-actions button:hover {
-  background: var(--primary-dark);
+  background: #5b2ca0;
+}
+
+/* ======== SETAS ======== */
+.arrow {
+  background: none;
+  color: #7b3fc8;
+  border: none;
+  cursor: pointer;
+  font-size: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.2s;
+  outline: none;
+  z-index: 10;
+}
+
+/* Sem bordas de foco */
+.arrow:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Esquerda e direita */
+.arrow.left {
+  left: 10px; /* dentro do container */
+}
+
+.arrow.right {
+  right: 10px; /* dentro do container */
+}
+
+.arrow:hover {
+  color: #5b2ca0;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .livros-carousel {
+    gap: 25px;
+  }
+
+  .livro-card {
+    width: 220px;
+  }
+
+  .carousel-container {
+    padding: 0 40px; /* menos espaço nas laterais em telas menores */
+  }
+
+  .arrow.left {
+    left: 5px;
+  }
+
+  .arrow.right {
+    right: 5px;
+  }
 }

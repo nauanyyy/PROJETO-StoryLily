@@ -1,6 +1,6 @@
 :root {
-  --primary:  #8748a7;
-  --primary-dark: #5a3dcf;
+  --primary: #c5c5ff;
+  --primary-dark: #a880e1;
   --background: #f5f3ff;
   --card-bg: #ffffff;
   --card-light: #ede9fe;
@@ -17,8 +17,10 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--background);
   color: #111827;
+  min-height: 100vh;
 }
 
+/* Navbar */
 nav {
   width: 100%;
   background: var(--primary);
@@ -44,55 +46,70 @@ nav .nav-links {
 }
 
 nav .nav-links button {
-  background: transparent;
+  background: #8748a7;
   border: none;
   color: white;
   font-size: 1rem;
   cursor: pointer;
-  transition: 0.2s;
+  padding: 8px 14px;
+  border-radius: 15px;
+  transition: background 0.2s;
+  outline: none;
 }
 
 nav .nav-links button:hover {
-  color: #ede9fe;
+  background: #a880e1;
 }
 
+nav .nav-links button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Container geral da página - conteúdo centralizado */
 .page-container {
   display: flex;
-  justify-content: center;
-  padding: 100px 20px 40px; /* espaço para navbar */
-  min-height: 100vh;
+  justify-content: center;      /* centraliza horizontalmente */
+  align-items: flex-start;      /* alinhamento vertical no topo */
+  padding: 100px 20px 40px;     /* espaço para navbar fixa */
+  min-height: calc(100vh - 100px);
+  width: 100vw;                 /* largura total da viewport */
+  box-sizing: border-box;
+  background: var(--background);
 }
 
-.page-box {
+/* Box principal das páginas */
+.page-box,
+.dicas-box {
+  width: 100%;
+  max-width: 900px; /* limite maximo da largura */
+  margin: 0 auto;
   background: var(--card-bg);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 800px;
   text-align: center;
+  box-sizing: border-box;
 }
 
+/* Títulos */
 h2 {
   margin-bottom: 20px;
   color: var(--primary-dark);
+  font-weight: 700;
 }
 
+/* Textos secundários */
 .subtitle {
   font-size: 16px;
   color: var(--text-light);
   margin-bottom: 20px;
 }
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
-}
-
+/* Botões principais */
 .menu button,
-.livro-actions button {
+.livro-actions button,
+.busca-botao {
   background: var(--primary);
   color: white;
   border: none;
@@ -104,10 +121,12 @@ h2 {
 }
 
 .menu button:hover,
-.livro-actions button:hover {
+.livro-actions button:hover,
+.busca-botao:hover {
   background: var(--primary-dark);
 }
 
+/* Lista de livros */
 .livros-lista {
   list-style: none;
   padding: 0;
@@ -120,6 +139,7 @@ h2 {
   margin-bottom: 15px;
   border-radius: 8px;
   transition: transform 0.2s;
+  text-align: left;
 }
 
 .livro-card:hover {
@@ -132,6 +152,8 @@ h2 {
   gap: 10px;
   justify-content: center;
 }
+
+/* Home box */
 .home-box {
   display: flex;
   flex-direction: column;
@@ -139,10 +161,13 @@ h2 {
   justify-content: center;
   text-align: center;
   padding: 50px 30px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .home-box .menu {
-  flex-direction: row; /* botões em linha */
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
@@ -151,4 +176,84 @@ h2 {
 
 .home-box .menu button {
   min-width: 160px;
+}
+
+/* Logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  height: 60px;
+  width: auto;
+}
+
+/* Seção de busca */
+.busca-livros {
+  margin-bottom: 40px;
+}
+
+.busca-titulo {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 15px;
+}
+
+.busca-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.busca-input {
+  padding: 10px;
+  width: 280px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* Seção TOP 10 */
+.top-livros {
+  margin-top: 30px;
+}
+
+.top-titulo {
+  font-size: 1.2rem;
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+}
+
+.top-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.top-seta {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-dark);
+}
+
+.top-livros-lista {
+  display: flex;
+  gap: 15px;
+}
+
+.top-livro-card {
+  width: 100px;
+  height: 150px;
+  background: var(--card-light);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text-light);
 }
