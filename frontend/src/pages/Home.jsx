@@ -1,38 +1,69 @@
-import "../styles/global.css";
+import React, { useState } from "react";
+import "./Home.css";
+import { Link } from "react-router-dom";
 
-export default function Home() {
+const Home = () => {
+  const [index, setIndex] = useState(0);
+
+  // mock de livros (vai ser substituído pela API depois)
+  const livros = Array(10).fill("ft do livro");
+
+  const handleNext = () => {
+    if (index > -(livros.length - 4) * 160) {
+      setIndex(index - 160);
+    }
+  };
+
+  const handlePrev = () => {
+    if (index < 0) {
+      setIndex(index + 160);
+    }
+  };
+
   return (
-    <div className="page-container">
-      <div className="home-box">
-        {/* Seção de busca */}
-        <section className="busca-livros">
-          <h2 className="busca-titulo">Busque por livros do seu interesse!</h2>
-          <div className="busca-form">
-            <input
-              type="text"
-              placeholder="buscar livros..."
-              className="busca-input"
-            />
-            <button className="busca-botao">Buscar</button>
-          </div>
-        </section>
+    <div className="container">
+      <nav className="navbar">
+        <Link to="/biblioteca">Biblioteca</Link>
+        <Link to="/em-leitura">Em Leitura</Link>
+        <Link to="/recomendados">Recomendados</Link>
+        <Link to="/dicas">Dicas</Link>
+        <Link to="/favoritos">Favoritos</Link>
+        <div className="menu-icons">🔔 🪄</div>
+      </nav>
 
-        {/* Seção TOP 10 */}
-        <section className="top-livros">
-          <h3 className="top-titulo">TOP 10 DOS MAIS PROCURADOS</h3>
-          <div className="top-carousel">
-            <button className="top-seta esquerda">❮</button>
-            <div className="top-livros-lista">
-              {[...Array(5)].map((_, index) => (
-                <div key={index} className="top-livro-card">
-                  ft do livro
+      <div className="search-section">
+        <h3>Busque por livros do seu interesse!</h3>
+        <div className="search-box">
+          <input type="text" placeholder="buscar livros..." />
+          <button>Buscar</button>
+        </div>
+      </div>
+
+      <div className="carousel-container">
+        <h4>TOP 10 DOS MAIS PROCURADOS</h4>
+        <div className="carousel">
+          <div className="arrow" onClick={handlePrev}>❮</div>
+          <div className="carousel-items">
+            <div
+              className="items"
+              style={{ transform: `translateX(${index}px)` }}
+            >
+              {livros.map((livro, i) => (
+                <div key={i} className="book">
+                  {livro}
                 </div>
               ))}
             </div>
-            <button className="top-seta direita">❯</button>
           </div>
-        </section>
+          <div className="arrow" onClick={handleNext}>❯</div>
+        </div>
       </div>
+
+      <footer>
+        © 2025 Raposinha Lettera — Todos os direitos reservados.
+      </footer>
     </div>
   );
-}
+};
+
+export default Home;
