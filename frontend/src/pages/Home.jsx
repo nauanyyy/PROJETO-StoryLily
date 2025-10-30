@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "./Home.css";
+import "../styles/Home.css";
 import { Link } from "react-router-dom";
 
 const Home = () => {
   const [index, setIndex] = useState(0);
 
   // mock de livros (vai ser substituído pela API depois)
-  const livros = Array(10).fill("ft do livro");
+  const livros = Array(6).fill("ft do livro");
 
   const handleNext = () => {
     if (index > -(livros.length - 4) * 160) {
