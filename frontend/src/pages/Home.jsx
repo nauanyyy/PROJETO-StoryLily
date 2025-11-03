@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import Navbar from "../components/Navbar"; // Navbar correto
 import "../styles/Home.css";
-import { Link } from "react-router-dom";
 
 const Home = () => {
   const [index, setIndex] = useState(0);
 
-  // mock de livros (vai ser substituído pela API depois)
   const livros = Array(6).fill("ft do livro");
 
   const handleNext = () => {
@@ -21,37 +20,25 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar">
-        <Link to="/biblioteca">Biblioteca</Link>
-        <Link to="/em-leitura">Em Leitura</Link>
-        <Link to="/recomendados">Recomendados</Link>
-        <Link to="/dicas">Dicas</Link>
-        <Link to="/favoritos">Favoritos</Link>
-        <div className="menu-icons">🔔 🪄</div>
-      </nav>
+    <div className="home-container">
+      <Navbar />
 
-      <div className="search-section">
+      <div className="search-area">
         <h3>Busque por livros do seu interesse!</h3>
         <div className="search-box">
-          <input type="text" placeholder="buscar livros..." />
+          <input type="text" placeholder="Buscar livros..." />
           <button>Buscar</button>
         </div>
       </div>
 
-      <div className="carousel-container">
+      <div className="top-livros">
         <h4>TOP 10 DOS MAIS PROCURADOS</h4>
         <div className="carousel">
           <div className="arrow" onClick={handlePrev}>❮</div>
           <div className="carousel-items">
-            <div
-              className="items"
-              style={{ transform: `translateX(${index}px)` }}
-            >
+            <div className="items" style={{ transform: `translateX(${index}px)` }}>
               {livros.map((livro, i) => (
-                <div key={i} className="book">
-                  {livro}
-                </div>
+                <div key={i} className="book">{livro}</div>
               ))}
             </div>
           </div>

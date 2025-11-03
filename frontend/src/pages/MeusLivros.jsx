@@ -1,6 +1,5 @@
 import { useBooks } from "../context/BookContext";
 import "../styles/MeusLivros.css";
-import "../styles/global.css";
 
 export default function MeusLivros() {
   const { meusLivros } = useBooks();
@@ -8,7 +7,6 @@ export default function MeusLivros() {
   return (
     <div className="page-container">
       <div className="page-box">
-        <h2>📚 Meus Livros</h2>
         {meusLivros.length === 0 ? (
           <p>Você ainda não adicionou livros à sua coleção.</p>
         ) : (

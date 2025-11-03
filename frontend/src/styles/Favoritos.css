@@ -1,0 +1,120 @@
+/* Fundo do card */
+.favoritos-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+  z-index: 10;
+}
+
+.favoritos-overlay.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card principal */
+.favoritos-card {
+  background-color: #6c1a91;
+  width: 60%;
+  max-width: 700px;
+  height: 70%;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 35px;
+  position: relative;
+}
+
+/* Cabeçalho com botão arredondado */
+.favoritos-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.favoritos-title {
+  background-color: #b99aff;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 160px;
+  border-radius: 25px;
+  padding: 8px 0;
+  margin-bottom: 20px;
+}
+
+/* Área de rolagem interna */
+.favoritos-scroll {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #540076 #7e2fa2;
+  padding-right: 10px;
+}
+
+/* Barra de rolagem personalizada */
+.favoritos-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.favoritos-scroll::-webkit-scrollbar-thumb {
+  background-color: #540076;
+  border-radius: 10px;
+}
+
+.favoritos-scroll::-webkit-scrollbar-track {
+  background-color: #7e2fa2;
+  border-radius: 10px;
+}
+
+/* Cada linha (imagem + opinião) */
+.favoritos-linha {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Capa do livro */
+.favorito-capa {
+  width: 80px;
+  height: 80px;
+  background-color: #3b0069;
+  border-radius: 4px;
+}
+
+/* Caixa lilás com texto */
+.favorito-caixa {
+  flex: 1;
+  background-color: #b99aff;
+  border-radius: 15px;
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorito-caixa p {
+  color: white;
+  font-style: italic;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.favoritos-empty {
+  color: #e3cfff;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 40px;
+}
