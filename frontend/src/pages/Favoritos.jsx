@@ -1,40 +1,29 @@
-import { useEffect, useState } from "react";
-import { useBooks } from "../context/BookContext";
-import "../styles/Favoritos.css";
+import React from "react";
+import "../styles/favoritos.css";
 
-export default function Favoritos() {
-  const { livros } = useBooks();
-  const favoritos = livros.filter((l) => l.favorito);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setVisible(true), 100);
-  }, []);
-
+export default function Favoritos({ favoritos }) {
   return (
-    <div className={`favoritos-overlay ${visible ? "show" : ""}`}>
-      <div className="favoritos-card">
-        <div className="favoritos-header">
-          <h2 className="favoritos-title">Favoritos</h2>
-        </div>
+    <div className="favoritos-container fade-in">
+      <header className="favoritos-header">
+        <h2>⭐ Favoritos</h2>
+      </header>
 
-        <div className="favoritos-scroll">
-          {favoritos.length === 0 ? (
-            <p className="favoritos-empty">
-              colocar o conteudo igual esta no exemplo do canva
-               </p>
-          ) : (
-            favoritos.map((livro) => (
-              <div key={livro.id} className="favoritos-linha">
-                <div className="favorito-capa"></div>
-                <div className="favorito-caixa">
-                  <p>Dê sua opinião sobre o livro aqui</p>
-                </div>
+      {favoritos.length === 0 ? (
+        <p className="vazio">Nenhum livro favoritado ainda.</p>
+      ) : (
+        <div className="favoritos-lista">
+          {favoritos.map((livro) => (
+            <div className="favorito-card" key={livro.id}>
+              <div className="livro-foto">ft do livro</div>
+              <div className="livro-detalhes">
+                <h3>{livro.nome}</h3>
+                <p>{livro.descricao}</p>
+                <textarea placeholder="Dê sua opinião sobre o livro aqui"></textarea>
               </div>
-            ))
-          )}
+            </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }
