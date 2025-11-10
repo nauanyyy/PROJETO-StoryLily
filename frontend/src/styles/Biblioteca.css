@@ -1,50 +1,51 @@
-body, html {
+/* RESET GERAL */
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
   background-color: #5e2a8c;
   font-family: "Poppins", sans-serif;
   color: white;
+  box-sizing: border-box;
 }
 
+/* CONTAINER GERAL */
 .biblioteca-container {
-  width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100vw;
   padding: 30px;
-  justify-content: center; /* centraliza os livros quando cabem */
-
-}
-.fileira-carrossel > .livro-card {
-  flex: 0 0 auto; /* evita que os cards encolham */
+  box-sizing: border-box;
 }
 
+/* CABEÇALHO */
 .biblioteca-header {
   width: 100%;
-  max-width: 1200px;
-  background-color: #b89ddb;
-  border-radius: 20px;
-  padding: 15px 30px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  padding: 20px 40px;
   color: #421a6d;
   font-weight: bold;
+  box-sizing: border-box;
 }
 
+/* BARRA DE BUSCA */
 .busca-container {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   background-color: #a066c9;
   border-radius: 15px;
   padding: 10px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
+  box-sizing: border-box;
 }
 
 .busca-container input {
@@ -57,10 +58,6 @@ body, html {
   color: #49277a;
   outline: none;
   font-size: 16px;
-}
-
-.busca-container input::placeholder {
-  color: #5c3a96;
 }
 
 .busca-container button {
@@ -80,31 +77,32 @@ body, html {
   background-color: #e3baff;
 }
 
-/* ------ GRID CENTRALIZADO COM DUAS FILEIRAS ------ */
+/* GRID DE LIVROS — OCUPA A TELA INTEIRA */
 .livros-grid {
-  margin-top: 40px;
+  margin-top: 50px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-rows: repeat(2, 1fr);
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
   width: 100%;
-  max-width: 900px;
+  flex: 1;
   justify-items: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
-/* ------ CARDS GRANDES E CENTRALIZADOS ------ */
+/* CARDS */
 .livro-card {
   background-color: #b47ddb;
-  width: 200px;
-  height: 250px;
+  width: 100%;
+  max-width: 250px;
+  height: 280px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease;
@@ -134,6 +132,7 @@ body, html {
   color: #fff;
 }
 
+/* FAVORITOS */
 .favorito-btn {
   position: absolute;
   top: 8px;
@@ -141,7 +140,7 @@ body, html {
   background: transparent;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -150,7 +149,7 @@ body, html {
   color: yellow;
 }
 
-/* ------ MODAL DE DESCRIÇÃO ------ */
+/* MODAL */
 .descricao-modal {
   position: fixed;
   top: 0;
