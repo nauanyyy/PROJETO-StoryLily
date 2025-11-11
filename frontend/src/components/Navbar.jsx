@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png"; // Ajuste o caminho conforme necessário
 import "../styles/global.css";
 
 export default function Navbar() {
@@ -8,8 +7,9 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="logo-container" onClick={() => navigate("/")}>
+        {/* Caminho direto para a pasta public/assets */}
         <img 
-          src={logo} 
+          src="/assets/logo.png" 
           alt="StoryLily Logo" 
           className="navbar-logo"
         />

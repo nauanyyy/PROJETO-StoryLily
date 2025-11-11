@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/favoritos.css";
+import "../styles/Favoritos.css";
 
 export default function Favoritos({ favoritos }) {
   return (
