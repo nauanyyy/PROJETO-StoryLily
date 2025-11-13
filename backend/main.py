@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Query, HTTPException, Depends
 from sqlmodel import Session, select
+from fastapi.middleware.cors import CORSMiddleware  # ✅ ADICIONAR ESTA LINHA
+
 from database import init_db, get_session
 from auth import router as auth_router
 from openlibrary_client import search_books, get_work, cover_url
@@ -20,11 +22,21 @@ from schemas import (
 )
 from fastapi.openapi.utils import get_openapi
 
+
 # -----------------------------------
 # CONFIGURAÇÃO PRINCIPAL DA APLICAÇÃO
 # -----------------------------------
 
 app = FastAPI(title="Story Lilly 📚", version="1.0.0")
+
+# ✅ CORS - permite acesso do React (vite)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # endereço padrão do frontend (Vite)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Inicializar banco
 init_db()
