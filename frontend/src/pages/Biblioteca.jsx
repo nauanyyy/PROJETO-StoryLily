@@ -1,51 +1,86 @@
-import { useRef } from "react";
-import { useBooks } from "../context/BookContext";
-import "../styles/Biblioteca.css";
-import "../styles/global.css";
+import { useState, useEffect } from "react";
+import api from "../api/api";
+import FilterModal from "../componentes/FilterModal";
 
 export default function Biblioteca() {
-  const { livros, adicionarLivro, marcarFavorito, marcarLido } = useBooks();
-  const scrollRef = useRef(null);
+  const [livros, setLivros] = useState([]);
+  const [busca, setBusca] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [filtros, setFiltros] = useState({});
+  const [carregando, setCarregando] = useState(false);
 
-  const scrollLeft = () => {
-    scrollRef.current.scrollBy({ left: -400, behavior: "smooth" });
+  // -----------------------------
+  // Função principal de busca
+  // -----------------------------
+  const buscarLivros = async () => {
+    setCarregando(true);
+
+    try {
+      const params = {};
+
+      // Se tiver texto de busca, envia o parâmetro q
+      if (busca.trim() !== "") {
+        params.q = busca;
+      }
+
+      // Junta os filtros aplicados
+      Object.assign(params, filtros);
+
+      const response = await api.get("/buscar", { params });
+
+      setLivros(response.data.livros || []);
+    } catch (err) {
+      console.error("Erro ao buscar livros:", err);
+    } finally {
+      setCarregando(false);
+    }
   };
 
-  const scrollRight = () => {
-    scrollRef.current.scrollBy({ left: 400, behavior: "smooth" });
-  };
+  // Atualiza listagem quando filtros mudarem
+  useEffect(() => {
+    buscarLivros();
+  }, [filtros]);
 
   return (
-    <div className="page-container">
-      <div className="biblioteca-box">
-        <div className="carousel-container">
-          <button className="arrow left" onClick={scrollLeft}>
-            ❮
-          </button>
+    <div style={{ padding: "20px" }}>
+      <h1>Biblioteca</h1>
 
-          <ul className="livros-carousel" ref={scrollRef}>
-            {livros.map((livro) => (
-              <li key={livro.id} className="livro-card">
-                <h3>{livro.titulo}</h3>
-                <p>Autor: {livro.autor}</p>
-                <div className="livro-actions">
-                  <button onClick={() => adicionarLivro(livro)}>Adicionar</button>
-                  <button onClick={() => marcarFavorito(livro.id)}>
-                    {livro.favorito ? "★ Favorito" : "☆ Favoritar"}
-                  </button>
-                  <button onClick={() => marcarLido(livro.id)}>
-                    {livro.lido ? "✅ Lido" : "Marcar como Lido"}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+      {/* Campo de busca */}
+      <input
+        placeholder="Buscar livro..."
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+        style={{ marginRight: "10px" }}
+      />
 
-          <button className="arrow right" onClick={scrollRight}>
-            ❯
-          </button>
+      {/* Botão buscar */}
+      <button onClick={buscarLivros}>Buscar</button>
+
+      {/* Botão abrir filtros */}
+      <button onClick={() => setModalOpen(true)} style={{ marginLeft: "10px" }}>
+        Filtros
+      </button>
+
+      {/* Carregando */}
+      {carregando && <p>Carregando livros...</p>}
+
+      {/* Lista de livros */}
+      {!carregando && livros.length === 0 && <p>Nenhum livro encontrado.</p>}
+
+      {livros.map((livro, i) => (
+        <div key={i} style={{ marginTop: "12px" }}>
+          <strong>{livro.titulo}</strong>
+          {livro.autor && <> — {livro.autor}</>}
+          {livro.ano && <span> ({livro.ano})</span>}
         </div>
-      </div>
+      ))}
+
+      {/* Modal de Filtros */}
+      <FilterModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onApply={(f) => setFiltros(f)}
+      />
     </div>
   );
 }

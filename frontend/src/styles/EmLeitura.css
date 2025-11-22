@@ -1,0 +1,114 @@
+/* Container geral */
+.leitura-container {
+  padding: 30px;
+  background: #8b3f9f;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Título */
+.leitura-titulo {
+  text-align: center;
+  background: #5c2d91;
+  padding: 14px 28px;
+  margin-bottom: 30px;
+  border-radius: 40px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+/* Formulário de adicionar */
+.form-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.form-add input {
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  width: 200px;
+  max-width: 90%;
+  background: #e4d7ff;
+  color: #3a1641;
+  font-size: 15px;
+}
+
+.form-add button {
+  background: #c17aff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Grid dos livros */
+.livros-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Card */
+.card {
+  background: #ffffff;
+  color: #111;
+  padding: 16px;
+  border-radius: 12px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.20);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.no-img {
+  font-size: 50px;
+  height: 150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#dfc7ff;
+  border-radius:8px;
+}
+
+.card h3 {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.card p {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.card span {
+  font-size: 14px;
+  display:block;
+  margin-bottom: 10px;
+}
+
+/* Botão excluir */
+.btn-del {
+  background: #ff5c5c;
+  color: #fff;
+  border:none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor:pointer;
+  font-weight:700;
+}

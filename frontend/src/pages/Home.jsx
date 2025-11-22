@@ -1,69 +1,156 @@
-import React, { useState } from "react";
-import "./Home.css";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import "../styles/Home.css";
+import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 
-const Home = () => {
-  const [index, setIndex] = useState(0);
+export default function Home() {
+  const navigate = useNavigate();
+  const [topLivros, setTopLivros] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  // mock de livros (vai ser substituído pela API depois)
-  const livros = Array(10).fill("ft do livro");
-
-  const handleNext = () => {
-    if (index > -(livros.length - 4) * 160) {
-      setIndex(index - 160);
+  // Buscar Top 10 do backend
+  const carregarTop = async () => {
+    try {
+      const res = await api.get("/recomendados");
+      setTopLivros(res.data || []);
+    } catch (err) {
+      console.error("Erro ao carregar top recomendados:", err);
     }
   };
 
-  const handlePrev = () => {
-    if (index < 0) {
-      setIndex(index + 160);
-    }
-  };
+  useEffect(() => {
+    carregarTop();
+  }, []);
+
+  // Fechar menu ao clicar fora
+  useEffect(() => {
+    const handler = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
-    <div className="container">
-      <nav className="navbar">
-        <Link to="/biblioteca">Biblioteca</Link>
-        <Link to="/em-leitura">Em Leitura</Link>
-        <Link to="/recomendados">Recomendados</Link>
-        <Link to="/dicas">Dicas</Link>
-        <Link to="/favoritos">Favoritos</Link>
-        <div className="menu-icons">🔔 🪄</div>
-      </nav>
+    <div className="home-root">
 
-      <div className="search-section">
-        <h3>Busque por livros do seu interesse!</h3>
-        <div className="search-box">
-          <input type="text" placeholder="buscar livros..." />
-          <button>Buscar</button>
-        </div>
-      </div>
+      {/* TOP BAR */}
+      <div className="home-top">
+        <div className="home-top-inner">
 
-      <div className="carousel-container">
-        <h4>TOP 10 DOS MAIS PROCURADOS</h4>
-        <div className="carousel">
-          <div className="arrow" onClick={handlePrev}>❮</div>
-          <div className="carousel-items">
-            <div
-              className="items"
-              style={{ transform: `translateX(${index}px)` }}
-            >
-              {livros.map((livro, i) => (
-                <div key={i} className="book">
-                  {livro}
-                </div>
-              ))}
-            </div>
+          {/* LOGO */}
+          <img
+            src="/assets/2.png"
+            className="top-image"
+            alt="Logo"
+            onClick={() => navigate("/")}
+          />
+
+          {/* NAV DESKTOP */}
+          <div className="nav-buttons desktop-only">
+            <button onClick={() => navigate("/biblioteca")}>Biblioteca</button>
+            <button onClick={() => navigate("/em-leitura")}>Em Leitura</button>
+            <button onClick={() => navigate("/recomendados")}>Recomendados</button>
+            <button onClick={() => navigate("/dicas")}>Dicas</button>
+            <button onClick={() => navigate("/favoritos")}>Favoritos</button>
+            <button onClick={() => navigate("/desejos")}>Desejos</button>
           </div>
-          <div className="arrow" onClick={handleNext}>❯</div>
+
+          {/* ÍCONES DESKTOP */}
+          <div className="nav-icons desktop-only">
+            <span className="icon" onClick={() => navigate("/notificacoes")}>🔔</span>
+            <span className="icon" onClick={() => navigate("/perfil")}>👤</span>
+          </div>
+
+          {/* HAMBÚRGUER MOBILE */}
+          <div className="hamburger mobile-only" onClick={() => setMenuOpen(true)}>
+            ☰
+          </div>
         </div>
       </div>
 
-      <footer>
-        © 2025 Raposinha Lettera — Todos os direitos reservados.
-      </footer>
+      {/* MENU HAMBÚRGUER */}
+      {menuOpen && (
+        <div className="menu-overlay">
+          <div className="menu-panel" ref={menuRef}>
+            <h2>Menu</h2>
+
+            <button onClick={() => navigate("/biblioteca")}>Biblioteca</button>
+            <button onClick={() => navigate("/em-leitura")}>Em Leitura</button>
+            <button onClick={() => navigate("/recomendados")}>Recomendados</button>
+            <button onClick={() => navigate("/dicas")}>Dicas</button>
+            <button onClick={() => navigate("/favoritos")}>Favoritos</button>
+            <button onClick={() => navigate("/desejos")}>Desejos</button>
+            <button onClick={() => navigate("/notificacoes")}>🔔 Notificações</button>
+            <button onClick={() => navigate("/perfil")}>👤 Perfil</button>
+
+            <button className="menu-fechar" onClick={() => setMenuOpen(false)}>
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MAIN */}
+      <div className="home-main">
+
+        {/* BUSCA */}
+        <div className="search-section">
+          <h1>🔎 Buscar Livros</h1>
+
+          <div className="search-form">
+            <input
+              type="text"
+              placeholder="Digite algo para pesquisar..."
+              onKeyDown={(e) => {
+                if (e.key === "Enter") navigate(`/biblioteca?q=${e.target.value}`);
+              }}
+            />
+          </div>
+        </div>
+
+        {/* CARROSSEL */}
+        <h2 className="carousel-title">🔥 Top 10 Mais Procurados</h2>
+
+        <div className="carousel-wrap">
+
+          {/* SETA ESQUERDA */}
+          <button className="arrow-btn left" onClick={() => {
+            document.querySelector(".carousel").scrollBy({ left: -300, behavior: "smooth" });
+          }}>
+            ❮
+          </button>
+
+          <div className="carousel">
+            {topLivros.length === 0 && <p className="carregando">Carregando...</p>}
+
+            {topLivros.map((livro, i) => (
+              <div className="top-card" key={i}>
+                {livro.capa_url ? (
+                  <img src={livro.capa_url} alt={livro.titulo} />
+                ) : (
+                  <div className="no-img">📘</div>
+                )}
+                <h3>{livro.titulo}</h3>
+                <p>{livro.autor}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* SETA DIREITA */}
+          <button className="arrow-btn right" onClick={() => {
+            document.querySelector(".carousel").scrollBy({ left: 300, behavior: "smooth" });
+          }}>
+            ❯
+          </button>
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <div className="home-footer">© 2025 Biblioteca Virtual – Todos os direitos reservados.</div>
     </div>
   );
-};
-
-export default Home;
+}

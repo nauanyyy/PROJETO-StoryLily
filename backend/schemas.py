@@ -1,3 +1,4 @@
+# schemas.py
 from pydantic import BaseModel
 from typing import Optional
 
@@ -13,10 +14,12 @@ class UsuarioLogin(BaseModel):
 
 class UsuarioRead(BaseModel):
     id: int
+    nome: str
     email: str
+    logado: Optional[bool] = False
 
     class Config:
-        from_attributes = True  # antes era orm_mode
+        orm_mode = True
 
 # Em Leitura
 class LivroLidoSchema(BaseModel):
@@ -27,8 +30,7 @@ class LivroLidoSchema(BaseModel):
     capa_url: Optional[str] = None
 
     class Config:
-        from_attributes = True
-
+        orm_mode = True
 
 class LivroFavoritoSchema(BaseModel):
     id: int
@@ -38,7 +40,7 @@ class LivroFavoritoSchema(BaseModel):
     capa_url: Optional[str] = None
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class LivroDesejoSchema(BaseModel):
     id: int
@@ -48,8 +50,7 @@ class LivroDesejoSchema(BaseModel):
     capa_url: Optional[str] = None
 
     class Config:
-        from_attributes = True
-
+        orm_mode = True
 
 class LivroRecomendadoSchema(BaseModel):
     id: int
@@ -60,7 +61,7 @@ class LivroRecomendadoSchema(BaseModel):
     count: int = 0
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class NotificacaoSchema(BaseModel):
     id: int
@@ -68,5 +69,4 @@ class NotificacaoSchema(BaseModel):
     lida: bool
 
     class Config:
-        from_attributes = True
-
+        orm_mode = True

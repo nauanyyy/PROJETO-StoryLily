@@ -19,6 +19,7 @@ from schemas import (
     LivroDesejoSchema,
 )
 from fastapi.openapi.utils import get_openapi
+from fastapi.middleware.cors import CORSMiddleware
 
 # -----------------------------------
 # CONFIGURAÇÃO PRINCIPAL DA APLICAÇÃO
@@ -31,6 +32,14 @@ init_db()
 
 # Importa rotas de autenticação
 app.include_router(auth_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # libera o frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # -----------------------------------
 # CORREÇÃO DO SWAGGER (OAuth2 PASSWORD)

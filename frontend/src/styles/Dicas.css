@@ -1,65 +1,59 @@
-body{
-  background-color: #642e80;
-}
-.page-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 20px 40px; /* espaço para navbar */
+/* Container geral */
+.dicas-container {
+  padding: 32px;
+  background: #8b3f9f;
   min-height: 100vh;
-  background: var(--background);
+  color: #fff;
 }
 
-.page-box {
-  width: 100%;
-  max-width: 900px;          /* limita largura máxima */
-  margin: 0 auto;            /* centraliza horizontalmente */
-  padding: 30px;
-  background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+/* Título */
+.dicas-titulo {
   text-align: center;
-  box-sizing: border-box;
+  background: #5c2d91;
+  padding: 14px 28px;
+  margin-bottom: 28px;
+  border-radius: 40px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 26px;
+  font-weight: 800;
 }
 
-h2 {
-  color: #884a9b; /* roxo escuro */
-  margin-bottom: 30px;
-}
-
+/* Lista */
 .dicas-lista {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto; /* centraliza a lista horizontalmente */
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-width: 700px; /* opcional, para limitar largura dos cards */
-  width: 100%;
+  gap: 18px;
+  max-width: 700px;
+  margin: auto;
 }
 
+/* Card das dicas */
 .dica-card {
-  background: var(--card-light);
-  padding: 20px 25px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(90, 45, 130, 0.15);
-  text-align: left;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+  background: #ffffff;
+  color: #222;
+  padding: 18px 22px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 18px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  font-weight: 600;
 }
 
-.dica-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(90, 45, 130, 0.3);
+.dica-card .emoji {
+  font-size: 34px;
 }
 
-.dica-card h3 {
-  color: #74459c; /* roxo escuro */
-  margin-bottom: 10px;
-}
-
-.dica-card p {
-  color: var(--text-light);
-  font-size: 1rem;
-  line-height: 1.4;
+/* Mensagem vazia */
+.vazio {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.25);
+  padding: 12px 20px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
 }

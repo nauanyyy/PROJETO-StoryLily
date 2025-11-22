@@ -1,33 +1,70 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { BookProvider } from "./context/BookContext";
-import Navbar from "./components/Navbar";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
+// PÁGINAS
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Biblioteca from "./pages/Biblioteca";
-import MeusLivros from "./pages/MeusLivros";
+import EmLeitura from "./pages/EmLeitura";
+import Recomendados from "./pages/Recomendados";
+import Dicas from "./pages/Dicas";
 import Favoritos from "./pages/Favoritos";
-import Lidos from "./pages/Lidos";
-import Login from "./pages/Login";
-import Cadastro from "./pages/Cadastro";
+import Notificacoes from "./pages/Notificacoes";
+import Perfil from "./pages/Perfil";
+import Desejos from "./pages/Desejos";
 
+// ESTILOS GLOBAIS (se tiver)
 import "./styles/global.css";
 
 function App() {
   return (
-    <BookProvider>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/biblioteca" element={<Biblioteca />} />
-          <Route path="/meus-livros" element={<MeusLivros />} />
-          <Route path="/favoritos" element={<Favoritos />} />
-          <Route path="/lidos" element={<Lidos />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastro" element={<Cadastro />} />
-        </Routes>
-      </Router>
-    </BookProvider>
+    <Router>
+
+      <Routes>
+
+        {/* Rota inicial → redireciona para Login */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        {/* Login */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Cadastro */}
+        <Route path="/register" element={<Register />} />
+
+        {/* Home */}
+        <Route path="/home" element={<Home />} />
+
+        {/* Biblioteca */}
+        <Route path="/biblioteca" element={<Biblioteca />} />
+
+        {/* Em Leitura */}
+        <Route path="/em-leitura" element={<EmLeitura />} />
+
+        {/* Recomendados */}
+        <Route path="/recomendados" element={<Recomendados />} />
+
+        {/* Dicas */}
+        <Route path="/dicas" element={<Dicas />} />
+
+        {/* Favoritos */}
+        <Route path="/favoritos" element={<Favoritos />} />
+
+        {/* Notificações */}
+        <Route path="/notificacoes" element={<Notificacoes />} />
+
+        {/* Perfil */}
+        <Route path="/perfil" element={<Perfil />} />
+
+        {/* Desejos */}
+        <Route path="/desejos" element={<Desejos />} />
+
+        {/* Caso digite rota inexistente */}
+        <Route path="*" element={<h1>Página não encontrada</h1>} />
+
+      </Routes>
+
+    </Router>
   );
 }
 

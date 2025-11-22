@@ -1,122 +1,86 @@
-from datetime import datetime, timedelta
-from jose import JWTError, jwt
-from fastapi import APIRouter, HTTPException, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlmodel import Session, select
-from database import get_session
+# auth.py — rotas de auth compatível com seus schemas
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlmodel import Session, select, SQLModel
+import os
+
+from schemas import UsuarioCreate, UsuarioLogin, UsuarioRead
+from database import engine, get_session
 from models import Usuario
-from schemas import UsuarioCreate, UsuarioRead
-from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from utils import hash_password, verify_password, create_access_token, decode_token
 
-# -------------------------------
-# ROTAS DE AUTENTICAÇÃO (em português)
-# -------------------------------
-router = APIRouter(
-    prefix="/auth",
-    tags=["Autenticação"],
-    responses={401: {"description": "Não autorizado"}, 404: {"description": "Não encontrado"}},
-)
+router = APIRouter(prefix="/auth", tags=["Auth"])
 
-# ⚠️ IMPORTANTE: colocar a barra "/" no início do tokenUrl
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")  # usado apenas se for proteger rotas
 
-# --- Criação e verificação de tokens JWT ---
-def criar_token_jwt(dados: dict, expira_em: timedelta | None = None):
-    """Cria um token JWT para autenticação do usuário."""
-    to_encode = dados.copy()
-    expira = datetime.utcnow() + (expira_em or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expira})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
-
-def verificar_token(
-    token: str = Depends(oauth2_scheme), session: Session = Depends(get_session)
-):
-    """Valida o token JWT e retorna o usuário autenticado."""
-    credenciais_invalidas = HTTPException(
-        status_code=401,
-        detail="Token inválido ou expirado. Faça login novamente.",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
-            raise credenciais_invalidas
-
-        # Buscar usuário no banco
-        user = session.exec(select(Usuario).where(Usuario.email == email)).first()
-        if not user:
-            raise credenciais_invalidas
-        return user
-    except JWTError:
-        raise credenciais_invalidas
-
-
-# --- Registro de usuário ---
-@router.post(
-    "/register",
-    response_model=UsuarioRead,
-    summary="Cadastrar novo usuário",
-    description="Cria uma nova conta de usuário com nome, e-mail e senha.",
-)
-def register(user: UsuarioCreate, session: Session = Depends(get_session)):
-    existente = session.exec(select(Usuario).where(Usuario.email == user.email)).first()
-    if existente:
-        raise HTTPException(status_code=400, detail="E-mail já está cadastrado.")
-
-    novo = Usuario(nome=user.nome, email=user.email, senha=user.senha, logado=False)
+@router.post("/register", response_model=UsuarioRead, status_code=status.HTTP_201_CREATED)
+def register_user(user: UsuarioCreate, session: Session = Depends(get_session)):
+    # verifica e-mail duplicado
+    stmt = select(Usuario).where(Usuario.email == user.email)
+    existing = session.exec(stmt).first()
+    if existing:
+        raise HTTPException(status_code=409, detail="email_duplicado")
+    hashed = hash_password(user.senha)
+    novo = Usuario(nome=user.nome, email=user.email, senha=hashed, logado=False)
     session.add(novo)
     session.commit()
     session.refresh(novo)
     return novo
 
-
-# --- Login JWT ---
-@router.post(
-    "/token",
-    summary="Login e geração de token JWT",
-    description="Faz login com e-mail e senha e retorna um token JWT para autenticação.",
-)
-def login_token(
-    form_data: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(get_session)
-):
-    user = session.exec(select(Usuario).where(Usuario.email == form_data.username)).first()
-    if not user or user.senha != form_data.password:
-        raise HTTPException(status_code=401, detail="E-mail ou senha incorretos.")
-
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = criar_token_jwt(dados={"sub": user.email}, expira_em=access_token_expires)
-
+@router.post("/login")
+def login(data: UsuarioLogin, session: Session = Depends(get_session)):
+    stmt = select(Usuario).where(Usuario.email == data.email)
+    user = session.exec(stmt).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="Credenciais inválidas")
+    if not verify_password(data.senha, user.senha):
+        raise HTTPException(status_code=401, detail="Credenciais inválidas")
+    token = create_access_token({"sub": str(user.id)})
+    # marca logado true opcional
     user.logado = True
     session.add(user)
     session.commit()
+    return {"access_token": token, "token_type": "bearer"}
 
-    return {"access_token": access_token, "token_type": "bearer"}
+def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Depends(get_session)):
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Token inválido ou expirado")
+    user_id = payload.get("sub")
+    if user_id is None:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    stmt = select(Usuario).where(Usuario.id == int(user_id))
+    user = session.exec(stmt).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    return user
 
+@router.get("/me")
+def read_me(user: Usuario = Depends(get_current_user)):
+    return {"id": user.id, "nome": user.nome, "email": user.email, "logado": user.logado}
 
-# --- Logout ---
-@router.post(
-    "/logout",
-    summary="Logout do usuário",
-    description="Finaliza a sessão do usuário logado e invalida o token JWT atual.",
-)
-def logout(email: str, session: Session = Depends(get_session)):
-    existente = session.exec(select(Usuario).where(Usuario.email == email)).first()
-    if not existente or not existente.logado:
-        raise HTTPException(status_code=400, detail="Usuário não está logado.")
-    existente.logado = False
-    session.add(existente)
+@router.delete("/user")
+def delete_user(email: str, session: Session = Depends(get_session)):
+    stmt = select(Usuario).where(Usuario.email == email)
+    user = session.exec(stmt).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    session.delete(user)
     session.commit()
-    return {"mensagem": f"Usuário {existente.nome} saiu do sistema com sucesso."}
+    return {"mensagem": "Usuário deletado"}
 
-
-# --- Perfil do usuário (rota protegida) ---
-@router.get(
-    "/me",
-    response_model=UsuarioRead,
-    summary="Ver perfil do usuário logado",
-    description="Retorna as informações do usuário autenticado pelo token JWT.",
-)
-def perfil_usuario(user: Usuario = Depends(verificar_token)):
-    return {"id": user.id, "nome": user.nome, "email": user.email}
+@router.post("/reset-db")
+def reset_db_safe():
+    try:
+        # tenta fechar conexões (engine.dispose) — necessário no Windows
+        engine.dispose()
+        db_path = "database.db"
+        if os.path.exists(db_path):
+            try:
+                os.remove(db_path)
+            except PermissionError:
+                raise HTTPException(status_code=500, detail="O banco ainda está em uso. Feche o backend e tente novamente.")
+        SQLModel.metadata.create_all(engine)
+        return {"mensagem": "Banco de dados resetado com sucesso!"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao resetar banco: {e}")

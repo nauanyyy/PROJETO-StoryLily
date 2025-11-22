@@ -1,0 +1,58 @@
+.notif-container {
+  padding: 32px;
+  background: #8b3f9f;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Título */
+.notif-titulo {
+  text-align: center;
+  background: #5c2d91;
+  padding: 14px 28px;
+  margin-bottom: 28px;
+  border-radius: 40px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+/* Lista */
+.notif-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 700px;
+  margin: auto;
+}
+
+/* Card */
+.notif-card {
+  background: #ffffff;
+  color: #222;
+  padding: 18px 22px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 18px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  font-weight: 600;
+}
+
+.notif-card .emoji {
+  font-size: 32px;
+}
+
+/* Mensagem vazia */
+.vazio {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.25);
+  padding: 12px 20px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+}
