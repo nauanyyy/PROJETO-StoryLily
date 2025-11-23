@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import useNotificacoes from "../hooks/useNotificacoes";
 
 export default function Home() {
   const navigate = useNavigate();
   const [topLivros, setTopLivros] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+
+  const notificacoes = useNotificacoes();
 
   // Buscar Top 10 do backend
   const carregarTop = async () => {
@@ -57,11 +60,20 @@ export default function Home() {
             <button onClick={() => navigate("/dicas")}>Dicas</button>
             <button onClick={() => navigate("/favoritos")}>Favoritos</button>
             <button onClick={() => navigate("/desejos")}>Desejos</button>
+            <button onClick={() => navigate("/lidos")}>Lidos</button>
           </div>
 
           {/* ÍCONES DESKTOP */}
           <div className="nav-icons desktop-only">
-            <span className="icon" onClick={() => navigate("/notificacoes")}>🔔</span>
+
+            {/* Ícone de Notificações com bolinha vermelha */}
+            <div className="notif-wrapper" onClick={() => navigate("/notificacoes")}>
+              <span className="icon">🔔</span>
+
+              {/* aparece apenas se tiver notificações não lidas */}
+              {notificacoes.length > 0 && <span className="notif-badge"></span>}
+            </div>
+
             <span className="icon" onClick={() => navigate("/perfil")}>👤</span>
           </div>
 
@@ -69,6 +81,7 @@ export default function Home() {
           <div className="hamburger mobile-only" onClick={() => setMenuOpen(true)}>
             ☰
           </div>
+
         </div>
       </div>
 
@@ -84,6 +97,7 @@ export default function Home() {
             <button onClick={() => navigate("/dicas")}>Dicas</button>
             <button onClick={() => navigate("/favoritos")}>Favoritos</button>
             <button onClick={() => navigate("/desejos")}>Desejos</button>
+            <button onClick={() => navigate("/lidos")}>Lidos</button>
             <button onClick={() => navigate("/notificacoes")}>🔔 Notificações</button>
             <button onClick={() => navigate("/perfil")}>👤 Perfil</button>
 

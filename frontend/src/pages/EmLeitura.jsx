@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import "../styles/EmLeitura.css";
+import { abrirLivroComNotificacao } from "../utils/leitor";
+
 
 export default function EmLeitura() {
   const [livros, setLivros] = useState([]);
@@ -46,7 +48,7 @@ export default function EmLeitura() {
     }
   };
 
-  // Deletar livro
+  // Remover da lista
   const deletarLivro = async (titulo) => {
     if (!window.confirm(`Remover "${titulo}" da lista?`)) return;
 
@@ -57,6 +59,64 @@ export default function EmLeitura() {
       carregarLivros();
     } catch (err) {
       console.error("Erro ao deletar:", err);
+    }
+  };
+
+  // ------------------------------
+  // BOTÕES ADICIONAIS (NOVOS)
+  // ------------------------------
+
+  const adicionarFavorito = async (livro) => {
+    try {
+      await api.post("/favoritos", livro);
+      alert("Adicionado aos favoritos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removerFavorito = async (titulo) => {
+    try {
+      await api.delete(`/favoritos/${titulo}`);
+      alert("Removido dos favoritos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const marcarComoLido = async (livro) => {
+    try {
+      await api.post("/lidos", livro);
+      alert("Livro marcado como lido!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removerDosLidos = async (titulo) => {
+    try {
+      await api.delete(`/lidos/${titulo}`);
+      alert("Removido dos lidos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const adicionarDesejo = async (livro) => {
+    try {
+      await api.post("/desejos", livro);
+      alert("Adicionado à lista de desejos!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removerDesejo = async (titulo) => {
+    try {
+      await api.delete(`/desejos/${titulo}`);
+      alert("Removido da lista de desejos!");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -105,9 +165,23 @@ export default function EmLeitura() {
             <p>{livro.autor}</p>
             <span>{livro.ano}</span>
 
-            <button className="btn-del" onClick={() => deletarLivro(livro.titulo)}>
-              Remover
-            </button>
+            {/* BOTÕES NOVOS */}
+            <div className="acoes">
+              <button onClick={() => abrirLivroComNotificacao(livro)}>📖 Ler</button>
+
+
+              <button onClick={() => adicionarFavorito(livro)}>❤️ Favoritar</button>
+              <button onClick={() => removerFavorito(livro.titulo)}>❌ Remover Favorito</button>
+
+              <button onClick={() => marcarComoLido(livro)}>✅ Lido</button>
+              <button onClick={() => removerDosLidos(livro.titulo)}>❌ Remover Lido</button>
+
+
+              {/* REMOVER DA LISTA */}
+              <button className="btn-del" onClick={() => deletarLivro(livro.titulo)}>
+                Remover da Lista
+              </button>
+            </div>
           </div>
         ))}
       </div>

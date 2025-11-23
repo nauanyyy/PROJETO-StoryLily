@@ -20,6 +20,7 @@ from schemas import (
 )
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
+from routes.leitura import router as leitura_router
 
 # -----------------------------------
 # CONFIGURAÇÃO PRINCIPAL DA APLICAÇÃO
@@ -32,6 +33,7 @@ init_db()
 
 # Importa rotas de autenticação
 app.include_router(auth_router)
+app.include_router(leitura_router)
 
 app.add_middleware(
     CORSMiddleware,

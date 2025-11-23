@@ -13,6 +13,7 @@ import Favoritos from "./pages/Favoritos";
 import Notificacoes from "./pages/Notificacoes";
 import Perfil from "./pages/Perfil";
 import Desejos from "./pages/Desejos";
+import Lidos from "./pages/Lidos";
 
 // ESTILOS GLOBAIS (se tiver)
 import "./styles/global.css";
@@ -58,6 +59,9 @@ function App() {
 
         {/* Desejos */}
         <Route path="/desejos" element={<Desejos />} />
+
+        {/* Lidos */}
+        <Route path="/lidos" element={<Lidos />} />
 
         {/* Caso digite rota inexistente */}
         <Route path="*" element={<h1>Página não encontrada</h1>} />

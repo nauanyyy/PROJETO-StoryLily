@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import "../styles/Desejos.css";
+import { abrirLivroComNotificacao } from "../utils/leitor";
+
 
 export default function Desejos() {
   const [lista, setLista] = useState([]);
   const [novoLivro, setNovoLivro] = useState({
     titulo: "",
     autor: "",
-    capa_url: ""
+    capa_url: "",
   });
 
   const token = localStorage.getItem("token");
@@ -60,6 +62,47 @@ export default function Desejos() {
     }
   };
 
+  // ----------------------------------------
+  // Botões adicionais (igual Biblioteca)
+  // ----------------------------------------
+
+
+  const adicionarEmLeitura = async (livro) => {
+    try {
+      await api.post("/em-leitura", livro);
+      alert("Adicionado à lista de leitura!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removerEmLeitura = async (titulo) => {
+    try {
+      await api.delete(`/em-leitura/${titulo}`);
+      alert("Removido da lista de leitura!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const marcarComoLido = async (livro) => {
+    try {
+      await api.post("/lidos", livro);
+      alert("Marcado como lido!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removerDosLidos = async (titulo) => {
+    try {
+      await api.delete(`/lidos/${titulo}`);
+      alert("Removido dos lidos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="desejos-container">
       <h1 className="desejos-titulo">💜 Lista de Desejos</h1>
@@ -69,17 +112,23 @@ export default function Desejos() {
         <input
           placeholder="Título"
           value={novoLivro.titulo}
-          onChange={(e) => setNovoLivro({ ...novoLivro, titulo: e.target.value })}
+          onChange={(e) =>
+            setNovoLivro({ ...novoLivro, titulo: e.target.value })
+          }
         />
         <input
           placeholder="Autor"
           value={novoLivro.autor}
-          onChange={(e) => setNovoLivro({ ...novoLivro, autor: e.target.value })}
+          onChange={(e) =>
+            setNovoLivro({ ...novoLivro, autor: e.target.value })
+          }
         />
         <input
           placeholder="URL da Capa"
           value={novoLivro.capa_url}
-          onChange={(e) => setNovoLivro({ ...novoLivro, capa_url: e.target.value })}
+          onChange={(e) =>
+            setNovoLivro({ ...novoLivro, capa_url: e.target.value })
+          }
         />
         <button type="submit">Adicionar</button>
       </form>
@@ -101,9 +150,20 @@ export default function Desejos() {
             <h3>{livro.titulo}</h3>
             {livro.autor && <p>{livro.autor}</p>}
 
-            <button className="btn-del" onClick={() => deletar(livro.titulo)}>
-              Remover
-            </button>
+            <div className="acoes">
+
+              <button onClick={() => abrirLivroComNotificacao(livro)}>📖 Ler</button>
+
+              <button onClick={() => adicionarEmLeitura(livro)}>📖 Ler</button>
+              <button onClick={() => removerEmLeitura(livro.titulo)}>❌ Não Ler</button>
+
+              <button onClick={() => marcarComoLido(livro)}>✅ Lido</button>
+              <button onClick={() => removerDosLidos(livro.titulo)}>❌ Não Lido</button>
+
+              <button className="btn-del" onClick={() => deletar(livro.titulo)}>
+                Remover
+              </button>
+            </div>
           </div>
         ))}
       </div>

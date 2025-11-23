@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api/api";
 import FilterModal from "../componentes/FilterModal";
+import { abrirLivroComNotificacao } from "../utils/leitor";
 
 export default function Biblioteca() {
   const [livros, setLivros] = useState([]);
@@ -9,21 +10,14 @@ export default function Biblioteca() {
   const [filtros, setFiltros] = useState({});
   const [carregando, setCarregando] = useState(false);
 
-  // -----------------------------
-  // Função principal de busca
-  // -----------------------------
   const buscarLivros = async () => {
     setCarregando(true);
 
     try {
       const params = {};
 
-      // Se tiver texto de busca, envia o parâmetro q
-      if (busca.trim() !== "") {
-        params.q = busca;
-      }
+      if (busca.trim() !== "") params.q = busca;
 
-      // Junta os filtros aplicados
       Object.assign(params, filtros);
 
       const response = await api.get("/buscar", { params });
@@ -36,16 +30,86 @@ export default function Biblioteca() {
     }
   };
 
-  // Atualiza listagem quando filtros mudarem
   useEffect(() => {
     buscarLivros();
   }, [filtros]);
+
+  const adicionarFavorito = async (livro) => {
+    try {
+      await api.post("/favoritos", livro);
+      alert("Adicionado aos favoritos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removerFavorito = async (titulo) => {
+    try {
+      await api.delete(`/favoritos/${titulo}`);
+      alert("Removido dos favoritos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const adicionarEmLeitura = async (livro) => {
+    try {
+      await api.post("/em-leitura", livro);
+      alert("Livro adicionado à lista de leitura!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removerEmLeitura = async (titulo) => {
+    try {
+      await api.delete(`/em-leitura/${titulo}`);
+      alert("Removido da lista de leitura.");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const marcarComoLido = async (livro) => {
+    try {
+      await api.post("/lidos", livro);
+      alert("Livro marcado como LIDO!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removerDosLidos = async (titulo) => {
+    try {
+      await api.delete(`/lidos/${titulo}`);
+      alert("Removido dos lidos.");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const adicionarDesejo = async (livro) => {
+    try {
+      await api.post("/desejos", livro);
+      alert("Adicionado à lista de desejos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removerDesejo = async (titulo) => {
+    try {
+      await api.delete(`/desejos/${titulo}`);
+      alert("Removido da lista de desejos!");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>Biblioteca</h1>
 
-      {/* Campo de busca */}
       <input
         placeholder="Buscar livro..."
         value={busca}
@@ -53,29 +117,69 @@ export default function Biblioteca() {
         style={{ marginRight: "10px" }}
       />
 
-      {/* Botão buscar */}
       <button onClick={buscarLivros}>Buscar</button>
 
-      {/* Botão abrir filtros */}
       <button onClick={() => setModalOpen(true)} style={{ marginLeft: "10px" }}>
         Filtros
       </button>
 
-      {/* Carregando */}
       {carregando && <p>Carregando livros...</p>}
 
-      {/* Lista de livros */}
       {!carregando && livros.length === 0 && <p>Nenhum livro encontrado.</p>}
 
-      {livros.map((livro, i) => (
-        <div key={i} style={{ marginTop: "12px" }}>
-          <strong>{livro.titulo}</strong>
-          {livro.autor && <> — {livro.autor}</>}
-          {livro.ano && <span> ({livro.ano})</span>}
+      {livros.map((livro, index) => (
+        <div
+          key={index}
+          style={{
+            marginTop: "12px",
+            padding: "12px",
+            border: "1px solid #ccc",
+            borderRadius: "10px",
+            maxWidth: "500px",
+            background: "white",
+          }}
+        >
+          <img
+            src={livro.capa_url}
+            alt={livro.titulo}
+            style={{
+              width: "120px",
+              height: "170px",
+              objectFit: "cover",
+              borderRadius: "8px",
+              border: "1px solid #bbb",
+            }}
+          />
+
+          <h3>{livro.titulo}</h3>
+          <p>{livro.autor}</p>
+          <p>{livro.ano}</p>
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "10px" }}>
+
+            {/* ❤️ FAVORITOS */}
+            <button onClick={() => adicionarFavorito(livro)}>❤️ Favoritar</button>
+            <button onClick={() => removerFavorito(livro.titulo)}>❌ Remover</button>
+
+            {/* 📚 EM LEITURA */}
+            <button onClick={() => adicionarEmLeitura(livro)}>📚 Adicionar</button>
+            <button onClick={() => removerEmLeitura(livro.titulo)}>❌ Remover</button>
+
+            {/* 📖 ABRIR LEITOR (NOVO BOTÃO ADICIONADO) */}
+            <button onClick={() => abrirLivroComNotificacao(livro)}>📖 Ler</button>
+
+            {/* ✅ LIDO */}
+            <button onClick={() => marcarComoLido(livro)}>✅ Marcar Lido</button>
+            <button onClick={() => removerDosLidos(livro.titulo)}>❌ Não Lido</button>
+
+            {/* ⭐ DESEJO */}
+            <button onClick={() => adicionarDesejo(livro)}>⭐ Desejo Ler</button>
+            <button onClick={() => removerDesejo(livro.titulo)}>❌ Remover</button>
+
+          </div>
         </div>
       ))}
 
-      {/* Modal de Filtros */}
       <FilterModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}

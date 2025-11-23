@@ -6,14 +6,17 @@ export default function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState([]);
   const token = localStorage.getItem("token");
 
-  // Buscar notificações do backend
+  // Buscar notificações
   const carregar = async () => {
     try {
       const res = await api.get("/notificacoes", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-
-      setNotificacoes(res.data.mensagens || []);
+      // se o backend retorna uma lista direta:
+      // setNotificacoes(res.data || []);
+      // se o backend retorna { mensagens: [...] }:
+      if (res.data?.mensagens) setNotificacoes(res.data.mensagens);
+      else setNotificacoes(res.data || []);
     } catch (err) {
       console.error("Erro ao carregar notificações:", err);
     }
@@ -22,6 +25,27 @@ export default function Notificacoes() {
   useEffect(() => {
     carregar();
   }, []);
+
+  // Marcar todas como lidas
+  useEffect(() => {
+    const marcarLidas = async () => {
+      const tokenHeaders = token ? { Authorization: `Bearer ${token}` } : {};
+      try {
+        for (const msg of notificacoes) {
+          // se mensagem for objeto {mensagem: "...", lida: false}, ajusta:
+          const text = typeof msg === "string" ? msg : msg.mensagem;
+          if (!text) continue;
+          await api.put(`/notificacoes/${encodeURIComponent(text)}/ler`, {}, { headers: tokenHeaders });
+        }
+      } catch (err) {
+        console.error("Erro ao marcar notificacoes como lidas:", err);
+      }
+    };
+
+    if (notificacoes.length > 0) {
+      marcarLidas();
+    }
+  }, [notificacoes, token]);
 
   return (
     <div className="notif-container">
@@ -32,12 +56,15 @@ export default function Notificacoes() {
           <p className="vazio">Nenhuma notificação disponível...</p>
         )}
 
-        {notificacoes.map((msg, index) => (
-          <div className="notif-card" key={index}>
-            <span className="emoji">📢</span>
-            <p>{msg}</p>
-          </div>
-        ))}
+        {notificacoes.map((msg, index) => {
+          const text = typeof msg === "string" ? msg : msg.mensagem;
+          return (
+            <div className="notif-card" key={index}>
+              <span className="emoji">📢</span>
+              <p>{text}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
