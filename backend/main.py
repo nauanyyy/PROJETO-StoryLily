@@ -20,7 +20,7 @@ from schemas import (
 )
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
-from routes.leitura import router as leitura_router
+from routers.leitura import router as leitura_router
 
 # -----------------------------------
 # CONFIGURAÇÃO PRINCIPAL DA APLICAÇÃO

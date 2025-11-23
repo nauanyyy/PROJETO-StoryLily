@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // PÁGINAS
+import LandingPage from "./pages/LandingPage";  // ⬅️ ADICIONADO
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -15,7 +16,7 @@ import Perfil from "./pages/Perfil";
 import Desejos from "./pages/Desejos";
 import Lidos from "./pages/Lidos";
 
-// ESTILOS GLOBAIS (se tiver)
+// ESTILOS GLOBAIS
 import "./styles/global.css";
 
 function App() {
@@ -24,8 +25,8 @@ function App() {
 
       <Routes>
 
-        {/* Rota inicial → redireciona para Login */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        {/* 🌸 Rota inicial → Agora mostra a Landing Page */}
+        <Route path="/" element={<LandingPage />} />
 
         {/* Login */}
         <Route path="/login" element={<Login />} />
@@ -63,7 +64,7 @@ function App() {
         {/* Lidos */}
         <Route path="/lidos" element={<Lidos />} />
 
-        {/* Caso digite rota inexistente */}
+        {/* Rota inexistente */}
         <Route path="*" element={<h1>Página não encontrada</h1>} />
 
       </Routes>

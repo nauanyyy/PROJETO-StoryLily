@@ -113,7 +113,7 @@ export default function Home() {
 
         {/* BUSCA */}
         <div className="search-section">
-          <h1>🔎 Buscar Livros</h1>
+          <h1>🔎 Busque por livros do seu interesse! </h1>
 
           <div className="search-form">
             <input

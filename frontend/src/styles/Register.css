@@ -1,0 +1,71 @@
+/* Fundo da página */
+body {
+  background-color: #e6e9f2;
+  margin: 0;
+  padding: 0;
+}
+
+/* CONTAINER CENTRAL */
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* TÍTULO */
+.register-container h2 {
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  color: #3b0c63;
+}
+
+/* FORMULÁRIO */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 270px;
+}
+
+/* INPUTS */
+.register-form input {
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 1rem;
+}
+
+/* BOTÃO */
+.register-form button {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 18px;
+  border: none;
+  background-color: #540076;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.register-form button:hover {
+  background-color: #3b0054;
+}
+
+/* TEXTO "já tem conta" */
+.register-link {
+  margin-top: 25px;
+  font-size: 1rem;
+  color: #333; /* NÃO roxo */
+  font-weight: normal; /* NÃO negrito */
+}
+
+/* SPAN do "Fazer login" */
+.register-link span {
+  color: #4a0086; /* NÃO roxo */}
+
+

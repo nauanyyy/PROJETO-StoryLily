@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import "../styles/Login.css"; // 🔥 IMPORTANDO O CSS
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,10 +31,10 @@ export default function Login() {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="login-container">
       <h2>Login</h2>
 
-      <form onSubmit={handleLogin} style={styles.form}>
+      <form onSubmit={handleLogin} className="login-form">
         <input
           type="email"
           placeholder="E-mail"
@@ -50,17 +51,17 @@ export default function Login() {
           required
         />
 
-        <button type="submit">Entrar</button>
+        <button type="submit" className="login-btn">Entrar</button>
       </form>
 
-      {mensagem && <p>{mensagem}</p>}
+      {mensagem && <p className="login-msg">{mensagem}</p>}
 
       {/* 🔥 O link aparece SEMPRE — obrigatório criar conta se não tiver */}
-      <p style={{ marginTop: "10px" }}>
+      <p className="register-text">
         Ainda não tem conta?{" "}
         <span
           onClick={() => navigate("/register")}
-          style={{ color: "blue", cursor: "pointer", fontWeight: "bold" }}
+          className="register-link"
         >
           Criar conta
         </span>
@@ -68,14 +69,3 @@ export default function Login() {
     </div>
   );
 }
-
-const styles = {
-  container: { textAlign: "center", marginTop: "100px" },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    width: "250px",
-    margin: "auto",
-  },
-};

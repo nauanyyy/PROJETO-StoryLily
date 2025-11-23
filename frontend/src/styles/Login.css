@@ -1,0 +1,72 @@
+/* CONTAINER CENTRALIZADO */
+.login-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* tudo no centro vertical */
+  align-items: center; /* centro horizontal */
+  text-align: center;
+  background-color: #f7f9fc; /* branco gelo */
+}
+
+/* TÍTULO */
+.login-container h2 {
+  margin-bottom: 25px; /* só afasta um pouco do form */
+  font-size: 2rem;
+}
+
+/* FORM */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* espaço entre inputs */
+  width: 260px;
+}
+
+/* INPUTS */
+.login-form input {
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* BOTÃO */
+.login-btn {
+  margin-top: 18px; /* só um leve espaço do formulário */
+  background-color: #540076;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #3b0054;
+}
+
+/* MENSAGEM (verificando / erro) */
+.login-msg {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+/* TEXTO "CRIAR CONTA" */
+.register-text {
+  margin-top: 18px; /* agora fica logo abaixo da mensagem e do botão */
+  font-size: 0.95rem;
+}
+
+.register-link {
+  color: #540076;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}

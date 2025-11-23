@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import "../styles/Register.css"; // <<--- IMPORTA O CSS NOVO
 
 export default function Register() {
   const [nome, setNome] = useState("");
@@ -29,10 +30,10 @@ export default function Register() {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="register-container">
       <h2>Criar Conta</h2>
 
-      <form onSubmit={handleRegister} style={styles.form}>
+      <form onSubmit={handleRegister} className="register-form">
         <input
           type="text"
           placeholder="Nome"
@@ -62,26 +63,12 @@ export default function Register() {
 
       {mensagem && <p>{mensagem}</p>}
 
-      <p style={{ marginTop: "10px" }}>
+      <p className="register-link">
         Já tem conta?{" "}
-        <span
-          onClick={() => navigate("/login")}
-          style={{ color: "blue", cursor: "pointer", fontWeight: "bold" }}
-        >
+        <span onClick={() => navigate("/login")}>
           Fazer login
         </span>
       </p>
     </div>
   );
 }
-
-const styles = {
-  container: { textAlign: "center", marginTop: "100px" },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    width: "250px",
-    margin: "auto",
-  },
-};
