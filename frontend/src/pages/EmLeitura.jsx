@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../componentes/Navbar";
 import "../styles/EmLeitura.css";
+import "../styles/PageHeader.css";
 import { abrirLivroComNotificacao } from "../utils/leitor";
 
 
@@ -122,7 +124,10 @@ export default function EmLeitura() {
 
   return (
     <div className="leitura-container">
-      <h1 className="leitura-titulo">📖 Em Leitura</h1>
+      <Navbar />
+      
+      {/* Header */}
+
 
       <form className="form-add" onSubmit={adicionarLivro}>
         <input

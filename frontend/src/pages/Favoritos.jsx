@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../componentes/Navbar";
 import "../styles/Favoritos.css";
+import "../styles/PageHeader.css";
 import { abrirLivroComNotificacao } from "../utils/leitor";
 
 
@@ -109,7 +111,9 @@ export default function Favoritos() {
 
   return (
     <div className="fav-container">
-      <h1 className="fav-titulo">⭐ Meus Favoritos</h1>
+      <Navbar />
+      
+      {/* Header */}
 
       {/* Formulário */}
       <form className="fav-form" onSubmit={adicionar}>

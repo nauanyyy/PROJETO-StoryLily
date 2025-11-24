@@ -8,7 +8,6 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Biblioteca from "./pages/Biblioteca";
 import EmLeitura from "./pages/EmLeitura";
-import Recomendados from "./pages/Recomendados";
 import Dicas from "./pages/Dicas";
 import Favoritos from "./pages/Favoritos";
 import Notificacoes from "./pages/Notificacoes";
@@ -42,9 +41,6 @@ function App() {
 
         {/* Em Leitura */}
         <Route path="/em-leitura" element={<EmLeitura />} />
-
-        {/* Recomendados */}
-        <Route path="/recomendados" element={<Recomendados />} />
 
         {/* Dicas */}
         <Route path="/dicas" element={<Dicas />} />

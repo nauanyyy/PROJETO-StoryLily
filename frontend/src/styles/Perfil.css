@@ -1,64 +1,111 @@
+/* ===================== PERFIL PAGE ===================== */
 .perfil-container {
-  padding: 32px;
-  background: #8b3f9f;
   min-height: 100vh;
-  color: #fff;
+  background: var(--bg-light);
+  padding-bottom: var(--spacing-2xl);
+  width: 100%;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Título */
 .perfil-titulo {
-  background: #5c2d91;
-  padding: 14px 28px;
-  border-radius: 40px;
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 30px;
+  font-size: var(--font-size-2xl);
+  color: var(--primary-purple);
+  margin-bottom: var(--spacing-xl);
+  font-weight: 700;
+  text-align: center;
 }
 
-/* Card principal */
 .perfil-card {
-  background: #ffffff;
-  color: #222;
-  width: 350px;
-  padding: 28px;
-  border-radius: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
   text-align: center;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.20);
+  animation: slideUp 0.5s ease-out;
+  margin-top: var(--spacing-xl);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .avatar {
-  font-size: 70px;
-  margin-bottom: 12px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-lilac) 0%, var(--button-purple) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  margin: 0 auto var(--spacing-lg) auto;
+  box-shadow: var(--shadow-md);
+  border: 4px solid var(--white);
 }
 
 .perfil-card h2 {
-  font-size: 24px;
-  margin-bottom: 12px;
+  font-size: var(--font-size-xl);
+  color: var(--primary-purple);
+  margin-bottom: var(--spacing-lg);
   font-weight: 700;
 }
 
 .perfil-card p {
-  margin: 6px 0;
-  font-size: 16px;
+  font-size: var(--font-size-md);
+  color: var(--text-medium);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.8;
 }
 
-/* Botão logout */
+.perfil-card p strong {
+  color: var(--primary-purple);
+  font-weight: 600;
+}
+
 .logout-btn {
-  margin-top: 18px;
-  background: #ff5c5c;
-  color: #fff;
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: #ef4444;
+  color: var(--white);
   border: none;
-  padding: 12px 20px;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: 700;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: 600;
   cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
   width: 100%;
 }
 
 .logout-btn:hover {
-  opacity: 0.85;
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 480px) {
+  .perfil-card {
+    padding: var(--spacing-lg);
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 48px;
+  }
 }

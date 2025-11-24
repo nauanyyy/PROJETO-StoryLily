@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../componentes/Navbar";
 import "../styles/Dicas.css";
+import "../styles/PageHeader.css";
 
 export default function Dicas() {
   const [dicas, setDicas] = useState([]);
@@ -21,7 +23,9 @@ export default function Dicas() {
 
   return (
     <div className="dicas-container">
-      <h1 className="dicas-titulo">💡 Dicas de Leitura</h1>
+      <Navbar />
+      
+      {/* Header */}
 
       <div className="dicas-lista">
         {dicas.length === 0 && (

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../componentes/Navbar";
 import "../styles/Desejos.css";
+import "../styles/PageHeader.css";
 import { abrirLivroComNotificacao } from "../utils/leitor";
 
 
@@ -105,7 +107,14 @@ export default function Desejos() {
 
   return (
     <div className="desejos-container">
-      <h1 className="desejos-titulo">💜 Lista de Desejos</h1>
+      <Navbar />
+      
+      {/* Header */}
+      <div className="page-header">
+        <div className="page-header-content">
+          <h1 className="page-title">💜 Lista de Desejos</h1>
+        </div>
+      </div>
 
       {/* Formulário */}
       <form className="desejos-form" onSubmit={adicionar}>

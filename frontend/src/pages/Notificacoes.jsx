@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../componentes/Navbar";
 import "../styles/Notificacoes.css";
+import "../styles/PageHeader.css";
 
 export default function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState([]);
@@ -49,7 +51,14 @@ export default function Notificacoes() {
 
   return (
     <div className="notif-container">
-      <h1 className="notif-titulo">🔔 Minhas Notificações</h1>
+      <Navbar />
+      
+      {/* Header */}
+      <div className="page-header">
+        <div className="page-header-content">
+          <h1 className="page-title">🔔 Minhas Notificações</h1>
+        </div>
+      </div>
 
       <div className="notif-lista">
         {notificacoes.length === 0 && (

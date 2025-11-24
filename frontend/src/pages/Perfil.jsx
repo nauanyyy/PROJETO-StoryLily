@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import Navbar from "../componentes/Navbar";
 import "../styles/Perfil.css";
+import "../styles/PageHeader.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Perfil() {
@@ -40,7 +42,14 @@ export default function Perfil() {
 
   return (
     <div className="perfil-container">
-      <h1 className="perfil-titulo">👤 Meu Perfil</h1>
+      <Navbar />
+      
+      {/* Header */}
+      <div className="page-header">
+        <div className="page-header-content">
+          <h1 className="page-title">👤 Meu Perfil</h1>
+        </div>
+      </div>
 
       <div className="perfil-card">
         <div className="avatar">👤</div>

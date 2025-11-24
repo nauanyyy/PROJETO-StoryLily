@@ -57,7 +57,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           <div className="row">
             <label>Gênero</label>
             <select value={genero} onChange={(e) => setGenero(e.target.value)}>
-              <option value="">-- escolher --</option>
+              <option value="">Escolher</option>
               <option value="fantasia">Fantasia</option>
               <option value="ficcao">Ficção</option>
               <option value="romance">Romance</option>
@@ -92,7 +92,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           <div className="row">
             <label>Idioma</label>
             <select value={idioma} onChange={(e) => setIdioma(e.target.value)}>
-              <option value="">-- escolher --</option>
+              <option value=""> Escolher</option>
               <option value="pt">Português</option>
               <option value="en">Inglês</option>
               <option value="es">Espanhol</option>
@@ -104,7 +104,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           <div className="row">
             <label>Formato</label>
             <select value={formato} onChange={(e) => setFormato(e.target.value)}>
-              <option value="">-- escolher --</option>
+              <option value="">Escolher</option>
               <option value="ebook">eBook</option>
               <option value="hardcover">Capa dura</option>
               <option value="paperback">Brochura</option>

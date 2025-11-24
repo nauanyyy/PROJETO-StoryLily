@@ -1,4 +1,4 @@
-/* Overlay escurecido */
+/* ===================== Overlay escurecido ===================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -9,18 +9,18 @@
   z-index: 2000;
 }
 
-/* Modal principal */
+/* ===================== Modal principal ===================== */
 .filter-modal {
   width: 80%;
   max-width: 900px;
-  background: #5c2d91; /* roxo profundo do layout */
-  color: #f4e9ff;
+  background:  #9d93c9; /* roxo neutro */
+  color: #160c2c;
   border-radius: 12px;
   padding: 26px 30px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.5);
 }
 
-/* Cabeçalho */
+/* ===================== Cabeçalho ===================== */
 .modal-header {
   display: flex;
   align-items: center;
@@ -28,9 +28,9 @@
   position: relative;
   margin-bottom: 18px;
 }
+
 .modal-header h2 {
-  background: #cdb6ff;
-  color: #33103f;
+  color: #ffffff;
   padding: 12px 30px;
   border-radius: 40px;
   font-size: 22px;
@@ -45,12 +45,12 @@
   top: -6px;
   background: transparent;
   border: none;
-  color: #f4e9ff;
+  color: #000000;
   font-size: 20px;
   cursor: pointer;
 }
 
-/* corpo do modal - campos */
+/* ===================== Corpo do modal - campos ===================== */
 .modal-body {
   padding: 18px 10px;
   display: grid;
@@ -70,10 +70,10 @@
 .row label {
   font-weight: 700;
   font-size: 18px;
-  color: #f4e9ff;
+  color: #ffffff;
 }
 
-/* selects e inputs */
+/* inputs e selects */
 .row input,
 .row select {
   width: 100%;
@@ -81,18 +81,37 @@
   border-radius: 18px;
   border: none;
   outline: none;
-  background: #cdb6ff;
-  color: #33103f;
+  background: #fdfdff; /* fundo claro */
+  color: #000000; /* texto digitado preto */
   font-size: 15px;
+  appearance: none; /* remove seta padrão do select */
+  box-sizing: border-box;
 }
 
-/* placeholder cor */
+/* placeholder */
 .row input::placeholder {
-  color: #33103f8a;
+  color: #3d00528a; /* placeholder claro */
   font-style: italic;
 }
 
-/* footer com botões */
+/* select arrow personalizada */
+.row select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'><path fill='%23000' d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  color: #000000; /* texto selecionado preto */
+}
+
+/* foco nos inputs e selects */
+.row input:focus,
+.row select:focus {
+  border: 2px solid #8a5cff; /* roxo neutro */
+  box-shadow: none; /* sem luminosidade */
+  color: #000000; /* mantém o texto preto */
+}
+
+/* ===================== Footer com botões ===================== */
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -100,29 +119,49 @@
   margin-top: 18px;
 }
 
+/* botão aplicar filtro - igual ao login */
 .btn-primary {
-  background: #c17aff;
-  color: #fff;
+  background-color: #540076;
+  color: white !important;
   border: none;
-  padding: 10px 18px;
-  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 20px;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 700;
+  transition: 0.2s ease;
 }
 
+.btn-primary:hover {
+  background-color: #3b0054;
+  color: white !important; /* garante que o texto não muda */
+}
+
+/* botão limpar - igual ao register */
 .btn-secondary {
-  background: transparent;
-  color: #f4e9ff;
-  border: 1px solid #e9d5ff55;
-  padding: 10px 18px;
-  border-radius: 12px;
+  background-color: #d7e1f3;
+  color: #540076 !important;
+  border: none;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 20px;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
-/* responsividade */
+.btn-secondary:hover {
+  background-color: #d2ddf5;
+  color: #540076 !important; /* garante que o texto não muda */
+}
+
+/* ===================== Responsividade ===================== */
 @media (max-width: 700px) {
   .modal-body {
     grid-template-columns: 1fr;
   }
-  .filter-modal { width: 94%; padding: 18px; }
+  .filter-modal { 
+    width: 94%; 
+    padding: 18px; 
+  }
 }
