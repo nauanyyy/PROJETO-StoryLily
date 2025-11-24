@@ -58,8 +58,6 @@ export default function Perfil() {
 
         <p><strong>Email:</strong> {user.email}</p>
 
-        {user.id && <p><strong>ID:</strong> {user.id}</p>}
-
         {user.created_at && (
           <p>
             <strong>Criado em:</strong> {new Date(user.created_at).toLocaleString()}

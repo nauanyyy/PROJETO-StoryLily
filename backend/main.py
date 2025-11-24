@@ -8,7 +8,6 @@ from models import (
     LivroFavorito,
     LivroRecomendado,
     Notificacao,
-    LivroDesejo,
     Usuario,
 )
 from schemas import (
@@ -16,7 +15,6 @@ from schemas import (
     LivroFavoritoSchema,
     LivroRecomendadoSchema,
     NotificacaoSchema,
-    LivroDesejoSchema,
 )
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
@@ -161,57 +159,6 @@ def info_buscar_livros():
     }
 
 
-# --- Em Leitura ---
-@app.get("/em-leitura", response_model=list[LivroLidoSchema])
-def listar_em_leitura(session: Session = Depends(get_session)):
-    return session.exec(select(LivroLido)).all()
-
-
-@app.post("/em-leitura", response_model=LivroLidoSchema)
-def adicionar_em_leitura(livro: LivroLido, session: Session = Depends(get_session)):
-    session.add(livro)
-    session.commit()
-    session.refresh(livro)
-
-    notif = Notificacao(mensagem=f"Você adicionou '{livro.titulo}' à sua lista de leitura.")
-    session.add(notif)
-    session.commit()
-    return livro
-
-
-@app.put("/em-leitura/{titulo}", response_model=LivroLidoSchema)
-def atualizar_em_leitura(titulo: str, dados: LivroLido, session: Session = Depends(get_session)):
-    stmt = select(LivroLido).where(LivroLido.titulo == titulo)
-    livro = session.exec(stmt).first()
-    if not livro:
-        raise HTTPException(status_code=404, detail="Livro não encontrado na lista de leitura")
-
-    livro.titulo = dados.titulo or livro.titulo
-    livro.autor = dados.autor or livro.autor
-    livro.ano = dados.ano or livro.ano
-    livro.capa_url = dados.capa_url or livro.capa_url
-
-    session.add(livro)
-    session.commit()
-    session.refresh(livro)
-
-    notif = Notificacao(mensagem=f"O livro '{livro.titulo}' foi atualizado na sua lista de leitura.")
-    session.add(notif)
-    session.commit()
-    return livro
-
-
-@app.delete("/em-leitura/{titulo}")
-def deletar_em_leitura(titulo: str, session: Session = Depends(get_session)):
-    stmt = select(LivroLido).where(LivroLido.titulo == titulo)
-    livro = session.exec(stmt).first()
-    if not livro:
-        raise HTTPException(status_code=404, detail="Livro não encontrado na lista de leitura")
-    session.delete(livro)
-    session.commit()
-    return {"mensagem": f"Livro '{titulo}' removido da lista de leitura."}
-
-
 # --- Lidos ---
 @app.get("/lidos", response_model=list[LivroLidoSchema])
 def listar_lidos(session: Session = Depends(get_session)):
@@ -313,34 +260,6 @@ def deletar_favorito(titulo: str, session: Session = Depends(get_session)):
     session.commit()
     return {"mensagem": f"Livro '{titulo}' removido dos favoritos."}
 
-
-# --- Desejos ---
-@app.get("/desejos", response_model=list[LivroDesejoSchema])
-def listar_desejos(session: Session = Depends(get_session)):
-    return session.exec(select(LivroDesejo)).all()
-
-
-@app.post("/desejos", response_model=LivroDesejoSchema)
-def adicionar_desejo(livro: LivroDesejo, session: Session = Depends(get_session)):
-    session.add(livro)
-    session.commit()
-    session.refresh(livro)
-
-    notif = Notificacao(mensagem=f"Você adicionou '{livro.titulo}' à sua lista de desejos 📌")
-    session.add(notif)
-    session.commit()
-    return livro
-
-
-@app.delete("/desejos/{titulo}")
-def deletar_desejo(titulo: str, session: Session = Depends(get_session)):
-    stmt = select(LivroDesejo).where(LivroDesejo.titulo == titulo)
-    livro = session.exec(stmt).first()
-    if not livro:
-        raise HTTPException(status_code=404, detail="Livro não encontrado na lista de desejos")
-    session.delete(livro)
-    session.commit()
-    return {"mensagem": f"Livro '{titulo}' removido da lista de desejos."}
 
 
 # --- Dicas ---

@@ -114,23 +114,6 @@
   color: white;
 }
 
-/* Botão Filtrar */
-.btn-secondary {
-  background-color: #9494ff;
-  color: white;
-  border: none;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-md);
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.25s ease, color 0.25s ease;
-}
-
-.btn-secondary:hover {
-  background-color: #c5c5ff;
-  color: white;
-}
 
 /* Garantir que flex não sobrescreva cores */
 .search-buttons .btn-primary,

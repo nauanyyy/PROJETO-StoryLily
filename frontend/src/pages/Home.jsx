@@ -3,9 +3,9 @@ import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import Navbar from "../componentes/Navbar";
-import fireImg from "../assets/fire.png"; // imagem do fogo
-import lupaImg from "../assets/lupa.png"; // imagem da lupa
-import livroImg from "../assets/livro.png"; // placeholder livro
+import fireImg from "../assets/fire.png";
+import lupaImg from "../assets/lupa.png";
+import livroImg from "../assets/livro.png";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -27,14 +27,15 @@ export default function Home() {
   }, []);
 
   const handleBusca = () => {
-    if (busca.trim() !== "") navigate(`/biblioteca?q=${busca}`);
+    if (busca.trim() !== "") {
+      navigate(`/biblioteca?q=${encodeURIComponent(busca)}`);
+    }
   };
 
   return (
     <div className="home-root">
       <Navbar />
 
-      {/* MAIN */}
       <div className="home-main">
         {/* BUSCA */}
         <div className="search-section">
@@ -54,7 +55,11 @@ export default function Home() {
               src={lupaImg}
               alt="Lupa"
               className="input-lupa"
+              onClick={handleBusca}
             />
+            <button className="btn-home-buscar" onClick={handleBusca}>
+              Buscar
+            </button>
           </div>
         </div>
 
@@ -65,7 +70,6 @@ export default function Home() {
         </h2>
 
         <div className="carousel-wrap">
-          {/* SETA ESQUERDA */}
           <button
             className="arrow-btn left"
             onClick={() => {
@@ -79,9 +83,7 @@ export default function Home() {
           </button>
 
           <div className="carousel">
-            {topLivros.length === 0 && (
-              <p className="carregando">Carregando...</p>
-            )}
+            {topLivros.length === 0 && <p className="carregando">Carregando...</p>}
 
             {topLivros.map((livro, i) => (
               <div className="top-card" key={i}>
@@ -106,7 +108,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* SETA DIREITA */}
           <button
             className="arrow-btn right"
             onClick={() => {
@@ -121,7 +122,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* FOOTER */}
       <div className="home-footer">
         © 2025 Biblioteca Virtual – Todos os direitos reservados.
       </div>

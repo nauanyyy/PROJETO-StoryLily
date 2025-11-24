@@ -7,7 +7,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Biblioteca from "./pages/Biblioteca";
-import EmLeitura from "./pages/EmLeitura";
 import Dicas from "./pages/Dicas";
 import Favoritos from "./pages/Favoritos";
 import Notificacoes from "./pages/Notificacoes";
@@ -37,9 +36,6 @@ function App() {
 
         {/* Biblioteca */}
         <Route path="/biblioteca" element={<Biblioteca />} />
-
-        {/* Em Leitura */}
-        <Route path="/em-leitura" element={<EmLeitura />} />
 
         {/* Dicas */}
         <Route path="/dicas" element={<Dicas />} />

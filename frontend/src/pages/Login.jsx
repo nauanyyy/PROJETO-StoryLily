@@ -23,7 +23,7 @@ export default function Login() {
       localStorage.setItem("token", response.data.access_token);
 
       setMensagem("Login realizado!");
-      setTimeout(() => navigate("/biblioteca"), 1000);
+      setTimeout(() => navigate("/home"), 1000);
 
     } catch (err) {
       setMensagem("Conta não encontrada. Crie uma conta para continuar.");

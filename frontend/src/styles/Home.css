@@ -1,6 +1,4 @@
 /* ===================== HOME PAGE ===================== */
-/* Usa variáveis do sistema de design Global.css */
-
 .home-root {
   width: 100%;
   min-height: 100vh;
@@ -226,10 +224,14 @@
   position: relative;
   width: 100%;
   margin-top: var(--spacing-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .search-form input {
-  width: 100%;
+  flex: 1;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
   border-radius: var(--radius-lg);
   border: 2px solid var(--glass-border);
@@ -247,12 +249,28 @@
 
 .input-lupa {
   position: absolute;
-  left: 0.8rem;
+  left: 10px;
   top: 50%;
   transform: translateY(-50%);
   width: 25px;
   height: 20px;
-  pointer-events: none;
+  cursor: pointer;
+}
+
+/* BOTÃO BUSCAR */
+.btn-home-buscar {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: #540076;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-home-buscar:hover {
+  background-color: #3b004f;
 }
 
 /* ===================== CAROUSEL ===================== */
@@ -428,5 +446,14 @@
 
   .home-main {
     padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .search-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-home-buscar {
+    width: 100%;
   }
 }

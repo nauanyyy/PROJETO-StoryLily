@@ -40,11 +40,9 @@ export default function Navbar() {
 
           {/* Botões desktop */}
           <div className="nav-buttons desktop-only">
-            <button onClick={() => navigate("/biblioteca")}>Biblioteca</button>
-            <button onClick={() => navigate("/em-leitura")}>Em Leitura</button>
-            <button onClick={() => navigate("/dicas")}>Dicas</button>
             <button onClick={() => navigate("/favoritos")}>Favoritos</button>
             <button onClick={() => navigate("/lidos")}>Lidos</button>
+            <button onClick={() => navigate("/dicas")}>Dicas</button>
           </div>
 
           {/* Ícones desktop */}
@@ -80,13 +78,12 @@ export default function Navbar() {
           <div className="menu-panel" ref={menuRef}>
             <h2>Menu</h2>
 
-            <button onClick={() => { navigate("/biblioteca"); setMenuOpen(false); }}>Biblioteca</button>
-            <button onClick={() => { navigate("/em-leitura"); setMenuOpen(false); }}>Em Leitura</button>
-            <button onClick={() => { navigate("/dicas"); setMenuOpen(false); }}>Dicas</button>
             <button onClick={() => { navigate("/favoritos"); setMenuOpen(false); }}>Favoritos</button>
             <button onClick={() => { navigate("/lidos"); setMenuOpen(false); }}>Lidos</button>
+            <button onClick={() => { navigate("/dicas"); setMenuOpen(false); }}>Dicas</button>
             <button onClick={() => { navigate("/notificacoes"); setMenuOpen(false); }}>Notificações</button>
             <button onClick={() => { navigate("/perfil"); setMenuOpen(false); }}>Perfil</button>
+
 
             <button className="menu-fechar" onClick={() => setMenuOpen(false)}>
               Fechar
