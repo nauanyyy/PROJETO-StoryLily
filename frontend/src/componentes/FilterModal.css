@@ -13,7 +13,7 @@
 .filter-modal {
   width: 80%;
   max-width: 900px;
-  background:  #9d93c9; /* roxo neutro */
+  background:  #978ace; /* roxo neutro */
   color: #160c2c;
   border-radius: 12px;
   padding: 26px 30px;
@@ -30,7 +30,7 @@
 }
 
 .modal-header h2 {
-  color: #ffffff;
+  color:  #3d156b;
   padding: 12px 30px;
   border-radius: 40px;
   font-size: 22px;
@@ -70,7 +70,7 @@
 .row label {
   font-weight: 700;
   font-size: 18px;
-  color: #ffffff;
+  color: #4d3e5c;
 }
 
 /* inputs e selects */
@@ -118,11 +118,10 @@
   gap: 12px;
   margin-top: 18px;
 }
-
-/* botão aplicar filtro - igual ao login */
+/* botão aplicar filtro */
 .btn-primary {
-  background-color: #540076;
-  color: white !important;
+  background-color: #540076; /* roxo escuro */
+  color: #ffffff !important;
   border: none;
   padding: 12px 28px;
   font-size: 1rem;
@@ -133,14 +132,14 @@
 }
 
 .btn-primary:hover {
-  background-color: #3b0054;
-  color: white !important; /* garante que o texto não muda */
+  background-color: #a200e7; /* hover roxo mais escuro */
+  color: #ffffff !important;
 }
 
-/* botão limpar - igual ao register */
+/* botão limpar */
 .btn-secondary {
-  background-color: #d7e1f3;
-  color: #540076 !important;
+  background-color: #2f00ff; /* lilás vivo, alto contraste com fundo */
+  color: #ffffff !important;
   border: none;
   padding: 12px 28px;
   font-size: 1rem;
@@ -151,9 +150,10 @@
 }
 
 .btn-secondary:hover {
-  background-color: #d2ddf5;
-  color: #540076 !important; /* garante que o texto não muda */
+  background-color: #5400d4; /* hover lilás escuro */
+  color: #ffffff !important;
 }
+
 
 /* ===================== Responsividade ===================== */
 @media (max-width: 700px) {

@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react"; 
+import { useState } from "react"; 
 import api from "../api/api";
 import FilterModal from "../componentes/FilterModal";
 import { abrirLivroComNotificacao } from "../utils/leitor";
 import Navbar from "../componentes/Navbar";
 import "../styles/Biblioteca.css";
-import "../styles/PageHeader.css";
 import { useNavigate } from "react-router-dom";
-import lupa from "../assets/lupa.png"; // Import da lupa
+import lupa from "../assets/lupa.png";
+import livroImg from "../assets/livro.png"; // placeholder livro
+import estrela from "../assets/estrela.png"; // substitui ❤️
+import adicionar from "../assets/adicionar.png"; // substitui 📚
+import pdf from "../assets/pdf.png"; // substitui 📖
+import lido from "../assets/lido.png"; // substitui ✅
 
 export default function Biblioteca() {
   const [livros, setLivros] = useState([]);
@@ -31,23 +35,10 @@ export default function Biblioteca() {
     }
   };
 
-  useEffect(() => {
-    buscarLivros();
-  }, [filtros]);
-
   const adicionarFavorito = async (livro) => {
     try {
       await api.post("/favoritos", livro);
       alert("Adicionado aos favoritos!");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const removerFavorito = async (titulo) => {
-    try {
-      await api.delete(`/favoritos/${titulo}`);
-      alert("Removido dos favoritos!");
     } catch (e) {
       console.log(e);
     }
@@ -62,28 +53,10 @@ export default function Biblioteca() {
     }
   };
 
-  const removerEmLeitura = async (titulo) => {
-    try {
-      await api.delete(`/em-leitura/${titulo}`);
-      alert("Removido da lista de leitura.");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const marcarComoLido = async (livro) => {
     try {
       await api.post("/lidos", livro);
       alert("Livro marcado como LIDO!");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const removerDosLidos = async (titulo) => {
-    try {
-      await api.delete(`/lidos/${titulo}`);
-      alert("Removido dos lidos.");
     } catch (e) {
       console.log(e);
     }
@@ -98,20 +71,11 @@ export default function Biblioteca() {
     }
   };
 
-  const removerDesejo = async (titulo) => {
-    try {
-      await api.delete(`/desejos/${titulo}`);
-      alert("Removido da lista de desejos!");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <div className="biblioteca-page">
       <Navbar />
       
-      {/* Search Bar */}
+      {/* Search Section */}
       <div className="biblioteca-search-section">
         <div className="search-container">
           <div className="search-input-wrapper">
@@ -126,6 +90,7 @@ export default function Biblioteca() {
               }}
             />
           </div>
+
           <div className="search-buttons">
             <button className="btn-primary" onClick={buscarLivros}>
               Buscar
@@ -163,7 +128,11 @@ export default function Biblioteca() {
                       className="livro-image"
                     />
                   ) : (
-                    <div className="livro-placeholder">📘</div>
+                    <img
+                      src={livroImg}      
+                      alt="Livro placeholder"
+                      className="livro-placeholder"
+                    />
                   )}
                 </div>
 
@@ -179,35 +148,28 @@ export default function Biblioteca() {
                     onClick={() => adicionarFavorito(livro)}
                     title="Adicionar aos favoritos"
                   >
-                    ❤️
+                    <img src={estrela} alt="Favorito" className="action-icon" />
                   </button>
                   <button
                     className="action-btn leitura"
                     onClick={() => adicionarEmLeitura(livro)}
                     title="Adicionar à leitura"
                   >
-                    📚
+                    <img src={adicionar} alt="Adicionar à leitura" className="action-icon" />
                   </button>
                   <button
                     className="action-btn ler"
                     onClick={() => abrirLivroComNotificacao(livro)}
                     title="Ler livro"
                   >
-                    📖
+                    <img src={pdf} alt="Ler livro" className="action-icon" />
                   </button>
                   <button
                     className="action-btn lido"
                     onClick={() => marcarComoLido(livro)}
                     title="Marcar como lido"
                   >
-                    ✅
-                  </button>
-                  <button
-                    className="action-btn desejo"
-                    onClick={() => adicionarDesejo(livro)}
-                    title="Adicionar aos desejos"
-                  >
-                    ⭐
+                    <img src={lido} alt="Lido" className="action-icon" />
                   </button>
                 </div>
               </div>

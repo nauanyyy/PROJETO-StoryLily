@@ -5,7 +5,6 @@ import "../styles/Favoritos.css";
 import "../styles/PageHeader.css";
 import { abrirLivroComNotificacao } from "../utils/leitor";
 
-
 export default function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);
   const [novoFav, setNovoFav] = useState({
@@ -22,7 +21,6 @@ export default function Favoritos() {
       const res = await api.get("/favoritos", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-
       setFavoritos(res.data || []);
     } catch (err) {
       console.error("Erro ao carregar favoritos:", err);
@@ -36,14 +34,11 @@ export default function Favoritos() {
   // Adicionar favorito
   const adicionar = async (e) => {
     e.preventDefault();
-
     if (!novoFav.titulo.trim()) return alert("Digite um título!");
-
     try {
       await api.post("/favoritos", novoFav, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-
       setNovoFav({ titulo: "", autor: "", capa_url: "" });
       carregar();
     } catch (err) {
@@ -54,12 +49,10 @@ export default function Favoritos() {
   // Remover favorito
   const deletar = async (titulo) => {
     if (!window.confirm(`Remover "${titulo}" dos favoritos?`)) return;
-
     try {
       await api.delete(`/favoritos/${titulo}`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-
       carregar();
     } catch (err) {
       console.error("Erro ao deletar:", err);
@@ -106,14 +99,14 @@ export default function Favoritos() {
     }
   };
 
-
-
-
   return (
     <div className="fav-container">
       <Navbar />
-      
-      {/* Header */}
+
+      {/* Título da página */}
+      <h2 className="fav-subtitulo">
+        Livros marcados como favoritos
+      </h2>
 
       {/* Formulário */}
       <form className="fav-form" onSubmit={adicionar}>
@@ -132,7 +125,6 @@ export default function Favoritos() {
           value={novoFav.capa_url}
           onChange={(e) => setNovoFav({ ...novoFav, capa_url: e.target.value })}
         />
-
         <button type="submit">Adicionar</button>
       </form>
 
@@ -152,22 +144,12 @@ export default function Favoritos() {
             {livro.autor && <p>{livro.autor}</p>}
 
             <div className="acoes">
-
               <button onClick={() => abrirLivroComNotificacao(livro)}>📖 Ler</button>
-              
-              {/* AÇÕES NOVAS */}
-              <button onClick={() => adicionarEmLeitura(livro)}>📖 Ler</button>
-              <button onClick={() => removerEmLeitura(livro.titulo)}>❌ Remover Ler</button>
-
+              <button onClick={() => adicionarEmLeitura(livro)}>📚 Adicionar à Leitura</button>
+              <button onClick={() => removerEmLeitura(livro.titulo)}>❌ Remover da Leitura</button>
               <button onClick={() => marcarComoLido(livro)}>✅ Lido</button>
-              <button onClick={() => removerDosLidos(livro.titulo)}>❌ Remover Lido</button>
-
-
-              {/* 🔥 NOVO BOTÃO QUE VOCÊ PEDIU 🔥 */}
-              <button
-                className="btn-remove-fav"
-                onClick={() => deletar(livro.titulo)}
-              >
+              <button onClick={() => removerDosLidos(livro.titulo)}>❌ Remover dos Lidos</button>
+              <button className="btn-remove-fav" onClick={() => deletar(livro.titulo)}>
                 ❌ Remover dos Favoritos
               </button>
             </div>

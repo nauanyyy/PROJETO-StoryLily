@@ -56,7 +56,7 @@ export default function Notificacoes() {
       {/* Header */}
       <div className="page-header">
         <div className="page-header-content">
-          <h1 className="page-title">🔔 Minhas Notificações</h1>
+          <h1 className="page-title"> Minhas Notificações</h1>
         </div>
       </div>
 

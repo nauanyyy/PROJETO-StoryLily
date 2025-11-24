@@ -1,3 +1,4 @@
+/* ===================== NAVBAR ===================== */
 .navbar-top { 
   width: 100%;
   background: #d7ddec;
@@ -31,6 +32,7 @@
   filter: none !important;
 }
 
+/* ===================== BOTÕES DESKTOP ===================== */
 .nav-buttons.desktop-only {
   display: flex;
   gap: var(--spacing-sm);
@@ -54,7 +56,7 @@
 }
 
 .nav-buttons.desktop-only button:hover {
-  background: #d2ddf5;
+  background: #e9effc;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -63,17 +65,22 @@
   outline: none;
 }
 
+/* ===================== ÍCONES DESKTOP ===================== */
 .nav-icons.desktop-only {
   display: flex;
   gap: var(--spacing-sm);
   align-items: center;
 }
 
+/* Sino atualizado levemente maior */
 .sino-img {
-  width: 32px;
-  height: 32px;
+  width: 40px;          /* aumenta o tamanho */
+  height: 40px;
   cursor: pointer;
   object-fit: cover;
+  position: relative;   /* permite mover com top/right */
+  top: 4px;             /* desce um pouquinho */
+  right: 6px;           /* anda um pouco pra esquerda */
 }
 
 .perfil-img {
@@ -82,6 +89,8 @@
   border-radius: 50%;
   cursor: pointer;
   object-fit: cover;
+  position: relative;
+  right: 6px;           /* anda pra esquerda junto com o sino */
 }
 
 .notif-wrapper {
@@ -100,6 +109,7 @@
   border: 2px solid var(--white);
 }
 
+/* ===================== MOBILE ===================== */
 .mobile-only {
   display: none;
 }
@@ -118,6 +128,7 @@
   background: var(--glass-bg-strong);
 }
 
+/* ===================== MOBILE MENU ===================== */
 .menu-overlay {
   position: fixed;
   inset: 0;
@@ -184,6 +195,7 @@
   margin-top: var(--spacing-lg);
 }
 
+/* ===================== MEDIA QUERIES ===================== */
 @media (max-width: 768px) {
   .nav-buttons.desktop-only,
   .nav-icons.desktop-only {

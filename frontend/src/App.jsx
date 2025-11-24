@@ -12,7 +12,6 @@ import Dicas from "./pages/Dicas";
 import Favoritos from "./pages/Favoritos";
 import Notificacoes from "./pages/Notificacoes";
 import Perfil from "./pages/Perfil";
-import Desejos from "./pages/Desejos";
 import Lidos from "./pages/Lidos";
 
 // ESTILOS GLOBAIS
@@ -53,9 +52,6 @@ function App() {
 
         {/* Perfil */}
         <Route path="/perfil" element={<Perfil />} />
-
-        {/* Desejos */}
-        <Route path="/desejos" element={<Desejos />} />
 
         {/* Lidos */}
         <Route path="/lidos" element={<Lidos />} />

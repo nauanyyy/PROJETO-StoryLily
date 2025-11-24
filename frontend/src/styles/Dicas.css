@@ -1,3 +1,5 @@
+/* ===================== Dicas.css ===================== */
+
 /* Container geral */
 .dicas-container {
   min-height: 100vh;
@@ -7,28 +9,28 @@
   margin: 0;
 }
 
-/* Título */
-.dicas-titulo {
+/* Subtítulo */
+.dicas-subtitulo {
   text-align: center;
-  background: #5c2d91;
-  padding: 14px 28px;
-  margin-bottom: 28px;
-  border-radius: 40px;
-  width: fit-content;
+  color: #5c2d91; /* roxo */
+  font-size: 26px; /* levemente maior */
+  font-weight: 600;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
-  font-size: 26px;
-  font-weight: 800;
+  line-height: 1.4;
 }
 
-/* Lista */
+/* Container geral das dicas */
 .dicas-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  max-width: 700px;
-  margin: auto;
-  padding: var(--spacing-xl) var(--spacing-lg) 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto 40px auto;
+  padding: 0 24px 40px 24px;
 }
 
 /* Card das dicas */
@@ -37,30 +39,69 @@
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   color: var(--text-dark);
-  padding: var(--spacing-lg) var(--spacing-xl);
+  padding: 36px; /* um pouco mais de padding */
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  font-size: var(--font-size-md);
+  gap: 28px; /* aumenta o espaço entre imagem e texto */
+  font-size: 1.1rem; /* aumenta a fonte do texto */
   box-shadow: var(--shadow-sm);
   font-weight: 600;
+  min-height: 160px;
 }
 
+/* Imagem dentro do card */
 .dica-card .emoji {
-  font-size: 34px;
+  width: 60px;   /* maior que antes */
+  height: 60px;
+  object-fit: contain;
 }
 
 /* Mensagem vazia */
 .vazio {
-  margin-top: var(--spacing-lg);
+  margin-top: 40px;
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 24px;
   border-radius: var(--radius-md);
   text-align: center;
   font-weight: 600;
-  font-size: var(--font-size-md);
+  font-size: 1.1rem; /* aumentada */
   color: var(--text-medium);
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .dicas-lista {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dicas-lista {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dicas-lista {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 16px 24px 16px;
+  }
+
+  .dica-card {
+    padding: 22px;
+    min-height: auto;
+  }
+
+  .dica-card .emoji {
+    width: 50px;
+    height: 50px;
+  }
 }

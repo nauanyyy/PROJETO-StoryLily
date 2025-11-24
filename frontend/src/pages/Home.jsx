@@ -5,6 +5,7 @@ import api from "../api/api";
 import Navbar from "../componentes/Navbar";
 import fireImg from "../assets/fire.png"; // imagem do fogo
 import lupaImg from "../assets/lupa.png"; // imagem da lupa
+import livroImg from "../assets/livro.png"; // placeholder livro
 
 export default function Home() {
   const navigate = useNavigate();
@@ -84,13 +85,23 @@ export default function Home() {
 
             {topLivros.map((livro, i) => (
               <div className="top-card" key={i}>
-                {livro.capa_url ? (
-                  <img src={livro.capa_url} alt={livro.titulo} />
-                ) : (
-                  <div className="no-img">📘</div>
-                )}
+                <div className="top-card-image">
+                  {livro.capa_url ? (
+                    <img
+                      src={livro.capa_url}
+                      alt={livro.titulo}
+                      className="top-card-img"
+                    />
+                  ) : (
+                    <img
+                      src={livroImg}
+                      alt="Livro placeholder"
+                      className="top-card-placeholder"
+                    />
+                  )}
+                </div>
                 <h3>{livro.titulo}</h3>
-                <p>{livro.autor}</p>
+                <p>{livro.autor || "Autor desconhecido"}</p>
               </div>
             ))}
           </div>

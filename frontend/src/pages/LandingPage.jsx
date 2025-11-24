@@ -38,7 +38,7 @@ export default function LandingPage() {
 
           {/* BOTÃO GRANDE "ENTRAR" */}
           <button className="btn-big-enter" onClick={() => navigate("/register")}>
-            Entrar
+            Cadastre-se
           </button>
         </div>
 

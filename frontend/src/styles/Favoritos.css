@@ -15,6 +15,20 @@
   font-weight: 700;
 }
 
+/* Subtítulo da página de favoritos */
+.fav-subtitulo {
+  text-align: center;
+  color: var(--primary-purple); /* mantém o tema roxo */
+  font-size: 26px; /* tamanho levemente maior */
+  font-weight: 600;
+  margin-top: 40px;   /* um pouco mais para cima */
+  margin-bottom: 20px; /* pequeno espaço para o conteúdo abaixo */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.4;
+}
+
 /* ===================== FORM ===================== */
 .fav-form {
   display: flex;
@@ -71,7 +85,7 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: var(--spacing-lg);
   max-width: 1300px;
-  margin: 0 auto;
+  margin: 80px auto 0 auto; /* antes 40px, agora 80px */
   padding: 0 var(--spacing-lg);
 }
 

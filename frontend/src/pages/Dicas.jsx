@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 import api from "../api/api";
 import Navbar from "../componentes/Navbar";
 import "../styles/Dicas.css";
 import "../styles/PageHeader.css";
+
+// Importando a imagem
+import LivroImg from "../assets/1.png";
 
 export default function Dicas() {
   const [dicas, setDicas] = useState([]);
@@ -25,7 +28,10 @@ export default function Dicas() {
     <div className="dicas-container">
       <Navbar />
       
-      {/* Header */}
+      {/* Título descritivo */}
+      <h2 className="dicas-subtitulo">
+        Aqui você encontra dicas rápidas para as dúvidas mais frequentes!
+      </h2>
 
       <div className="dicas-lista">
         {dicas.length === 0 && (
@@ -34,7 +40,8 @@ export default function Dicas() {
 
         {dicas.map((dica, index) => (
           <div className="dica-card" key={index}>
-            <span className="emoji">📘</span>
+            {/* Substituindo emoji por imagem */}
+            <img src={LivroImg} alt="Livro" className="emoji" />
             <p>{dica}</p>
           </div>
         ))}
