@@ -1,0 +1,123 @@
+/* Container geral */
+.dicas-container {
+  min-height: 100vh;
+  background: #f9f9fb; /* fundo claro */
+  padding-bottom: 2rem;
+  width: 100%;
+  margin: 0;
+}
+
+/* HERO */
+.dicas-hero {
+  text-align: center;
+  padding: 15px 20px 40px;
+  margin-bottom: 40px;
+}
+
+.dicas-hero h1 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-family: 'Poppins', sans-serif;
+  color: #540076;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.dicas-hero p {
+  color: #6a5a8f;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+/* BOTÕES DAS CATEGORIAS */
+.categoria-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.categoria-btn {
+  background: white;
+  border: 1px solid #d3c3ff;
+  padding: 5px 12px;
+  border-radius: 22px;
+  color: var(--primary-purple);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.categoria-btn.active,
+.categoria-btn:hover {
+  background: var(--primary-purple);
+  color: white;
+  border-color: var(--primary-purple);
+}
+
+/* LISTA DE DICAS */
+.dicas-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 36px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* CARD */
+.dica-card {
+  display: flex;
+  gap: 20px;
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid #e7dbff;
+  box-shadow: 0 4px 12px rgba(120, 74, 180, 0.15);
+  transition: 0.25s;
+}
+
+.dica-card:hover {
+  transform: translateY(-6px);
+}
+
+/* IMAGEM */
+.emoji {
+  width: 80px;
+  height: 80px;
+}
+
+/* TEXTO INTERNO */
+.dica-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dica-titulo {
+  color: var(--primary-purple);
+  font-size: 1.25rem;
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+.dica-texto {
+  color: #4d3d62;
+  font-size: 1rem;
+  padding-bottom: 10px;
+}
+.dica-tag {
+  background: #efe8ff;
+  padding: 4px 10px; /* padding menor (antes 6px 14px) */
+  width: 200px;      /* 🔥 tamanho padronizado */
+  text-align: center;/* centraliza o texto */
+  border-radius: 10px;
+  color: var(--primary-purple);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap; /* evita quebrar linha */
+}

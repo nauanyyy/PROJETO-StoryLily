@@ -1,0 +1,45 @@
+/* ===================== PAGE HEADER - REUTILIZÁVEL ===================== */
+.page-header {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: var(--spacing-lg) 0;
+  box-shadow: var(--shadow-sm);
+  width: 100vw;
+  margin: 0;
+  position: relative;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+.page-header-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.page-title {
+  font-size: var(--font-size-2xl);
+  color: var(--primary-purple);
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .page-header-content {
+    padding: 0 var(--spacing-md);
+  }
+
+  .page-title {
+    font-size: var(--font-size-xl);
+  }
+}
+

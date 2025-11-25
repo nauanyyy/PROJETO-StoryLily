@@ -1,0 +1,417 @@
+/* ===================== BIBLIOTECA PAGE ===================== */
+.biblioteca-page {
+  min-height: 100vh;
+  background: var(--bg-light);
+  padding-bottom: var(--spacing-2xl);
+}
+
+/* ===================== HEADER ===================== */
+.biblioteca-title {
+  font-size: var(--font-size-2xl);
+  color: var(--primary-purple);
+  margin: 0;
+  font-weight: 700;
+}
+
+.biblioteca-header-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.btn-icon {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background: var(--glass-bg-strong);
+}
+
+/* ===================== SEARCH SECTION ===================== */
+.biblioteca-search-section {
+  background: var(--white);
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid var(--glass-border);
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.search-container {
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 300px;
+}
+
+.search-input-wrapper .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  font-size: var(--font-size-md);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  border-color: #b799e3;
+  box-shadow: none;
+  outline: none;
+}
+
+/* ------------------ BOTÕES ------------------ */
+.search-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.btn-primary {
+  background-color: #540076;
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.btn-primary:hover {
+  background-color: #3b0054;
+  color: white;
+}
+
+/* Garantir que flex não sobrescreva cores */
+.search-buttons .btn-primary,
+.search-buttons .btn-secondary {
+  flex: 1;
+}
+
+/* ===================== CONTENT ===================== */
+.biblioteca-content {
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  box-sizing: border-box;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--text-medium);
+  font-size: var(--font-size-lg);
+}
+
+/* ===================== LIVROS GRID ===================== */
+.livros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.livro-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.livro-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-lilac);
+}
+
+.livro-image-container {
+  width: 100%;
+  aspect-ratio: 2/3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #f1f1f1;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.livro-image {
+  width: 110%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.livro-placeholder {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+}
+
+.livro-info {
+  flex: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.livro-titulo {
+  font-size: var(--font-size-md);
+  color: var(--primary-purple);
+  margin: 0 0 var(--spacing-xs) 0;
+  font-weight: 600;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.livro-autor {
+  font-size: var(--font-size-sm);
+  color: var(--text-medium);
+  margin: 0 0 var(--spacing-xs) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.livro-ano {
+  font-size: var(--font-size-xs);
+  color: var(--text-medium);
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* ===================== ACTIONS ===================== */
+.livro-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--glass-border);
+}
+
+.action-btn {
+  width: 45px;
+  height: 45px;
+  padding: 6px;
+  background: #d7ddec;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn.favorito:hover { background: #f7ffb1; }
+.action-btn.ler:hover      { background: var(--button-purple); }
+.action-btn.lido:hover     { background: #afe4c9; }
+
+.action-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .biblioteca-header-content {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .search-buttons {
+    width: 100%;
+  }
+
+  .search-buttons .btn-primary,
+  .search-buttons .btn-secondary {
+    flex: 1;
+  }
+
+  .livros-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .livros-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .livro-actions {
+    gap: var(--spacing-xs);
+  }
+
+  .action-btn {
+    min-width: 35px;
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ===================== MODAL DO LIVRO ===================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 520px;
+  padding: 24px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+  animation: modalShow 0.25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes modalShow {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  background: #540076;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  float: right;
+}
+
+.modal-close:hover {
+  background: #3b0054;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-capa {
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 16px auto;
+}
+
+.modal-body h2 {
+  font-size: 22px;
+  color: #540076;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.modal-info {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.modal-info strong {
+  color: #540076;
+}
+
+/* ===================== BOTÕES DO MODAL ===================== */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.modal-actions button {
+  background-color: #dfd4ff;
+  color: #540076;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-actions button:hover {
+  background-color: #cbbfff;
+}
+
+.action-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}

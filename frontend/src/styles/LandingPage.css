@@ -1,0 +1,143 @@
+/* GARANTE QUE NÃO HAJA ESPAÇOS EM BRANCO NA PÁGINA */ 
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* CONTAINER PRINCIPAL */
+.landing-container {
+  width: 100%;
+  height: 100vh;
+  background: #f9f9fb; /* fundo claro */
+  
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* SUBE O CONTEÚDO */
+  padding: 2px 50px 0 80px; /* controla o quanto sobe */
+  box-sizing: border-box;
+}
+
+/* TEXTOS */
+.landing-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 65%; /* aumenta a área do texto */
+  text-align: left;
+  margin-top: -40px;
+}
+
+.landing-title {
+  font-size: 1.8rem; /* TAMANHO PARECIDO COM O ANTES */
+  font-weight: bold;
+  color: #3b0c63;
+  margin-bottom: 20px;
+}
+
+.landing-subtitle {
+  font-size: 1.3rem; /* TAMANHO PARECIDO COM O ANTES */
+  color: #131016;
+  line-height: 1.5;
+}
+
+/* IMAGEM À DIREITA */
+.landing-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 35%; /* imagem ocupa menos espaço */
+}
+
+.landing-image {
+  width: 100%;
+  max-width: 370px;
+  height: auto;
+  margin-right: 50px; 
+}
+
+/* HEADER */
+.landing-header {
+  width: 100%;
+  height: 80px;
+  background: #dfd4ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  height: 75px;
+  object-fit: contain;
+}
+
+/* Reaproveitando os botões antigos */
+.header-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+/* LOGIN (ROXO ESCURO) */
+.btn-login {
+  background-color: #540076;
+  color: white;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.btn-login:hover {
+  background-color: #3b0054;
+}
+
+/* CADASTRO (ROXO CLARO) */
+.btn-register {
+  background-color:  #c8aaff;
+  color:  #540076;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+.btn-register:hover {
+  background-color: #d2ddf5;
+}
+
+/* REMOVER LINHA AO CLICAR */
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-big-enter {
+  margin-top: 55px;          /* desce mais */
+  align-self: left;        /* centraliza no container */
+  display: block;                       
+  margin-right: auto;        
+  
+  background-color: #540076; /* tom mais neutro */
+  color: white;
+  border: none;
+  padding: 20px 48px;
+  font-size: 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.25s ease;
+}
+
+.btn-big-enter:hover {
+  background-color: #6258c4; /* hover suave */
+}
+

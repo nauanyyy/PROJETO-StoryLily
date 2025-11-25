@@ -1,0 +1,21 @@
+/* src/styles/Header.css */
+.landing-header {
+  width: 100%;
+  height: 80px;
+  background: #dfd4ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  height: 75px;
+  object-fit: contain;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 20px;
+}

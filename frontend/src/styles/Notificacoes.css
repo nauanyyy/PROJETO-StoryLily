@@ -1,0 +1,121 @@
+.notif-container {
+  min-height: 100vh;
+  background: var(--bg-light);
+  padding-bottom: 2rem;
+  width: 100%;
+  margin: 0;
+}
+
+/* Header */
+.notif-titulo {
+  text-align: center;
+  background: #5c2d91;
+  padding: 14px 28px;
+  margin-top: 70px;
+  margin-bottom: 28px;
+  border-radius: 40px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+/* Lista */
+.notif-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  max-width: 700px;
+  margin: auto;
+  padding: var(--spacing-xl) var(--spacing-lg) 0;
+}
+
+/* Card */
+.notif-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  color: var(--text-dark);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-md);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+}
+
+/* Imagem maior */
+.notif-card .notif-img {
+  width: 48px; /* maior que antes */
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Mensagem vazia */
+.vazio {
+  margin-top: var(--spacing-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  color: var(--text-medium);
+}
+
+/* Limpar botão roxo escuro */
+.limpar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-limpar {
+  background: #7428f7; /* roxo escuro */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+
+.btn-limpar:hover {
+  background: #5a0adb;
+}
+
+/* Icone dentro do botão */
+.icon-btn {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .notif-card {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .notif-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .notif-card .notif-img {
+    width: 40px;
+    height: 40px;
+  }
+}

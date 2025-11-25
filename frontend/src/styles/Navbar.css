@@ -1,0 +1,246 @@
+/* ===================== NAVBAR ===================== */
+.navbar-top { 
+  width: 100%;
+  background: #dfd4ff;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(160, 118, 197, 0.2);
+  padding: var(--spacing-md) 0;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.navbar-top-inner {
+  width: 100%;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Logo à esquerda, ícones à direita */
+  margin: 0;
+  position: relative; /* necessário para centralizar .nav-buttons com absolute */
+}
+
+.navbar-logo {
+  height: 60px;
+  cursor: pointer;
+  filter: none !important;
+  transition: none !important;
+}
+
+.navbar-logo:hover {
+  transform: none !important;
+  filter: none !important;
+}
+
+/* ===================== BOTÕES DESKTOP ===================== */
+/* Os botões ficam centrados absolutamente no container (.navbar-top-inner) */
+.nav-buttons.desktop-only {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* centraliza vertical e horizontalmente */
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: nowrap;
+  align-items: center;
+  pointer-events: auto; /* garante que os botões sejam clicáveis */
+  white-space: nowrap;
+}
+
+/* Ajuste caso o conteúdo vertical mude — mantém centralização suave */
+.nav-buttons.desktop-only button {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--primary-purple);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.2s ease, transform 0.15s ease;
+  transform: none !important;
+  box-shadow: none !important;
+  outline: none;
+}
+
+.nav-buttons.desktop-only button:hover {
+  background: #e9effc;
+  transform: translateY(-2px);
+  box-shadow: none !important;
+}
+
+.nav-buttons.desktop-only button:focus {
+  outline: 2px solid rgba(160,118,197,0.2);
+  outline-offset: 2px;
+}
+
+/* ===================== ÍCONES DESKTOP ===================== */
+.nav-icons.desktop-only {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  z-index: 2; /* ficar acima dos botões caso haja sobreposição */
+}
+
+/* Sino um pouco maior */
+.sino-img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  object-fit: cover;
+  position: relative;
+  top: 4px;
+  right: 6px;
+}
+
+.perfil-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  position: relative;
+  right: 6px;
+}
+
+.notif-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.notif-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+
+/* ===================== MOBILE ===================== */
+.mobile-only {
+  display: none;
+}
+
+.hamburger {
+  font-size: var(--font-size-2xl);
+  cursor: pointer;
+  user-select: none;
+  color: var(--primary-purple);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.hamburger:hover {
+  background: var(--glass-bg-strong);
+}
+
+/* ===================== MOBILE MENU ===================== */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(58, 21, 88, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  max-width: 90%;
+  height: 100%;
+  padding: var(--spacing-xl);
+  background: var(--glass-bg);
+  backdrop-filter: blur(22px);
+  border-left: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+  animation: slideIn 0.3s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.menu-panel h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary-purple);
+  font-size: var(--font-size-xl);
+}
+
+.menu-panel button {
+  width: 100%;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: var(--white);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  color: var(--primary-purple);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.menu-panel button:hover {
+  background: var(--glass-bg-strong);
+  transform: translateX(4px);
+}
+
+.menu-fechar {
+  background: #ef4444 !important;
+  color: var(--white) !important;
+  margin-top: var(--spacing-lg);
+}
+
+/* ===================== MEDIA QUERIES ===================== */
+/* Em telas menores, desabilitamos a centralização absoluta (para não quebrar layout)
+   e passamos os botões para fluxo normal (logo + botões ocultos + hamburger). */
+@media (max-width: 1024px) {
+  .nav-buttons.desktop-only {
+    /* se preferir ocultar antes de 768, deixe em 768 — 1024 é um limite mais flexível */
+    display: none;
+  }
+  .nav-icons.desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
+  .navbar-top-inner {
+    padding: 0 var(--spacing-md);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-buttons.desktop-only,
+  .nav-icons.desktop-only {
+    display: none;
+  }
+  .mobile-only {
+    display: block;
+  }
+  .navbar-top-inner {
+    padding: 0 var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-top-inner {
+    padding: 0 var(--spacing-sm);
+  }
+}
