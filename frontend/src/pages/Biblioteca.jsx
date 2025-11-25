@@ -13,17 +13,34 @@ import lerIcon from "../assets/ler.png";
 import lidoIcon from "../assets/lido.png";
 
 export default function Biblioteca() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [livros, setLivros] = useState([]);
+  const [allLivros, setAllLivros] = useState([]);
   const [busca, setBusca] = useState("");
+  const [filtroAutor, setFiltroAutor] = useState("");
+  const [filtroAno, setFiltroAno] = useState("");
+  const [modalFiltros, setModalFiltros] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [toast, setToast] = useState(null);
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  // =================== DARK MODE ===================
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
 
   const mostrarToast = (mensagem) => setToast(mensagem);
 
+  // =================== CARREGAMENTO INICIAL ===================
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const q = params.get("q") || "";
@@ -31,28 +48,77 @@ export default function Biblioteca() {
     if (q.trim() !== "") {
       setBusca(q);
       buscarLivros(q);
+    } else {
+      buscarLivros("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
+
+  // =================== FUNÇÕES DE FILTRO ===================
+  const aplicarFiltros = (lista) => {
+    return (lista || []).filter((l) => {
+      const condAutor =
+        filtroAutor.trim() === "" ||
+        (l.autor || "").toLowerCase().includes(filtroAutor.toLowerCase());
+      const condAno =
+        filtroAno.trim() === "" || String(l.ano) === filtroAno.trim();
+      return condAutor && condAno;
+    });
+  };
 
   const buscarLivros = async (query) => {
     setCarregando(true);
     try {
       const termo = query ?? busca;
-      const params = {};
-      if (termo.trim() !== "") params.q = termo;
+      let response;
 
-      const response = await api.get("/buscar", { params });
-      setLivros(response.data.livros || []);
+      if (!termo || termo.trim() === "") {
+        response = await api.get("/buscar");
+      } else {
+        response = await api.get("/buscar", { params: { q: termo } });
+      }
+
+      const dados = response.data.livros || [];
+      setAllLivros(dados);
+      setLivros(aplicarFiltros(dados));
     } catch (err) {
+      console.error(err);
       mostrarToast("Erro ao buscar livros.");
     } finally {
       setCarregando(false);
     }
   };
 
-  // ============================================
-  // 🔥 VERIFICA DUPLICADO PELO TÍTULO (CORRETO)
-  // ============================================
+  useEffect(() => {
+    if (allLivros && allLivros.length > 0) {
+      setLivros(aplicarFiltros(allLivros));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtroAutor, filtroAno]);
+
+  const limparFiltros = async () => {
+    setFiltroAutor("");
+    setFiltroAno("");
+
+    if (allLivros && allLivros.length > 0) {
+      setLivros(allLivros);
+      return;
+    }
+
+    setCarregando(true);
+    try {
+      const response = await api.get("/buscar");
+      const dados = response.data.livros || [];
+      setAllLivros(dados);
+      setLivros(dados);
+    } catch (err) {
+      console.error(err);
+      mostrarToast("Erro ao carregar livros.");
+    } finally {
+      setCarregando(false);
+    }
+  };
+
   const jaExisteNaLista = async (rota, titulo) => {
     try {
       const res = await api.get(`/${rota}`);
@@ -62,7 +128,6 @@ export default function Biblioteca() {
     }
   };
 
-  // FAVORITOS
   const adicionarFavorito = async (livro) => {
     const duplicado = await jaExisteNaLista("favoritos", livro.titulo);
 
@@ -79,7 +144,6 @@ export default function Biblioteca() {
     }
   };
 
-  // LIDOS
   const marcarComoLido = async (livro) => {
     const duplicado = await jaExisteNaLista("lidos", livro.titulo);
 
@@ -97,16 +161,17 @@ export default function Biblioteca() {
   };
 
   return (
-    <div className="biblioteca-page">
+    <div className={`biblioteca-page ${darkMode ? "dark" : ""}`}>
       <Navbar />
 
+      {/* ======== BARRA DE BUSCA ======== */}
       <div className="biblioteca-search-section">
         <div className="search-container">
-          <div className="search-input-wrapper">
+          <div className="search-input-wrapper search-small">
             <img src={lupa} alt="Lupa" className="search-icon" />
             <input
               className="search-input"
-              placeholder="Buscar livro por título, autor..."
+              placeholder="Buscar livro..."
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && buscarLivros()}
@@ -117,16 +182,26 @@ export default function Biblioteca() {
             <button className="btn-primary" onClick={() => buscarLivros()}>
               Buscar
             </button>
+
+            <button
+              className="btn-secondary"
+              onClick={() => setModalFiltros(true)}
+            >
+              Filtros
+            </button>
+
+            <button className="btn-secondary" onClick={limparFiltros}>
+              Limpar Filtros
+            </button>
           </div>
         </div>
       </div>
 
+      {/* ======== LISTA DE LIVROS ======== */}
       <div className="biblioteca-content">
         {carregando && <p>Carregando livros...</p>}
 
-        {!carregando && livros.length === 0 && (
-          <p>Nenhum livro encontrado. Tente outra busca!</p>
-        )}
+        {!carregando && livros.length === 0 && <p>Nenhum livro encontrado.</p>}
 
         {!carregando && livros.length > 0 && (
           <div className="livros-grid">
@@ -141,10 +216,11 @@ export default function Biblioteca() {
                   alt={livro.titulo}
                   className="livro-image"
                 />
-
                 <div className="livro-info">
                   <h3 className="livro-titulo">{livro.titulo}</h3>
-                  <p className="livro-autor">{livro.autor || "Autor desconhecido"}</p>
+                  <p className="livro-autor">
+                    {livro.autor || "Autor desconhecido"}
+                  </p>
                   {livro.ano && <p className="livro-ano">{livro.ano}</p>}
                 </div>
               </div>
@@ -153,6 +229,7 @@ export default function Biblioteca() {
         )}
       </div>
 
+      {/* ======== MODAL DO LIVRO ======== */}
       {livroSelecionado && (
         <div className="modal-overlay" onClick={() => setLivroSelecionado(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -175,9 +252,8 @@ export default function Biblioteca() {
               <p><strong>Ano:</strong> {livroSelecionado.ano}</p>
 
               <div className="modal-actions">
-
                 <button onClick={() => adicionarFavorito(livroSelecionado)}>
-                  <img src={estrelaImg} className="action-icon" /> Favoritar
+                  <img src={estrelaImg} className="action-icon" /> Favorito
                 </button>
 
                 <button onClick={() => abrirLivroComNotificacao(livroSelecionado)}>
@@ -187,8 +263,55 @@ export default function Biblioteca() {
                 <button onClick={() => marcarComoLido(livroSelecionado)}>
                   <img src={lidoIcon} className="action-icon" /> Lido
                 </button>
-
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ======== MODAL FILTROS ======== */}
+      {modalFiltros && (
+        <div className="modal-overlay" onClick={() => setModalFiltros(false)}>
+          <div
+            className="modal-content filtro-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>Filtros</h2>
+
+            <label>Autor</label>
+            <input
+              className="filtro-input"
+              value={filtroAutor}
+              onChange={(e) => setFiltroAutor(e.target.value)}
+              placeholder="Ex: Stephen King"
+            />
+
+            <label>Ano</label>
+            <input
+              className="filtro-input"
+              value={filtroAno}
+              onChange={(e) => setFiltroAno(e.target.value)}
+              placeholder="Ex: 1999"
+            />
+
+            <div className="modal-actions">
+              <button
+                onClick={() => {
+                  buscarLivros();
+                  setModalFiltros(false);
+                }}
+              >
+                Aplicar
+              </button>
+
+              <button
+                onClick={() => {
+                  limparFiltros();
+                  setModalFiltros(false);
+                }}
+              >
+                Limpar Filtros
+              </button>
             </div>
           </div>
         </div>

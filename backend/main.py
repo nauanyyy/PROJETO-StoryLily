@@ -19,13 +19,12 @@ from schemas import (
 from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from routers.leitura import router as leitura_router
+from fastapi import APIRouter
 
 # =======================================
 # CONFIGURAÇÃO
 # =======================================
-
 app = FastAPI(title="Story Lilly 📚", version="1.0.0")
-
 init_db()
 
 app.include_router(auth_router)
@@ -38,7 +37,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 def custom_openapi():
     if app.openapi_schema:
@@ -60,7 +58,6 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-
 app.openapi = custom_openapi
 
 # =======================================
@@ -76,10 +73,6 @@ dicas_de_leitura = [
 # =======================================
 # ROTAS PRINCIPAIS
 # =======================================
-
-# --------------------------------------------------------
-# 🔍 BUSCAR LIVROS — SEM CRIAR NENHUMA NOTIFICAÇÃO ❗
-# --------------------------------------------------------
 @app.get("/buscar", response_model=dict)
 def buscar(
     q: str | None = Query(None),
@@ -120,19 +113,16 @@ def buscar(
 
     livros = []
     for d in data.get("docs", []):
-        # registra no LivroRecomendado
         titulo = d.get("title")
         autor_nome = ", ".join(d.get("author_name", [])) if d.get("author_name") else None
         capa = cover_url(d.get("cover_i"))
 
-        # verifica se já existe
         livro_rec = session.exec(select(LivroRecomendado).where(LivroRecomendado.titulo == titulo)).first()
         if livro_rec:
             livro_rec.count += 1
         else:
             livro_rec = LivroRecomendado(titulo=titulo, autor=autor_nome, capa_url=capa, count=1)
             session.add(livro_rec)
-
         session.commit()
 
         livros.append({
@@ -156,67 +146,47 @@ def buscar(
 def listar_lidos(session: Session = Depends(get_session)):
     return session.exec(select(LivroLido)).all()
 
-
 @app.post("/lidos", response_model=LivroLidoSchema)
 def marcar_como_lido(livro: LivroLido, session: Session = Depends(get_session)):
-    # verifica duplicado por google_id (ou outra chave única) antes de inserir
     if getattr(livro, "google_id", None):
         stmt = select(LivroLido).where(LivroLido.google_id == livro.google_id)
         existente = session.exec(stmt).first()
         if existente:
             raise HTTPException(status_code=400, detail="Livro já marcado como lido")
-
     session.add(livro)
     session.commit()
     session.refresh(livro)
-
-    # 🔔 Notificação
     session.add(Notificacao(mensagem=f"Você marcou '{livro.titulo}' como lido ✅"))
     session.commit()
-
     return livro
-
 
 @app.put("/lidos/{titulo}", response_model=LivroLidoSchema)
 def atualizar_lido(titulo: str, dados: LivroLido, session: Session = Depends(get_session)):
     stmt = select(LivroLido).where(LivroLido.titulo == titulo)
     livro = session.exec(stmt).first()
-
     if not livro:
         raise HTTPException(404, "Livro não encontrado")
-
     livro.titulo = dados.titulo or livro.titulo
     livro.autor = dados.autor or livro.autor
     livro.ano = dados.ano or livro.ano
     livro.capa_url = dados.capa_url or livro.capa_url
-
     session.add(livro)
     session.commit()
     session.refresh(livro)
-
     session.add(Notificacao(mensagem=f"O livro '{livro.titulo}' foi atualizado."))
     session.commit()
-
     return livro
-
 
 @app.delete("/lidos/{titulo}")
 def deletar_lido(titulo: str, session: Session = Depends(get_session)):
     titulo = titulo.strip()
-
-    stmt = select(LivroLido).where(
-        LivroLido.titulo == titulo
-    )
+    stmt = select(LivroLido).where(LivroLido.titulo == titulo)
     livro = session.exec(stmt).first()
-
     if not livro:
         raise HTTPException(404, f"Livro '{titulo}' não encontrado na lista de lidos.")
-
     session.delete(livro)
     session.commit()
-
     return {"mensagem": f"'{titulo}' removido dos lidos."}
-
 
 # =======================================
 # FAVORITOS
@@ -225,67 +195,47 @@ def deletar_lido(titulo: str, session: Session = Depends(get_session)):
 def listar_favoritos(session: Session = Depends(get_session)):
     return session.exec(select(LivroFavorito)).all()
 
-
 @app.post("/favoritos", response_model=LivroFavoritoSchema)
 def adicionar_favorito(livro: LivroFavorito, session: Session = Depends(get_session)):
-    # verifica duplicado por google_id se existir
     if getattr(livro, "google_id", None):
         stmt = select(LivroFavorito).where(LivroFavorito.google_id == livro.google_id)
         existente = session.exec(stmt).first()
         if existente:
             raise HTTPException(status_code=400, detail="Livro já está nos favoritos")
-
     session.add(livro)
     session.commit()
     session.refresh(livro)
-
     session.add(Notificacao(mensagem=f"Você adicionou '{livro.titulo}' aos favoritos ⭐"))
     session.commit()
-
     return livro
-
 
 @app.put("/favoritos/{titulo}", response_model=LivroFavoritoSchema)
 def atualizar_favorito(titulo: str, dados: LivroFavorito, session: Session = Depends(get_session)):
     stmt = select(LivroFavorito).where(LivroFavorito.titulo == titulo)
     livro = session.exec(stmt).first()
-
     if not livro:
         raise HTTPException(404, "Não encontrado")
-
     livro.titulo = dados.titulo or livro.titulo
     livro.autor = dados.autor or livro.autor
     livro.ano = dados.ano or livro.ano
     livro.capa_url = dados.capa_url or livro.capa_url
-
     session.add(livro)
     session.commit()
     session.refresh(livro)
-
     session.add(Notificacao(mensagem=f"O favorito '{livro.titulo}' foi atualizado."))
     session.commit()
-
     return livro
-
 
 @app.delete("/favoritos/{titulo}")
 def deletar_favorito(titulo: str, session: Session = Depends(get_session)):
-
     titulo = titulo.strip()
-
-    stmt = select(LivroFavorito).where(
-        LivroFavorito.titulo == titulo
-    )
+    stmt = select(LivroFavorito).where(LivroFavorito.titulo == titulo)
     livro = session.exec(stmt).first()
-
     if not livro:
         raise HTTPException(404, f"Livro '{titulo}' não encontrado nos favoritos.")
-
     session.delete(livro)
     session.commit()
-
     return {"mensagem": f"'{titulo}' removido dos favoritos."}
-
 
 # =======================================
 # DICAS
@@ -299,7 +249,6 @@ def listar_recomendados(session: Session = Depends(get_session)):
     top_livros = session.exec(
         select(LivroRecomendado).order_by(LivroRecomendado.count.desc()).limit(10)
     ).all()
-
     resultado = []
     for livro in top_livros:
         resultado.append(
@@ -313,8 +262,6 @@ def listar_recomendados(session: Session = Depends(get_session)):
         )
     return resultado
 
-
-
 # =======================================
 # NOTIFICAÇÕES
 # =======================================
@@ -322,34 +269,23 @@ def listar_recomendados(session: Session = Depends(get_session)):
 def listar_notificacoes(session: Session = Depends(get_session)):
     return session.exec(select(Notificacao)).all()
 
-
 @app.put("/notificacoes/{mensagem}/ler")
 def marcar_como_lida(mensagem: str, session: Session = Depends(get_session)):
     stmt = select(Notificacao).where(Notificacao.mensagem == mensagem)
     notif = session.exec(stmt).first()
-
     if not notif:
         raise HTTPException(404, "Notificação não encontrada")
-
     notif.lida = True
     session.add(notif)
     session.commit()
-
     return {"mensagem": "OK"}
 
-
-# --------------------------------------------------------
-# 🧹 LIMPAR TODAS AS NOTIFICAÇÕES
-# --------------------------------------------------------
 @app.delete("/notificacoes/limpar")
 def limpar_notificacoes(session: Session = Depends(get_session)):
     notificacoes = session.exec(select(Notificacao)).all()
-
     for n in notificacoes:
         session.delete(n)
-
     session.commit()
-
     return {"mensagem": "Todas as notificações foram apagadas ✔️"}
 
 # =======================================
@@ -359,3 +295,19 @@ def limpar_notificacoes(session: Session = Depends(get_session)):
 def listar_usuarios(session: Session = Depends(get_session)):
     usuarios = session.exec(select(Usuario)).all()
     return [{"id": u.id, "nome": u.nome, "email": u.email, "logado": u.logado} for u in usuarios]
+
+# =======================================
+# ESTATÍSTICAS
+# =======================================
+@app.get("/estatisticas")
+def obter_estatisticas(session: Session = Depends(get_session)):
+    fav_count = session.exec(select(LivroFavorito)).all()
+    lidos_count = session.exec(select(LivroLido)).all()
+    autor = session.exec(
+        select(LivroRecomendado).order_by(LivroRecomendado.count.desc())
+    ).first()
+    return {
+        "favoritos": len(fav_count),
+        "lidos": len(lidos_count),
+        "autor_mais_marcado": autor.autor if autor else "Nenhum"
+    }

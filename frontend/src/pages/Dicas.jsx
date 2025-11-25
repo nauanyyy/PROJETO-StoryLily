@@ -7,8 +7,10 @@ import LivroImg from "../assets/1.png";
 export default function Dicas() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("habitos");
   const [dicasFiltradas, setDicasFiltradas] = useState([]);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
 
-  // Função para converter categoria para texto correto (acento + maiúscula)
   const formatarCategoria = (categoria) => {
     const mapa = {
       habitos: "Hábitos",
@@ -19,7 +21,6 @@ export default function Dicas() {
     return mapa[categoria] || categoria;
   };
 
-  // ----- Dicas organizadas em categorias -----
   const todasDicas = {
     habitos: [
       "Leia pelo menos 20 minutos por dia.",
@@ -51,8 +52,16 @@ export default function Dicas() {
     setDicasFiltradas(todasDicas[categoriaSelecionada]);
   }, [categoriaSelecionada]);
 
+  useEffect(() => {
+    // Aplica o tema ao carregar a página
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
+
   return (
-    <div className="dicas-container">
+    <div className={`dicas-container ${darkMode ? "dark" : ""}`}>
       <Navbar />
 
       {/* Seção hero */}
@@ -61,33 +70,15 @@ export default function Dicas() {
         <p>Escolha uma categoria e explore sugestões úteis para melhorar seu hábito de leitura.</p>
 
         <div className="categoria-container">
-          <button 
-            className={`categoria-btn ${categoriaSelecionada === "habitos" ? "active" : ""}`}
-            onClick={() => setCategoriaSelecionada("habitos")}
-          >
-            Hábitos
-          </button>
-
-          <button 
-            className={`categoria-btn ${categoriaSelecionada === "organizacao" ? "active" : ""}`}
-            onClick={() => setCategoriaSelecionada("organizacao")}
-          >
-            Organização
-          </button>
-
-          <button 
-            className={`categoria-btn ${categoriaSelecionada === "concentracao" ? "active" : ""}`}
-            onClick={() => setCategoriaSelecionada("concentracao")}
-          >
-            Concentração
-          </button>
-
-          <button 
-            className={`categoria-btn ${categoriaSelecionada === "rotina" ? "active" : ""}`}
-            onClick={() => setCategoriaSelecionada("rotina")}
-          >
-            Rotina
-          </button>
+          {["habitos","organizacao","concentracao","rotina"].map((cat) => (
+            <button 
+              key={cat}
+              className={`categoria-btn ${categoriaSelecionada === cat ? "active" : ""}`}
+              onClick={() => setCategoriaSelecionada(cat)}
+            >
+              {formatarCategoria(cat)}
+            </button>
+          ))}
         </div>
       </section>
 

@@ -11,6 +11,9 @@ export default function Home() {
   const navigate = useNavigate();
   const [topLivros, setTopLivros] = useState([]);
   const [busca, setBusca] = useState("");
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  ); // <-- pega o modo do perfil
 
   const carregarTop = async () => {
     try {
@@ -25,6 +28,14 @@ export default function Home() {
     carregarTop();
   }, []);
 
+  // Aplica o tema escuro automaticamente
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
+
   const handleBusca = () => {
     if (busca.trim() !== "") {
       navigate(`/biblioteca?q=${encodeURIComponent(busca)}`);
@@ -32,7 +43,7 @@ export default function Home() {
   };
 
   return (
-    <div className="home-root">
+    <div className={`home-root ${darkMode ? "dark" : ""}`}>
       <Navbar />
       <div className="home-main">
         {/* BUSCA */}
@@ -46,8 +57,15 @@ export default function Home() {
               onChange={(e) => setBusca(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleBusca()}
             />
-            <img src={lupaImg} alt="Lupa" className="input-lupa" onClick={handleBusca} />
-            <button className="btn-home-buscar" onClick={handleBusca}>Buscar</button>
+            <img
+              src={lupaImg}
+              alt="Lupa"
+              className="input-lupa"
+              onClick={handleBusca}
+            />
+            <button className="btn-home-buscar" onClick={handleBusca}>
+              Buscar
+            </button>
           </div>
         </div>
 
@@ -60,8 +78,14 @@ export default function Home() {
         <div className="carousel-wrap">
           <button
             className="arrow-btn left"
-            onClick={() => document.querySelector(".carousel").scrollBy({ left: -300, behavior: "smooth" })}
-          >❮</button>
+            onClick={() =>
+              document
+                .querySelector(".carousel")
+                .scrollBy({ left: -300, behavior: "smooth" })
+            }
+          >
+            ❮
+          </button>
 
           <div className="carousel">
             {topLivros.length === 0 && <p className="carregando">Carregando...</p>}
@@ -83,8 +107,14 @@ export default function Home() {
 
           <button
             className="arrow-btn right"
-            onClick={() => document.querySelector(".carousel").scrollBy({ left: 300, behavior: "smooth" })}
-          >❯</button>
+            onClick={() =>
+              document
+                .querySelector(".carousel")
+                .scrollBy({ left: 300, behavior: "smooth" })
+            }
+          >
+            ❯
+          </button>
         </div>
       </div>
 

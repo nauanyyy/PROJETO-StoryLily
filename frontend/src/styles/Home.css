@@ -459,3 +459,53 @@
     width: 100%;
   }
 }
+
+/* ========= DARK MODE ========= */
+[data-theme="dark"] .home-root {
+  background: #1e1e2f;
+}
+
+[data-theme="dark"] .home-main {
+  background: transparent;
+}
+
+[data-theme="dark"] .search-section h1,
+[data-theme="dark"] .carousel-title,
+[data-theme="dark"] .top-card h3,
+[data-theme="dark"] .top-card p,
+[data-theme="dark"] .carregando {
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .search-form input {
+  background: #2c2c3e;
+  border: 1px solid #540076;
+  color: #fff;
+}
+
+[data-theme="dark"] .btn-home-buscar {
+  background-color: #540076;
+  color: #fff;
+}
+
+[data-theme="dark"] .btn-home-buscar:hover {
+  background-color: #3b004f;
+}
+
+[data-theme="dark"] .top-card {
+  background: #2c2c3e;
+  border: 1px solid #540076;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .arrow-btn {
+  background: #2c2c3e;
+  border: 1px solid #540076;
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .home-footer {
+  background: #1e1e2f;
+  color: #e0d7ff;
+  border-top: 1px solid #540076;
+}

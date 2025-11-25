@@ -244,3 +244,47 @@
     padding: 0 var(--spacing-sm);
   }
 }
+
+/* ========= DARK MODE SUAVE NAVBAR ========= */
+[data-theme="dark"] .navbar-top {
+  background: #2c1a59; /* roxo escuro suave */
+  border-bottom: 1px solid rgba(160,118,197,0.4); /* borda mais suave */
+}
+
+[data-theme="dark"] .nav-buttons.desktop-only button {
+  background: #4b2c8a; /* roxo claro principal */
+  border: 1px solid #6e4fcf;
+  color: #e0d7ff; /* texto suave */
+}
+
+[data-theme="dark"] .nav-buttons.desktop-only button:hover {
+  background: #5d3aa8; /* hover um pouco mais forte */
+}
+
+[data-theme="dark"] .nav-icons.desktop-only img {
+  filter: brightness(1.1); /* ícones mais suaves */
+}
+
+[data-theme="dark"] .menu-panel {
+  background: #3a2170; /* painel mais roxo mas ainda suave */
+  border-left: 1px solid #6e4fcf;
+}
+
+[data-theme="dark"] .menu-panel h2 {
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .menu-panel button {
+  background: #5d3aa8; /* roxo leve */
+  color: #e0d7ff;
+  border: 1px solid #6e4fcf;
+}
+
+[data-theme="dark"] .menu-panel button:hover {
+  background: #7044c8; /* hover leve */
+}
+
+[data-theme="dark"] .menu-fechar {
+  background: #ef4444 !important; /* vermelho continua */
+  color: #fff !important;
+}

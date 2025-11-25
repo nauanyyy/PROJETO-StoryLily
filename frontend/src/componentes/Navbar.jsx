@@ -9,6 +9,9 @@ import "../styles/Navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  ); // pega o modo do perfil
   const menuRef = useRef(null);
   const notificacoes = useNotificacoes();
 
@@ -25,10 +28,18 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, [menuOpen]);
 
+  // Aplica o tema escuro automaticamente
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
+
   return (
     <>
       {/* ===== HEADER ===== */}
-      <div className="navbar-top">
+      <div className={`navbar-top ${darkMode ? "dark" : ""}`}>
         <div className="navbar-top-inner">
 
           {/* Logo (esquerda) */}
@@ -44,6 +55,7 @@ export default function Navbar() {
             <button onClick={() => navigate("/home")}>Página Inicial</button>
             <button onClick={() => navigate("/favoritos")}>Favoritos</button>
             <button onClick={() => navigate("/lidos")}>Lidos</button>
+            <button onClick={() => navigate("/estatisticas")}>Estatísticas</button> {/* NOVO */}
             <button onClick={() => navigate("/dicas")}>Dicas</button>
           </div>
 
@@ -92,6 +104,7 @@ export default function Navbar() {
             <button onClick={() => { navigate("/home"); setMenuOpen(false); }}>Página Inicial</button>
             <button onClick={() => { navigate("/favoritos"); setMenuOpen(false); }}>Favoritos</button>
             <button onClick={() => { navigate("/lidos"); setMenuOpen(false); }}>Lidos</button>
+            <button onClick={() => { navigate("/estatisticas"); setMenuOpen(false); }}>Estatísticas</button> {/* NOVO */}
             <button onClick={() => { navigate("/dicas"); setMenuOpen(false); }}>Dicas</button>
             <button onClick={() => { navigate("/notificacoes"); setMenuOpen(false); }}>Notificações</button>
             <button onClick={() => { navigate("/perfil"); setMenuOpen(false); }}>Perfil</button>

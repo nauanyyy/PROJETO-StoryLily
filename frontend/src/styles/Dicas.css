@@ -121,3 +121,43 @@
   display: inline-block;
   white-space: nowrap; /* evita quebrar linha */
 }
+
+/* ========= DARK MODE ========= */
+[data-theme="dark"] .dicas-container {
+  background: #1e1e2f;
+}
+
+[data-theme="dark"] .dicas-hero h1,
+[data-theme="dark"] .dicas-hero p {
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .categoria-btn {
+  background: #2c2c3e;
+  color: #cbbcff;
+  border-color: #6a5a8f;
+}
+
+[data-theme="dark"] .categoria-btn.active,
+[data-theme="dark"] .categoria-btn:hover {
+  background: #540076;
+  color: #fff;
+  border-color: #540076;
+}
+
+[data-theme="dark"] .dica-card {
+  background: #2c2c3e;
+  border: 1px solid #540076;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .dica-titulo,
+[data-theme="dark"] .dica-texto,
+[data-theme="dark"] .dica-tag {
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .dica-tag {
+  background: #540076;
+  color: #fff;
+}

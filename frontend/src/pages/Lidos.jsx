@@ -9,38 +9,62 @@ import { abrirLivroComNotificacao } from "../utils/leitor";
 import lerImg from "../assets/ler.png";
 import favoritarImg from "../assets/favoritar.png";
 import removerImg from "../assets/remover.png";
+import livroImg from "../assets/livro.png";
 
 export default function Lidos() {
   const [livros, setLivros] = useState([]);
   const [toastMsg, setToastMsg] = useState(null);
   const [modalLivro, setModalLivro] = useState(null);
   const [carregando, setCarregando] = useState(false);
+  const [ordenarPor, setOrdenarPor] = useState("recentes");
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
 
   const getToken = () => localStorage.getItem("token");
 
   const mostrarToast = (mensagem) => setToastMsg(mensagem);
 
+  // Aplica o tema ao carregar a página ou alterar
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
+
   const carregar = async () => {
+    setCarregando(true);
     const token = getToken();
     try {
       const r = await api.get("/lidos", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-      
-      // Ordena do mais recente para o mais antigo
-      const livrosOrdenados = (r.data || []).sort((a, b) => b.id - a.id);
-      
-      setLivros(livrosOrdenados);
+      let lista = r.data || [];
+
+      // Ordenar conforme seleção
+      if (ordenarPor === "az") {
+        lista.sort((a, b) => (a.titulo || "").localeCompare(b.titulo || ""));
+      } else if (ordenarPor === "autor") {
+        lista.sort((a, b) => (a.autor || "").localeCompare(b.autor || ""));
+      } else if (ordenarPor === "ano") {
+        lista.sort((a, b) => (b.ano || 0) - (a.ano || 0));
+      } else if (ordenarPor === "recentes") {
+        lista.sort((a, b) => b.id - a.id);
+      }
+
+      setLivros(lista);
     } catch (err) {
       console.error("Erro ao carregar livros lidos:", err);
       mostrarToast("Erro ao carregar livros lidos.");
+    } finally {
+      setCarregando(false);
     }
   };
 
-
   useEffect(() => {
     carregar();
-  }, []);
+  }, [ordenarPor]);
 
   const remover = async (livro) => {
     const token = getToken();
@@ -54,7 +78,6 @@ export default function Lidos() {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
       }
-
       await carregar();
       mostrarToast(`"${livro.titulo}" removido dos lidos!`);
     } catch (err) {
@@ -67,7 +90,6 @@ export default function Lidos() {
 
   const adicionarFavorito = async (livro) => {
     const token = getToken();
-
     try {
       const r = await api.get("/favoritos", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -105,10 +127,26 @@ export default function Lidos() {
   };
 
   return (
-    <div className="lidos-container">
+    <div className={`lidos-container ${darkMode ? "dark" : ""}`}>
       <Navbar />
 
       <h1 className="lidos-titulo">Meus Livros Lidos</h1>
+
+      {/* ================== FILTRO / ORDENACAO ================== */}
+      <form className="lidos-form">
+        <label>
+          Ordenar por:
+          <select
+            value={ordenarPor}
+            onChange={(e) => setOrdenarPor(e.target.value)}
+          >
+            <option value="az">A–Z</option>
+            <option value="ano">Ano</option>
+            <option value="autor">Autor</option>
+            <option value="recentes">Recentes</option>
+          </select>
+        </label>
+      </form>
 
       {carregando ? (
         <p className="lidos-empty">Carregando...</p>
@@ -124,7 +162,7 @@ export default function Lidos() {
               {livro.capa_url ? (
                 <img src={livro.capa_url} alt={livro.titulo} />
               ) : (
-                <div className="no-img">📘</div>
+                <img src={livroImg} alt={livro.titulo} className="no-img" />
               )}
 
               <h3>{livro.titulo}</h3>

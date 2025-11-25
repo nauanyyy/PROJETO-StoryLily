@@ -146,7 +146,8 @@
 .livro-card {
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-border); /* mantém todas as bordas */
+  border-right: 1px solid var(--glass-border); /* garante borda direita */
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
@@ -157,14 +158,15 @@
   cursor: pointer;
 }
 
+
 .livro-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
   border-color: var(--accent-lilac);
 }
-
 .livro-image-container {
-  width: 100%;
+  width: calc(100% - 16px); /* ou menos, dependendo do seu --spacing-md */
+  padding: 0 var(--spacing-sm); /* dá espaço interno lateral */
   aspect-ratio: 2/3;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -175,11 +177,15 @@
   justify-content: center;
 }
 
+
 .livro-image {
-  width: 110%;
+  width: 97%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--radius-md);
+  padding-bottom: 5px;
 }
+
 
 .livro-placeholder {
   width: 170px;
@@ -414,4 +420,116 @@
   width: 22px;
   height: 22px;
   object-fit: contain;
+}
+
+/* ----- diminuir barra de busca ----- */
+.search-small {
+  max-width: 260px;
+}
+
+/* botões lado a lado */
+/* botões de Filtros e Limpar filtros — mesmo arredondamento do botão Buscar */
+.btn-secondary {
+  background: #cfc2ff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-md); /* igual ao botão Buscar */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: #b6a4ff;
+}
+
+
+/* modal de filtros */
+.filtro-modal {
+  max-width: 360px;
+}
+
+.filtro-input {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+/* ========= DARK MODE ========= */
+[data-theme="dark"] .biblioteca-page {
+  background: #1e1e2f;
+}
+
+[data-theme="dark"] .biblioteca-search-section {
+  background: #2c2c3e;
+  border-bottom: 1px solid #540076;
+}
+
+[data-theme="dark"] .search-input {
+  background: #1f1f30;
+  border: 1px solid #540076;
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .btn-primary {
+  background-color: #540076;
+  color: #fff;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background-color: #3b004f;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: #3b004f;
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: #540076;
+}
+
+[data-theme="dark"] .livro-card {
+  background: #2c2c3e;
+  border: 1px solid #540076;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .livro-titulo {
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .livro-autor,
+[data-theme="dark"] .livro-ano {
+  color: #cfc2ff;
+}
+
+[data-theme="dark"] .modal-content {
+  background: #2c2c3e;
+  color: #e0d7ff;
+  border: 1px solid #540076;
+}
+
+[data-theme="dark"] .modal-close {
+  background: #540076;
+  color: #fff;
+}
+
+[data-theme="dark"] .modal-actions button {
+  background-color: #540076;
+  color: #fff;
+}
+
+[data-theme="dark"] .modal-actions button:hover {
+  background-color: #3b004f;
+}
+
+[data-theme="dark"] .modal-body h2 {
+  color: #e0d7ff;
+}
+
+[data-theme="dark"] .modal-info strong {
+  color: #cfc2ff;
 }

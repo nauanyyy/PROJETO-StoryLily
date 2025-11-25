@@ -12,6 +12,7 @@ import Favoritos from "./pages/Favoritos";
 import Notificacoes from "./pages/Notificacoes";
 import Perfil from "./pages/Perfil";
 import Lidos from "./pages/Lidos";
+import Estatisticas from "./pages/Estatisticas";
 
 // ESTILOS GLOBAIS
 import "./styles/global.css";
@@ -51,6 +52,9 @@ function App() {
 
         {/* Lidos */}
         <Route path="/lidos" element={<Lidos />} />
+
+        {/* Estatísticas */}
+        <Route path="/estatisticas" element={<Estatisticas />} />
 
         {/* Rota inexistente */}
         <Route path="*" element={<h1>Página não encontrada</h1>} />
