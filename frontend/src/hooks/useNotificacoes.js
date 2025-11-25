@@ -1,4 +1,3 @@
-// src/hooks/useNotificacoes.js
 import { useEffect, useState } from "react";
 import api from "../api/api";
 
@@ -7,10 +6,8 @@ export default function useNotificacoes(pollIntervalMs = 5000) {
 
   const carregar = async () => {
     try {
-      // Busca recentes (não lidas)
       const res = await api.get("/notificacoes/recentes");
 
-      // Alguns backends retornam uma lista direta, outros um objeto.
       if (Array.isArray(res.data)) {
         setNotificacoes(res.data);
       } else if (res.data?.mensagens) {
@@ -25,10 +22,10 @@ export default function useNotificacoes(pollIntervalMs = 5000) {
   };
 
   useEffect(() => {
-    carregar(); // primeira carga
+    carregar(); 
     const id = setInterval(carregar, pollIntervalMs);
     return () => clearInterval(id);
   }, []);
 
-  return notificacoes; // retorna apenas NÃO lidas
+  return notificacoes; 
 }

@@ -9,7 +9,7 @@ import { abrirLivroComNotificacao } from "../utils/leitor";
 import lerImg from "../assets/ler.png";
 import lidoImg from "../assets/lido.png";
 import removerImg from "../assets/remover.png";
-import livroImg from "../assets/livro.png"; // imagem padrão
+import livroImg from "../assets/livro.png"; 
 
 export default function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);
@@ -21,7 +21,7 @@ export default function Favoritos() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
-  const [ordenacao, setOrdenacao] = useState("recentes"); // padrão Recentes
+  const [ordenacao, setOrdenacao] = useState("recentes"); 
 
   const token = localStorage.getItem("token");
 
@@ -34,14 +34,13 @@ export default function Favoritos() {
     );
   }, [darkMode]);
 
-  // Carregar favoritos
   const carregar = async () => {
     setCarregando(true);
     try {
       const res = await api.get("/favoritos", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-      const lista = (res.data || []).slice().reverse(); // recent últimos
+      const lista = (res.data || []).slice().reverse(); 
       setFavoritos(lista);
       setFavoritosExibidos(ordenarLista(lista, ordenacao));
     } catch (err) {
@@ -56,7 +55,6 @@ export default function Favoritos() {
     carregar();
   }, []);
 
-  // Abrir modal para remover
   const abrirModal = (livro) => {
     setLivroParaRemover(livro);
     setModalAberto(true);
@@ -116,7 +114,6 @@ export default function Favoritos() {
     }
   };
 
-  // ===== Função de ordenação =====
   const ordenarLista = (lista, criterio) => {
     const novaLista = [...lista];
     switch (criterio) {
@@ -132,11 +129,10 @@ export default function Favoritos() {
         });
       case "recentes":
       default:
-        return novaLista.slice().reverse(); // mais recentes primeiro
+        return novaLista.slice().reverse();
     }
   };
 
-  // Atualiza a lista exibida quando muda a ordenação
   useEffect(() => {
     setFavoritosExibidos(ordenarLista(favoritos, ordenacao));
   }, [ordenacao, favoritos]);
@@ -147,7 +143,6 @@ export default function Favoritos() {
 
       <h1 className="fav-titulo">Livros Favoritos</h1>
 
-      {/* Seletor de ordenação */}
       {favoritos.length > 0 && (
         <div className="fav-form">
           <label>

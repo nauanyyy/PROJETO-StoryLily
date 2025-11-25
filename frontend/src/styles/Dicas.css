@@ -1,13 +1,11 @@
-/* Container geral */
 .dicas-container {
   min-height: 100vh;
-  background: #f9f9fb; /* fundo claro */
+  background: #f9f9fb;
   padding-bottom: 2rem;
   width: 100%;
   margin: 0;
 }
 
-/* HERO */
 .dicas-hero {
   text-align: center;
   padding: 15px 20px 40px;
@@ -32,7 +30,6 @@
   margin-bottom: 30px;
 }
 
-/* BOTÕES DAS CATEGORIAS */
 .categoria-container {
   display: flex;
   justify-content: center;
@@ -58,7 +55,6 @@
   border-color: var(--primary-purple);
 }
 
-/* LISTA DE DICAS */
 .dicas-lista {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -68,7 +64,6 @@
   padding: 0 20px;
 }
 
-/* CARD */
 .dica-card {
   display: flex;
   gap: 20px;
@@ -84,13 +79,11 @@
   transform: translateY(-6px);
 }
 
-/* IMAGEM */
 .emoji {
   width: 80px;
   height: 80px;
 }
 
-/* TEXTO INTERNO */
 .dica-info {
   display: flex;
   flex-direction: column;
@@ -111,18 +104,17 @@
 }
 .dica-tag {
   background: #efe8ff;
-  padding: 4px 10px; /* padding menor (antes 6px 14px) */
-  width: 200px;      /* 🔥 tamanho padronizado */
-  text-align: center;/* centraliza o texto */
+  padding: 4px 10px;
+  width: 200px;   
+  text-align: center;
   border-radius: 10px;
   color: var(--primary-purple);
   font-size: 0.8rem;
   font-weight: 600;
   display: inline-block;
-  white-space: nowrap; /* evita quebrar linha */
+  white-space: nowrap; 
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .dicas-container {
   background: #1e1e2f;
 }

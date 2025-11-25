@@ -1,6 +1,3 @@
-/* login.css */
-
-/* Fundo da página */
 body {
   background-color: #f7f9fc;
   margin: 0;
@@ -8,16 +5,14 @@ body {
   height: 100vh;
 }
 
-/* CONTAINER CENTRAL TOTALMENTE CENTRALIZADO */
 .login-container {
   display: flex;
-  justify-content: center; /* centro horizontal */
-  align-items: center;     /* centro vertical */
+  justify-content: center;
+  align-items: center;     
   height: 100vh;
   width: 100%;
 }
 
-/* CARD CENTRAL */
 .login-card {
   background: #ffffff;
   padding: 30px 40px;
@@ -30,14 +25,12 @@ body {
   width: 100%;
 }
 
-/* TÍTULO */
 .login-card h2 {
   margin-bottom: 25px;
   font-size: 1.8rem;
   color: #3b0c63;
 }
 
-/* FORMULÁRIO */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -45,7 +38,6 @@ body {
   width: 100%;
 }
 
-/* INPUTS */
 .login-form input {
   padding: 12px;
   border-radius: 18px;
@@ -54,7 +46,6 @@ body {
   font-size: 1rem;
 }
 
-/* BOTÃO */
 .login-btn {
   margin-top: 10px;
   padding: 12px;
@@ -72,14 +63,12 @@ body {
   background-color: #3b0054;
 }
 
-/* MENSAGEM DE ERRO OU SUCESSO */
 .login-msg {
   margin-top: 12px;
   font-weight: bold;
   text-align: center;
 }
 
-/* TEXTO "CRIAR CONTA" */
 .register-text {
   margin-top: 18px;
   font-size: 0.95rem;
@@ -95,7 +84,6 @@ body {
   text-decoration: underline;
 }
 
-/* HEADER SUPERIOR FIXO */
 .header {
   width: 100%;
   height: 80px;
@@ -116,7 +104,6 @@ body {
   object-fit: contain;
 }
 
-/* ESPAÇAMENTO ABAIXO DO HEADER */
 .page-content {
   padding-top: 80px;
 }

@@ -1,21 +1,13 @@
-// src/utils/leitor.js
 import api from "../api/api";
 
-/**
- * Tenta abrir o livro via backend (cria notificação).
- * Se backend retornar url, abre.
- * Se backend não retornar url, tenta gerar cliente-side.
- */
 export async function abrirLivroComNotificacao(livro) {
   try {
-    // tenta via backend (cria notificação)
     const res = await api.post("/livro/abrir", livro);
     const url = res.data?.url;
     if (url) {
       window.open(url, "_blank");
       return { opened: true, url };
     }
-    // fallback local
     const local = gerarLinkLeitura(livro);
     if (local) {
       window.open(local, "_blank");
@@ -23,7 +15,6 @@ export async function abrirLivroComNotificacao(livro) {
     }
     return { opened: false };
   } catch (err) {
-    // em erro, tenta fallback cliente
     const local = gerarLinkLeitura(livro);
     if (local) {
       window.open(local, "_blank");

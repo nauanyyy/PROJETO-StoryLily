@@ -6,7 +6,6 @@
   margin: 0;
 }
 
-/* Header */
 .notif-titulo {
   text-align: center;
   background: #5c2d91;
@@ -21,7 +20,6 @@
   font-weight: 800;
 }
 
-/* Lista */
 .notif-lista {
   display: flex;
   flex-direction: column;
@@ -31,7 +29,6 @@
   padding: var(--spacing-xl) var(--spacing-lg) 0;
 }
 
-/* Card */
 .notif-card {
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
@@ -47,15 +44,13 @@
   font-weight: 600;
 }
 
-/* Imagem maior */
 .notif-card .notif-img {
-  width: 48px; /* maior que antes */
+  width: 48px;
   height: 48px;
   object-fit: contain;
   flex-shrink: 0;
 }
 
-/* Mensagem vazia */
 .vazio {
   margin-top: var(--spacing-lg);
   background: var(--glass-bg);
@@ -69,7 +64,6 @@
   color: var(--text-medium);
 }
 
-/* Limpar botão roxo escuro */
 .limpar-wrapper {
   display: flex;
   justify-content: center;
@@ -77,7 +71,7 @@
 }
 
 .btn-limpar {
-  background: #7428f7; /* roxo escuro */
+  background: #7428f7; 
   color: white;
   padding: 12px 20px;
   border-radius: 10px;
@@ -95,13 +89,11 @@
   background: #5a0adb;
 }
 
-/* Icone dentro do botão */
 .icon-btn {
   width: 20px;
   height: 20px;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .notif-card {
     font-size: 0.9rem;

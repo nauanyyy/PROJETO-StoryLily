@@ -1,4 +1,3 @@
-# auth.py — rotas de auth compatível com seus schemas
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select, SQLModel
@@ -11,12 +10,8 @@ from utils import hash_password, verify_password, create_access_token, decode_to
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")  # usado apenas se for proteger rotas
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login") 
 
-
-# -------------------------------
-# REGISTRO
-# -------------------------------
 @router.post("/register", response_model=UsuarioRead, status_code=status.HTTP_201_CREATED)
 def register_user(user: UsuarioCreate, session: Session = Depends(get_session)):
     stmt = select(Usuario).where(Usuario.email == user.email)
@@ -34,10 +29,6 @@ def register_user(user: UsuarioCreate, session: Session = Depends(get_session)):
 
     return novo
 
-
-# -------------------------------
-# LOGIN → ADICIONADO: NOTIFICAÇÃO
-# -------------------------------
 @router.post("/login")
 def login(data: UsuarioLogin, session: Session = Depends(get_session)):
 
@@ -52,12 +43,10 @@ def login(data: UsuarioLogin, session: Session = Depends(get_session)):
 
     token = create_access_token({"sub": str(user.id)})
 
-    # marcar logado
     user.logado = True
     session.add(user)
     session.commit()
 
-    # 🔔 CRIA NOTIFICAÇÃO DE LOGIN
     notificacao = Notificacao(
         mensagem="Você entrou no seu perfil.",
         lida=False
@@ -68,9 +57,6 @@ def login(data: UsuarioLogin, session: Session = Depends(get_session)):
     return {"access_token": token, "token_type": "bearer"}
 
 
-# -------------------------------
-# PEGAR USUÁRIO LOGADO
-# -------------------------------
 def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Depends(get_session)):
     payload = decode_token(token)
     if not payload:
@@ -88,15 +74,10 @@ def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Dep
 
     return user
 
-
 @router.get("/me")
 def read_me(user: Usuario = Depends(get_current_user)):
     return {"id": user.id, "nome": user.nome, "email": user.email, "logado": user.logado}
 
-
-# -------------------------------
-# LOGOUT → ADICIONADO: NOTIFICAÇÃO
-# -------------------------------
 @router.post("/logout")
 def logout(user: Usuario = Depends(get_current_user), session: Session = Depends(get_session)):
 
@@ -104,7 +85,6 @@ def logout(user: Usuario = Depends(get_current_user), session: Session = Depends
     session.add(user)
     session.commit()
 
-    # 🔔 CRIA NOTIFICAÇÃO DE LOGOUT
     notificacao = Notificacao(
         mensagem="Você saiu do seu perfil.",
         lida=False
@@ -114,10 +94,6 @@ def logout(user: Usuario = Depends(get_current_user), session: Session = Depends
 
     return {"mensagem": "Logout realizado com sucesso!"}
 
-
-# -------------------------------
-# DELETAR USUÁRIO
-# -------------------------------
 @router.delete("/user")
 def delete_user(email: str, session: Session = Depends(get_session)):
     stmt = select(Usuario).where(Usuario.email == email)
@@ -131,10 +107,6 @@ def delete_user(email: str, session: Session = Depends(get_session)):
 
     return {"mensagem": "Usuário deletado"}
 
-
-# -------------------------------
-# RESET DB
-# -------------------------------
 @router.post("/reset-db")
 def reset_db_safe():
     try:

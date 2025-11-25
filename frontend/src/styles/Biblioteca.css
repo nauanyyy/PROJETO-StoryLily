@@ -1,11 +1,9 @@
-/* ===================== BIBLIOTECA PAGE ===================== */
 .biblioteca-page {
   min-height: 100vh;
   background: var(--bg-light);
   padding-bottom: var(--spacing-2xl);
 }
 
-/* ===================== HEADER ===================== */
 .biblioteca-title {
   font-size: var(--font-size-2xl);
   color: var(--primary-purple);
@@ -37,7 +35,6 @@
   background: var(--glass-bg-strong);
 }
 
-/* ===================== SEARCH SECTION ===================== */
 .biblioteca-search-section {
   background: var(--white);
   padding: var(--spacing-lg) 0;
@@ -90,7 +87,6 @@
   outline: none;
 }
 
-/* ------------------ BOTÕES ------------------ */
 .search-buttons {
   display: flex;
   gap: var(--spacing-sm);
@@ -113,13 +109,11 @@
   color: white;
 }
 
-/* Garantir que flex não sobrescreva cores */
 .search-buttons .btn-primary,
 .search-buttons .btn-secondary {
   flex: 1;
 }
 
-/* ===================== CONTENT ===================== */
 .biblioteca-content {
   width: 100%;
   margin: 0;
@@ -135,7 +129,6 @@
   font-size: var(--font-size-lg);
 }
 
-/* ===================== LIVROS GRID ===================== */
 .livros-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -146,8 +139,8 @@
 .livro-card {
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border); /* mantém todas as bordas */
-  border-right: 1px solid var(--glass-border); /* garante borda direita */
+  border: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
@@ -165,8 +158,8 @@
   border-color: var(--accent-lilac);
 }
 .livro-image-container {
-  width: calc(100% - 16px); /* ou menos, dependendo do seu --spacing-md */
-  padding: 0 var(--spacing-sm); /* dá espaço interno lateral */
+  width: calc(100% - 16px); 
+  padding: 0 var(--spacing-sm); 
   aspect-ratio: 2/3;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -229,7 +222,6 @@
   opacity: 0.8;
 }
 
-/* ===================== ACTIONS ===================== */
 .livro-actions {
   display: flex;
   gap: 8px;
@@ -267,7 +259,6 @@
   object-fit: contain;
 }
 
-/* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
   .biblioteca-header-content {
     flex-direction: column;
@@ -314,7 +305,6 @@
   }
 }
 
-/* ===================== MODAL DO LIVRO ===================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -388,7 +378,6 @@
   color: #540076;
 }
 
-/* ===================== BOTÕES DO MODAL ===================== */
 .modal-actions {
   display: flex;
   gap: 10px;
@@ -422,18 +411,15 @@
   object-fit: contain;
 }
 
-/* ----- diminuir barra de busca ----- */
 .search-small {
   max-width: 260px;
 }
 
-/* botões lado a lado */
-/* botões de Filtros e Limpar filtros — mesmo arredondamento do botão Buscar */
 .btn-secondary {
   background: #cfc2ff;
   border: none;
   padding: 8px 14px;
-  border-radius: var(--radius-md); /* igual ao botão Buscar */
+  border-radius: var(--radius-md);
   font-weight: bold;
   cursor: pointer;
   transition: background 0.25s ease;
@@ -443,8 +429,6 @@
   background: #b6a4ff;
 }
 
-
-/* modal de filtros */
 .filtro-modal {
   max-width: 360px;
 }
@@ -457,7 +441,6 @@
   margin-bottom: 12px;
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .biblioteca-page {
   background: #1e1e2f;
 }

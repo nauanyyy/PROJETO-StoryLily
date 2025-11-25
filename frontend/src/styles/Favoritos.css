@@ -1,13 +1,11 @@
-/* ===================== FAVORITOS PAGE ===================== */
 .fav-container {
   min-height: 100vh;
-  background: #f9f9fb; /* fundo claro */
+  background: #f9f9fb;
   padding-bottom: 2rem;
   width: 100%;
   margin: 0;
 }
 
-/* ===================== FAVORITOS TÍTULO ===================== */
 .fav-titulo {
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
@@ -19,7 +17,6 @@
   text-align: center;
 }
 
-/* Subtítulo da página de favoritos */
 .fav-subtitulo {
   text-align: center;
   color: #8b5cf6;
@@ -33,7 +30,6 @@
   line-height: 1.4;
 }
 
-/* ===================== FORM ===================== */
 .fav-form {
   display: flex;
   flex-wrap: wrap;
@@ -83,17 +79,15 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* ===================== GRID ===================== */
 .fav-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
   max-width: 1300px;
-  margin: 2rem auto 0 auto; /* CORRIGIDO: igual ao Lidos */
+  margin: 2rem auto 0 auto; 
   padding: 0 1.5rem;
 }
 
-/* ===================== CARD ===================== */
 .fav-card {
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(16px);
@@ -151,7 +145,6 @@
   margin: 0 0 0.5rem 0;
 }
 
-/* ===================== AÇÕES ===================== */
 .acoes {
   display: flex;
   flex-direction: column;
@@ -172,7 +165,6 @@
   transition: all 0.2s ease;
 }
 
-/* Botão Ler - lilás */
 .acoes button:first-child {
   background: #e9d5ff;
   color: #5b21b6;
@@ -184,7 +176,6 @@
   transform: translateY(-2px);
 }
 
-/* Botão Favoritar - lilás */
 .acoes button:nth-child(2) {
   background: #e9d5ff;
   color: #5b21b6;
@@ -196,7 +187,6 @@
   transform: translateY(-2px);
 }
 
-/* Botão remover favorito */
 .acoes button.btn-remove-fav {
   background: #7c3aed !important;
   color: #fff !important;
@@ -207,7 +197,6 @@
   transform: translateY(-2px);
 }
 
-/* ===================== VAZIO ===================== */
 .vazio {
   grid-column: 1 / -1;
   text-align: center;
@@ -221,7 +210,6 @@
   font-weight: 500;
 }
 
-/* ===================== MODAL ===================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -282,7 +270,6 @@
   color: #fff;
 }
 
-/* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
   .fav-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -321,7 +308,6 @@
   transform: translateY(2px);
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .fav-container {
   background: #1e1e2f;
 }
@@ -365,7 +351,6 @@
   color: #fff;
 }
 
-/* ===================== ORDENACAO ===================== */
 .fav-form label {
   display: flex;
   align-items: center;
@@ -397,7 +382,6 @@
   box-shadow: 0 0 0 4px rgba(160, 118, 197, 0.2);
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .fav-form label {
   color: #e0d7ff;
 }

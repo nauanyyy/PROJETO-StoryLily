@@ -1,4 +1,3 @@
-/* ===================== HOME PAGE ===================== */
 .home-root {
   width: 100%;
   min-height: 100vh;
@@ -8,7 +7,6 @@
   align-items: center;
 }
 
-/* ===================== HEADER ===================== */
 .home-top {
   width: 100%;
   background: var(--glass-bg);
@@ -41,7 +39,6 @@
   transform: scale(1.05);
 }
 
-/* ===================== NAV DESKTOP ===================== */
 .nav-buttons.desktop-only {
   display: flex;
   gap: var(--spacing-sm);
@@ -106,7 +103,6 @@
   border: 2px solid var(--white);
 }
 
-/* ===================== MOBILE MENU BUTTON ===================== */
 .mobile-only {
   display: none;
 }
@@ -125,7 +121,6 @@
   background: var(--glass-bg-strong);
 }
 
-/* ===================== MOBILE MENU ===================== */
 .menu-overlay {
   position: fixed;
   inset: 0;
@@ -192,7 +187,6 @@
   margin-top: var(--spacing-lg);
 }
 
-/* ===================== MAIN ===================== */
 .home-main {
   width: 100%;
   max-width: 1300px;
@@ -202,7 +196,6 @@
   align-items: center;
 }
 
-/* ===================== SEARCH ===================== */
 .search-section {
   width: 100%;
   max-width: 700px;
@@ -257,7 +250,6 @@
   cursor: pointer;
 }
 
-/* BOTÃO BUSCAR */
 .btn-home-buscar {
   padding: 0.6rem 1rem;
   border: none;
@@ -273,13 +265,12 @@
   background-color: #3b004f;
 }
 
-/* ===================== CAROUSEL ===================== */
 .carousel-title {
   margin-top: var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
   font-size: 20px;
   font-weight: 700;
-  color: #3b004f; /* agora roxo igual aos títulos */
+  color: #3b004f; 
   text-align: center;
 }
 
@@ -369,7 +360,6 @@
   padding: var(--spacing-xl);
 }
 
-/* ===================== CAROUSEL ARROWS ===================== */
 .arrow-btn {
   position: absolute;
   top: 50%;
@@ -410,7 +400,6 @@
   right: var(--spacing-sm);
 }
 
-/* ===================== FOOTER ===================== */
 .home-footer {
   margin-top: var(--spacing-2xl);
   padding: var(--spacing-lg);
@@ -423,7 +412,6 @@
   border-top: 1px solid var(--glass-border);
 }
 
-/* ===================== MOBILE ===================== */
 @media (max-width: 768px) {
   .nav-buttons.desktop-only,
   .nav-icons.desktop-only {
@@ -460,7 +448,6 @@
   }
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .home-root {
   background: #1e1e2f;
 }

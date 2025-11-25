@@ -1,25 +1,22 @@
-/* ===================== LIDOS PAGE ===================== */
 .lidos-container {
   min-height: 100vh;
-  background: #f9f9fb; /* fundo claro */
+  background: #f9f9fb;
   padding-bottom: 2rem;
   width: 100%;
   margin: 0;
 }
 
-/* ===================== TÍTULO ===================== */
 .lidos-titulo {
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
   font-size: 2rem;
   font-family: 'Poppins', sans-serif;
-  color: #540076; /* roxo escuro */
+  color: #540076; 
   font-weight: 600;
   letter-spacing: 0.5px;
   text-align: center;
 }
 
-/* ===================== GRID ===================== */
 .lidos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -29,7 +26,6 @@
   padding: 0 1.5rem;
 }
 
-/* ===================== CARD ===================== */
 .lidos-card {
   background: rgba(255,255,255,0.6);
   backdrop-filter: blur(16px);
@@ -87,7 +83,6 @@
   margin: 0 0 0.5rem 0;
 }
 
-/* ===================== AÇÕES ===================== */
 .acoes {
   display: flex;
   flex-direction: column;
@@ -112,7 +107,6 @@
   transition: all 0.2s ease;
 }
 
-/* Botão Ler - lilás */
 .acoes button:first-child {
   background: #e9d5ff;
   color: #5b21b6;
@@ -124,7 +118,6 @@
   transform: translateY(-2px);
 }
 
-/* Botão Favoritar - roxo */
 .acoes button:nth-child(2) {
   background: #e9d5ff;
   color: #5b21b6;
@@ -136,7 +129,6 @@
   transform: translateY(-2px);
 }
 
-/* Botão Remover - vermelho */
 .acoes button.btn-remove-fav {
   background: #ef4444;
   color: #fff;
@@ -147,7 +139,6 @@
   transform: translateY(-2px);
 }
 
-/* Ícones dentro dos botões */
 .icon-btn {
   width: 20px !important;
   height: 20px !important;
@@ -156,7 +147,6 @@
   transform: translateY(2px);
 }
 
-/* ===================== EMPTY STATE ===================== */
 .lidos-empty {
   grid-column: 1 / -1;
   text-align: center;
@@ -170,7 +160,6 @@
   font-weight: 500;
 }
 
-/* ===================== MODAL ===================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -231,7 +220,6 @@
   color: #fff;
 }
 
-/* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
   .lidos-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -245,7 +233,6 @@
   }
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .lidos-container {
   background: #1e1e2f;
 }
@@ -279,7 +266,6 @@
   border: 1px solid #540076;
 }
 
-/* ===================== ORDENACAO ===================== */
 .lidos-form {
   display: flex;
   flex-wrap: wrap;
@@ -323,7 +309,6 @@
   box-shadow: 0 0 0 4px rgba(160, 118, 197, 0.2);
 }
 
-/* ========= DARK MODE ========= */
 [data-theme="dark"] .lidos-form label {
   color: #e0d7ff;
 }

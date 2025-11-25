@@ -5,7 +5,6 @@ router = APIRouter()
 
 GOOGLE_BOOKS_URL = "https://www.googleapis.com/books/v1/volumes"
 
-# Buscar livros por título
 @router.get("/buscar/")
 def buscar_livros(q: str):
     """

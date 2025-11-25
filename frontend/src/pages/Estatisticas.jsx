@@ -7,7 +7,6 @@ export default function Estatisticas() {
   const [lidosCount, setLidosCount] = useState(0);
   const [topAutor, setTopAutor] = useState("");
 
-  // Buscar dados do backend
   useEffect(() => {
     async function fetchData() {
       try {
@@ -19,7 +18,6 @@ export default function Estatisticas() {
         const lidos = await resLidos.json();
         setLidosCount(lidos.length);
 
-        // Autor mais marcado (favoritos + lidos)
         const autores = [...favoritos, ...lidos].map((livro) => livro.autor);
         const contador = {};
         autores.forEach((autor) => {
@@ -41,7 +39,6 @@ export default function Estatisticas() {
     <div className="estatisticas-page">
       <Navbar />
 
-      {/* Header com título e subtítulo */}
       <div className="estatisticas-header">
         <h1>Estatísticas da Biblioteca</h1>
         <p className="estatisticas-subtitle">
@@ -49,7 +46,6 @@ export default function Estatisticas() {
         </p>
       </div>
 
-      {/* Cards das estatísticas */}
       <div className="estatisticas-cards">
         <div className="estatistica-card favoritos">
           <h2>Livros Favoritos</h2>

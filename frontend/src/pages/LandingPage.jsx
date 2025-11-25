@@ -8,7 +8,6 @@ export default function LandingPage() {
 
   return (
     <>
-      {/* HEADER */}
       <header className="landing-header">
         <img src={Logo} alt="Logo" className="header-logo" />
 
@@ -23,7 +22,6 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* CONTEÚDO PRINCIPAL */}
       <div className="landing-container">
         <div className="landing-text">
           <h1 className="landing-title">
@@ -36,7 +34,6 @@ export default function LandingPage() {
             Encontre aqui o próximo capítulo que vai florescer no seu coração.
           </p>
 
-          {/* BOTÃO GRANDE "ENTRAR" */}
           <button className="btn-big-enter" onClick={() => navigate("/register")}>
             Cadastre-se
           </button>

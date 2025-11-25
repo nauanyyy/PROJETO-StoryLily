@@ -11,11 +11,10 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
-  ); // pega o modo do perfil
+  ); 
   const menuRef = useRef(null);
   const notificacoes = useNotificacoes();
 
-  // Fecha o menu ao clicar fora
   useEffect(() => {
     const handler = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -28,7 +27,6 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, [menuOpen]);
 
-  // Aplica o tema escuro automaticamente
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -38,11 +36,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ===== HEADER ===== */}
       <div className={`navbar-top ${darkMode ? "dark" : ""}`}>
         <div className="navbar-top-inner">
 
-          {/* Logo (esquerda) */}
           <img
             src={logo}
             className="navbar-logo"
@@ -50,16 +46,14 @@ export default function Navbar() {
             onClick={() => navigate("/home")}
           />
 
-          {/* Botões centralizados (desktop) */}
           <div className="nav-buttons desktop-only" aria-label="Navegação principal">
             <button onClick={() => navigate("/home")}>Página Inicial</button>
             <button onClick={() => navigate("/favoritos")}>Favoritos</button>
             <button onClick={() => navigate("/lidos")}>Lidos</button>
-            <button onClick={() => navigate("/estatisticas")}>Estatísticas</button> {/* NOVO */}
+            <button onClick={() => navigate("/estatisticas")}>Estatísticas</button> 
             <button onClick={() => navigate("/dicas")}>Dicas</button>
           </div>
 
-          {/* Ícones (direita) */}
           <div className="nav-icons desktop-only">
             <div
               className="notif-wrapper"
@@ -80,7 +74,6 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Botão hamburger (mobile) */}
           <div
             className="hamburger mobile-only"
             onClick={() => setMenuOpen(true)}
@@ -91,7 +84,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ===== MOBILE MENU ===== */}
       {menuOpen && (
         <div className="menu-overlay" onClick={() => setMenuOpen(false)}>
           <div
@@ -104,7 +96,7 @@ export default function Navbar() {
             <button onClick={() => { navigate("/home"); setMenuOpen(false); }}>Página Inicial</button>
             <button onClick={() => { navigate("/favoritos"); setMenuOpen(false); }}>Favoritos</button>
             <button onClick={() => { navigate("/lidos"); setMenuOpen(false); }}>Lidos</button>
-            <button onClick={() => { navigate("/estatisticas"); setMenuOpen(false); }}>Estatísticas</button> {/* NOVO */}
+            <button onClick={() => { navigate("/estatisticas"); setMenuOpen(false); }}>Estatísticas</button> 
             <button onClick={() => { navigate("/dicas"); setMenuOpen(false); }}>Dicas</button>
             <button onClick={() => { navigate("/notificacoes"); setMenuOpen(false); }}>Notificações</button>
             <button onClick={() => { navigate("/perfil"); setMenuOpen(false); }}>Perfil</button>

@@ -1,10 +1,10 @@
 .toast {
   position: fixed;
-  bottom: 20px; /* distância do canto inferior */
-  right: 20px;  /* distância do canto direito */
+  bottom: 20px;
+  right: 20px; 
   padding: 12px 24px;
-  background-color: #d9c4ff; /* lilás claro */
-  color: #540076; /* roxo escuro */
+  background-color: #d9c4ff;
+  color: #540076;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   font-weight: 600;

@@ -25,7 +25,6 @@ export default function Lidos() {
 
   const mostrarToast = (mensagem) => setToastMsg(mensagem);
 
-  // Aplica o tema ao carregar a página ou alterar
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -42,7 +41,6 @@ export default function Lidos() {
       });
       let lista = r.data || [];
 
-      // Ordenar conforme seleção
       if (ordenarPor === "az") {
         lista.sort((a, b) => (a.titulo || "").localeCompare(b.titulo || ""));
       } else if (ordenarPor === "autor") {
@@ -132,7 +130,6 @@ export default function Lidos() {
 
       <h1 className="lidos-titulo">Meus Livros Lidos</h1>
 
-      {/* ================== FILTRO / ORDENACAO ================== */}
       <form className="lidos-form">
         <label>
           Ordenar por:

@@ -21,9 +21,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers.leitura import router as leitura_router
 from fastapi import APIRouter
 
-# =======================================
-# CONFIGURAÇÃO
-# =======================================
 app = FastAPI(title="Story Lilly 📚", version="1.0.0")
 init_db()
 
@@ -60,9 +57,6 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
-# =======================================
-# DICAS FIXAS
-# =======================================
 dicas_de_leitura = [
     "Leia pelo menos 20 minutos por dia.",
     "Mantenha um caderno de anotações.",
@@ -70,9 +64,6 @@ dicas_de_leitura = [
     "Faça pausas para refletir sobre a leitura.",
 ]
 
-# =======================================
-# ROTAS PRINCIPAIS
-# =======================================
 @app.get("/buscar", response_model=dict)
 def buscar(
     q: str | None = Query(None),
@@ -139,9 +130,6 @@ def buscar(
         "livros": livros,
     }
 
-# =======================================
-# LIDOS
-# =======================================
 @app.get("/lidos", response_model=list[LivroLidoSchema])
 def listar_lidos(session: Session = Depends(get_session)):
     return session.exec(select(LivroLido)).all()
@@ -188,9 +176,6 @@ def deletar_lido(titulo: str, session: Session = Depends(get_session)):
     session.commit()
     return {"mensagem": f"'{titulo}' removido dos lidos."}
 
-# =======================================
-# FAVORITOS
-# =======================================
 @app.get("/favoritos", response_model=list[LivroFavoritoSchema])
 def listar_favoritos(session: Session = Depends(get_session)):
     return session.exec(select(LivroFavorito)).all()
@@ -237,9 +222,6 @@ def deletar_favorito(titulo: str, session: Session = Depends(get_session)):
     session.commit()
     return {"mensagem": f"'{titulo}' removido dos favoritos."}
 
-# =======================================
-# DICAS
-# =======================================
 @app.get("/dicas")
 def listar_dicas():
     return {"dicas": dicas_de_leitura}
@@ -262,9 +244,6 @@ def listar_recomendados(session: Session = Depends(get_session)):
         )
     return resultado
 
-# =======================================
-# NOTIFICAÇÕES
-# =======================================
 @app.get("/notificacoes", response_model=list[NotificacaoSchema])
 def listar_notificacoes(session: Session = Depends(get_session)):
     return session.exec(select(Notificacao)).all()
@@ -288,17 +267,11 @@ def limpar_notificacoes(session: Session = Depends(get_session)):
     session.commit()
     return {"mensagem": "Todas as notificações foram apagadas ✔️"}
 
-# =======================================
-# USUÁRIOS
-# =======================================
 @app.get("/usuarios")
 def listar_usuarios(session: Session = Depends(get_session)):
     usuarios = session.exec(select(Usuario)).all()
     return [{"id": u.id, "nome": u.nome, "email": u.email, "logado": u.logado} for u in usuarios]
 
-# =======================================
-# ESTATÍSTICAS
-# =======================================
 @app.get("/estatisticas")
 def obter_estatisticas(session: Session = Depends(get_session)):
     fav_count = session.exec(select(LivroFavorito)).all()

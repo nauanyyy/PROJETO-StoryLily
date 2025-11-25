@@ -1,7 +1,6 @@
-/* ===================== PERFIL PAGE ===================== */
 .perfil-container {
   min-height: 100vh;
-  background: var(--bg); /* antes era var(--bg-light) */
+  background: var(--bg); 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +9,7 @@
 .perfil-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  color: var(--text); /* garante que o texto também muda */
+  color: var(--text); 
 }
 
 .perfil-titulo {
@@ -100,7 +99,6 @@
   box-shadow: var(--shadow-md);
 }
 
-/* ===================== RESPONSIVE ===================== */
 @media (max-width: 480px) {
   .perfil-card {
     padding: var(--spacing-lg);
@@ -114,8 +112,8 @@
 }
 
 .avatar img {
-  width: 140px;   /* aumenta a largura */
-  height: 140px;  /* aumenta a altura */
+  width: 140px;  
+  height: 140px; 
   object-fit: cover;
   border-radius: 50%;
 }

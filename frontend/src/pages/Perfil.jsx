@@ -16,7 +16,6 @@ export default function Perfil() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // Função para alternar o tema globalmente
   const toggleDarkMode = () => {
     const novoModo = !darkMode;
     setDarkMode(novoModo);
@@ -27,7 +26,6 @@ export default function Perfil() {
     );
   };
 
-  // Carregar dados do usuário
   const carregarUsuario = async () => {
     try {
       const res = await api.get("/auth/me", {
@@ -41,7 +39,6 @@ export default function Perfil() {
     }
   };
 
-  // Carregar quantidade de livros lidos
   const carregarLivrosLidos = async () => {
     try {
       const res = await api.get("/lidos", {
@@ -62,7 +59,6 @@ export default function Perfil() {
     carregarUsuario();
     carregarLivrosLidos();
 
-    // Aplica o tema salvo ao carregar a página
     document.documentElement.setAttribute(
       "data-theme",
       darkMode ? "dark" : "light"

@@ -20,7 +20,6 @@ export default function Notificacoes() {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
 
-      // 🔥 ORDENA DA MAIS RECENTE PARA A MAIS ANTIGA
       if (res.data?.mensagens) {
         setNotificacoes([...res.data.mensagens].reverse());
       } else {

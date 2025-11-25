@@ -1,14 +1,12 @@
-/* ===== Página ===== */
 .estatisticas-page {
   min-height: 100vh;
-  background: #f9f9fb; /* fundo claro, igual Dicas */
+  background: #f9f9fb; 
   box-sizing: border-box;
   padding-bottom: 2rem;
   width: 100%;
   margin: 0;
 }
 
-/* ===== Cabeçalho ===== */
 .estatisticas-header {
   text-align: center;
   padding: 15px 20px 40px;
@@ -32,7 +30,6 @@
   margin-bottom: 30px;
 }
 
-/* ===== Cards ===== */
 .estatisticas-cards {
   display: flex;
   gap: 24px;
@@ -68,7 +65,6 @@
   color: #4d3d62;
 }
 
-/* ===== Cores individuais dos cards ===== */
 .estatistica-card.favoritos {
   border-top: 6px solid #f7c137;
 }
@@ -81,7 +77,6 @@
   border-top: 6px solid #b799e3;
 }
 
-/* ===== Dark Mode ===== */
 [data-theme="dark"] .estatisticas-page {
   background: #1e1e2f;
 }
@@ -104,7 +99,6 @@
   color: #cfcfff;
 }
 
-/* ===== Responsivo ===== */
 @media (max-width: 768px) {
   .estatisticas-cards {
     flex-direction: column;

@@ -26,7 +26,6 @@ export default function Biblioteca() {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const [toast, setToast] = useState(null);
 
-  // =================== DARK MODE ===================
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
@@ -40,7 +39,6 @@ export default function Biblioteca() {
 
   const mostrarToast = (mensagem) => setToast(mensagem);
 
-  // =================== CARREGAMENTO INICIAL ===================
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const q = params.get("q") || "";
@@ -51,10 +49,8 @@ export default function Biblioteca() {
     } else {
       buscarLivros("");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
-  // =================== FUNÇÕES DE FILTRO ===================
   const aplicarFiltros = (lista) => {
     return (lista || []).filter((l) => {
       const condAutor =
@@ -93,7 +89,6 @@ export default function Biblioteca() {
     if (allLivros && allLivros.length > 0) {
       setLivros(aplicarFiltros(allLivros));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtroAutor, filtroAno]);
 
   const limparFiltros = async () => {
@@ -164,7 +159,6 @@ export default function Biblioteca() {
     <div className={`biblioteca-page ${darkMode ? "dark" : ""}`}>
       <Navbar />
 
-      {/* ======== BARRA DE BUSCA ======== */}
       <div className="biblioteca-search-section">
         <div className="search-container">
           <div className="search-input-wrapper search-small">
@@ -197,7 +191,6 @@ export default function Biblioteca() {
         </div>
       </div>
 
-      {/* ======== LISTA DE LIVROS ======== */}
       <div className="biblioteca-content">
         {carregando && <p>Carregando livros...</p>}
 
@@ -229,7 +222,6 @@ export default function Biblioteca() {
         )}
       </div>
 
-      {/* ======== MODAL DO LIVRO ======== */}
       {livroSelecionado && (
         <div className="modal-overlay" onClick={() => setLivroSelecionado(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -269,7 +261,6 @@ export default function Biblioteca() {
         </div>
       )}
 
-      {/* ======== MODAL FILTROS ======== */}
       {modalFiltros && (
         <div className="modal-overlay" onClick={() => setModalFiltros(false)}>
           <div

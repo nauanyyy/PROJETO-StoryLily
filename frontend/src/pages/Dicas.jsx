@@ -53,7 +53,6 @@ export default function Dicas() {
   }, [categoriaSelecionada]);
 
   useEffect(() => {
-    // Aplica o tema ao carregar a página
     document.documentElement.setAttribute(
       "data-theme",
       darkMode ? "dark" : "light"
@@ -64,7 +63,6 @@ export default function Dicas() {
     <div className={`dicas-container ${darkMode ? "dark" : ""}`}>
       <Navbar />
 
-      {/* Seção hero */}
       <section className="dicas-hero">
         <h1>Transforme sua leitura com dicas práticas</h1>
         <p>Escolha uma categoria e explore sugestões úteis para melhorar seu hábito de leitura.</p>
@@ -82,7 +80,6 @@ export default function Dicas() {
         </div>
       </section>
 
-      {/* Lista filtrada */}
       <div className="dicas-lista">
         {dicasFiltradas.map((dica, index) => (
           <div className="dica-card" key={index}>

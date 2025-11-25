@@ -14,7 +14,6 @@ export default function ThemeToggle() {
   };
 
   useEffect(() => {
-    // Aplica tema salvo ao carregar qualquer página
     document.documentElement.setAttribute(
       "data-theme",
       darkMode ? "dark" : "light"

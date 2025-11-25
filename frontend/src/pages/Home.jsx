@@ -13,7 +13,7 @@ export default function Home() {
   const [busca, setBusca] = useState("");
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
-  ); // <-- pega o modo do perfil
+  );
 
   const carregarTop = async () => {
     try {
@@ -28,7 +28,6 @@ export default function Home() {
     carregarTop();
   }, []);
 
-  // Aplica o tema escuro automaticamente
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -46,7 +45,6 @@ export default function Home() {
     <div className={`home-root ${darkMode ? "dark" : ""}`}>
       <Navbar />
       <div className="home-main">
-        {/* BUSCA */}
         <div className="search-section">
           <h1>Busque por livros do seu interesse!</h1>
           <div className="search-form">
@@ -69,7 +67,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* CARROSSEL */}
         <h2 className="carousel-title">
           <img src={fogoImg} alt="Fogo" className="title-fogo" />
           TOP 10 MAIS PROCURADOS
