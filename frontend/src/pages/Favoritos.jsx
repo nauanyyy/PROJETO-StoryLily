@@ -9,7 +9,7 @@ import { abrirLivroComNotificacao } from "../utils/leitor";
 import lerImg from "../assets/ler.png";
 import lidoImg from "../assets/lido.png";
 import removerImg from "../assets/remover.png";
-import livroImg from "../assets/livro.png"; 
+import livroImg from "../assets/livro.png";
 
 export default function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);
@@ -21,7 +21,7 @@ export default function Favoritos() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
-  const [ordenacao, setOrdenacao] = useState("recentes"); 
+  const [ordenacao, setOrdenacao] = useState("recentes");
 
   const token = localStorage.getItem("token");
 
@@ -40,7 +40,7 @@ export default function Favoritos() {
       const res = await api.get("/favoritos", {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
-      const lista = (res.data || []).slice().reverse(); 
+      const lista = (res.data || []).slice().reverse();
       setFavoritos(lista);
       setFavoritosExibidos(ordenarLista(lista, ordenacao));
     } catch (err) {
@@ -64,8 +64,11 @@ export default function Favoritos() {
     if (!livroParaRemover) return;
 
     try {
-      const tituloEncoded = encodeURIComponent(livroParaRemover.titulo);
-      await api.delete(`/favoritos/${tituloEncoded}`, {
+      const id = encodeURIComponent(
+        livroParaRemover.google_id || livroParaRemover.titulo
+      );
+
+      await api.delete(`/favoritos/${id}`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
 
@@ -73,7 +76,8 @@ export default function Favoritos() {
       await carregar();
     } catch (err) {
       console.error("Erro ao deletar:", err);
-      const detalhe = err?.response?.data?.detail || "Erro ao remover dos favoritos.";
+      const detalhe =
+        err?.response?.data?.detail || "Erro ao remover dos favoritos.";
       mostrarToast(detalhe);
     } finally {
       setModalAberto(false);
@@ -87,20 +91,23 @@ export default function Favoritos() {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       const listaLidos = r.data || [];
-      const tituloNormalized = (livro.titulo || "").trim().toLowerCase();
+
       const jaExiste = listaLidos.some(
-        (l) => (l.titulo || "").trim().toLowerCase() === tituloNormalized
+        (l) => (l.google_id || l.titulo) === (livro.google_id || livro.titulo)
       );
+
       if (jaExiste) {
         mostrarToast("Este livro já está na sua lista de lidos!");
         return;
       }
 
       const payload = {
+        google_id: livro.google_id,
         titulo: livro.titulo,
-        autor: livro.autor || "",
-        ano: livro.ano ? String(livro.ano) : "",
-        capa_url: livro.capa_url || "",
+        autor: livro.autor,
+        ano: livro.ano,
+        capa_url: livro.capa_url,
+        preview_link: livro.preview_link,
       };
 
       await api.post("/lidos", payload, {
@@ -127,9 +134,8 @@ export default function Favoritos() {
           if (!b.autor) return -1;
           return a.autor.localeCompare(b.autor);
         });
-      case "recentes":
       default:
-        return novaLista.slice().reverse();
+        return novaLista;
     }
   };
 
@@ -167,7 +173,7 @@ export default function Favoritos() {
       ) : (
         <div className="fav-grid">
           {favoritosExibidos.map((livro) => (
-            <div className="fav-card" key={livro.titulo}>
+            <div className="fav-card" key={livro.google_id || livro.titulo}>
               {livro.capa_url ? (
                 <img src={livro.capa_url} alt={livro.titulo} />
               ) : (
@@ -186,8 +192,12 @@ export default function Favoritos() {
                   <img src={lidoImg} alt="lido" className="icon-btn" /> Lido
                 </button>
 
-                <button className="btn-remove-fav" onClick={() => abrirModal(livro)}>
-                  <img src={removerImg} alt="remover" className="icon-btn" /> Remover
+                <button
+                  className="btn-remove-fav"
+                  onClick={() => abrirModal(livro)}
+                >
+                  <img src={removerImg} alt="remover" className="icon-btn" />{" "}
+                  Remover
                 </button>
               </div>
             </div>
@@ -200,8 +210,15 @@ export default function Favoritos() {
           <div className="modal">
             <p>Remover "{livroParaRemover.titulo}" dos favoritos?</p>
             <div className="modal-buttons">
-              <button className="btn-confirm" onClick={confirmarRemocao}>Confirmar</button>
-              <button className="btn-cancel" onClick={() => setModalAberto(false)}>Cancelar</button>
+              <button className="btn-confirm" onClick={confirmarRemocao}>
+                Confirmar
+              </button>
+              <button
+                className="btn-cancel"
+                onClick={() => setModalAberto(false)}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>

@@ -10,7 +10,8 @@ from utils import hash_password, verify_password, create_access_token, decode_to
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login") 
+# Alinhado ao main.py (Swagger espera /auth/token)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 @router.post("/register", response_model=UsuarioRead, status_code=status.HTTP_201_CREATED)
 def register_user(user: UsuarioCreate, session: Session = Depends(get_session)):
@@ -55,6 +56,13 @@ def login(data: UsuarioLogin, session: Session = Depends(get_session)):
     session.commit()
 
     return {"access_token": token, "token_type": "bearer"}
+
+
+# Rota adicional para compatibilidade com Swagger / main.py (tokenUrl)
+# Ela reaproveita a mesma lógica do login — assim /auth/token e /auth/login fazem a mesma coisa.
+@router.post("/token")
+def token(data: UsuarioLogin, session: Session = Depends(get_session)):
+    return login(data, session)
 
 
 def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Depends(get_session)):

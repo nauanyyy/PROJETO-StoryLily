@@ -25,9 +25,10 @@ class UsuarioRead(BaseModel):
 class LivroLidoSchema(BaseModel):
     id: int
     titulo: str
-    autor: Optional[str] = None
-    ano: Optional[int] = None
-    capa_url: Optional[str] = None
+    autor: Optional[str]
+    ano: Optional[str]
+    capa_url: Optional[str]
+    google_id: Optional[str]
 
     class Config:
         orm_mode = True
@@ -35,9 +36,10 @@ class LivroLidoSchema(BaseModel):
 class LivroFavoritoSchema(BaseModel):
     id: int
     titulo: str
-    autor: Optional[str] = None
-    ano: Optional[int] = None
-    capa_url: Optional[str] = None
+    autor: Optional[str]
+    ano: Optional[str]
+    capa_url: Optional[str]
+    google_id: Optional[str]
 
     class Config:
         orm_mode = True

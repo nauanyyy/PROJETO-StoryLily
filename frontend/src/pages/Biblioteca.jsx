@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api/api";
+
 import { abrirLivroComNotificacao } from "../utils/leitor";
 import Navbar from "../componentes/Navbar";
 import Toast from "../componentes/Toast";
@@ -75,8 +76,20 @@ export default function Biblioteca() {
       }
 
       const dados = response.data.livros || [];
-      setAllLivros(dados);
-      setLivros(aplicarFiltros(dados));
+
+      // 🔥 Normalização CERTA (Google Books + TMDB)
+      const normalizados = dados.map((l) => ({
+        google_id: l.google_id,
+        titulo: l.titulo,
+        autor: l.autor,
+        ano: l.ano,
+        capa_url: l.capa_url,
+        preview_link: l.preview_link,
+        ...l,
+      }));
+
+      setAllLivros(normalizados);
+      setLivros(aplicarFiltros(normalizados));
     } catch (err) {
       console.error(err);
       mostrarToast("Erro ao buscar livros.");
@@ -86,7 +99,7 @@ export default function Biblioteca() {
   };
 
   useEffect(() => {
-    if (allLivros && allLivros.length > 0) {
+    if (allLivros.length > 0) {
       setLivros(aplicarFiltros(allLivros));
     }
   }, [filtroAutor, filtroAno]);
@@ -95,7 +108,7 @@ export default function Biblioteca() {
     setFiltroAutor("");
     setFiltroAno("");
 
-    if (allLivros && allLivros.length > 0) {
+    if (allLivros.length > 0) {
       setLivros(allLivros);
       return;
     }
@@ -104,8 +117,19 @@ export default function Biblioteca() {
     try {
       const response = await api.get("/buscar");
       const dados = response.data.livros || [];
-      setAllLivros(dados);
-      setLivros(dados);
+
+      const normalizados = dados.map((l) => ({
+        google_id: l.google_id,
+        titulo: l.titulo,
+        autor: l.autor,
+        ano: l.ano,
+        capa_url: l.capa_url,
+        preview_link: l.preview_link,
+        ...l,
+      }));
+
+      setAllLivros(normalizados);
+      setLivros(normalizados);
     } catch (err) {
       console.error(err);
       mostrarToast("Erro ao carregar livros.");
@@ -132,9 +156,19 @@ export default function Biblioteca() {
     }
 
     try {
-      await api.post("/favoritos", livro);
+      const payload = {
+        google_id: livro.google_id,
+        titulo: livro.titulo,
+        autor: livro.autor,
+        ano: livro.ano,
+        capa_url: livro.capa_url,
+        preview_link: livro.preview_link,
+      };
+
+      await api.post("/favoritos", payload);
       mostrarToast(`"${livro.titulo}" adicionado aos favoritos!`);
-    } catch {
+    } catch (err) {
+      console.error(err);
       mostrarToast("Erro ao adicionar aos favoritos.");
     }
   };
@@ -148,7 +182,16 @@ export default function Biblioteca() {
     }
 
     try {
-      await api.post("/lidos", livro);
+      const payload = {
+        google_id: livro.google_id,
+        titulo: livro.titulo,
+        autor: livro.autor,
+        ano: livro.ano,
+        capa_url: livro.capa_url,
+        preview_link: livro.preview_link,
+      };
+
+      await api.post("/lidos", payload);
       mostrarToast(`"${livro.titulo}" marcado como lido!`);
     } catch {
       mostrarToast("Erro ao marcar como lido.");
@@ -194,7 +237,9 @@ export default function Biblioteca() {
       <div className="biblioteca-content">
         {carregando && <p>Carregando livros...</p>}
 
-        {!carregando && livros.length === 0 && <p>Nenhum livro encontrado.</p>}
+        {!carregando && livros.length === 0 && (
+          <p>Nenhum livro encontrado.</p>
+        )}
 
         {!carregando && livros.length > 0 && (
           <div className="livros-grid">
@@ -240,15 +285,34 @@ export default function Biblioteca() {
               />
 
               <h2>{livroSelecionado.titulo}</h2>
-              <p><strong>Autor:</strong> {livroSelecionado.autor}</p>
-              <p><strong>Ano:</strong> {livroSelecionado.ano}</p>
+              <p>
+                <strong>Autor:</strong> {livroSelecionado.autor}
+              </p>
+              <p>
+                <strong>Ano:</strong> {livroSelecionado.ano}
+              </p>
+
+              {livroSelecionado.preview_link && (
+                <a
+                  href={livroSelecionado.preview_link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="preview-btn"
+                >
+                  Ver prévia no Google Books
+                </a>
+              )}
 
               <div className="modal-actions">
                 <button onClick={() => adicionarFavorito(livroSelecionado)}>
                   <img src={estrelaImg} className="action-icon" /> Favorito
                 </button>
 
-                <button onClick={() => abrirLivroComNotificacao(livroSelecionado)}>
+                <button
+                  onClick={() =>
+                    abrirLivroComNotificacao(livroSelecionado)
+                  }
+                >
                   <img src={lerIcon} className="action-icon" /> Ler
                 </button>
 

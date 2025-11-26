@@ -48,7 +48,7 @@ export default function Lidos() {
       } else if (ordenarPor === "ano") {
         lista.sort((a, b) => (b.ano || 0) - (a.ano || 0));
       } else if (ordenarPor === "recentes") {
-        lista.sort((a, b) => b.id - a.id);
+        lista.sort((a, b) => (b.id || 0) - (a.id || 0));
       }
 
       setLivros(lista);
@@ -66,16 +66,13 @@ export default function Lidos() {
 
   const remover = async (livro) => {
     const token = getToken();
+    const id = encodeURIComponent(livro.google_id || livro.titulo);
+
     try {
-      if (livro.google_id) {
-        await api.delete(`/lidos/${livro.google_id}`, {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        });
-      } else {
-        await api.delete(`/lidos/${encodeURIComponent(livro.titulo)}`, {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        });
-      }
+      await api.delete(`/lidos/${id}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+
       await carregar();
       mostrarToast(`"${livro.titulo}" removido dos lidos!`);
     } catch (err) {
@@ -94,9 +91,8 @@ export default function Lidos() {
       });
       const listaFavoritos = r.data || [];
 
-      const tituloNormalized = (livro.titulo || "").trim().toLowerCase();
       const jaExiste = listaFavoritos.some(
-        (l) => (l.titulo || "").trim().toLowerCase() === tituloNormalized
+        (l) => (l.google_id || l.titulo) === (livro.google_id || livro.titulo)
       );
 
       if (jaExiste) {
@@ -105,12 +101,13 @@ export default function Lidos() {
       }
 
       const payload = {
+        google_id: livro.google_id,
         titulo: livro.titulo,
-        autor: livro.autor || "",
-        ano: livro.ano ? String(livro.ano) : "",
-        capa_url: livro.capa_url || "",
+        autor: livro.autor,
+        ano: livro.ano,
+        capa_url: livro.capa_url,
+        preview_link: livro.preview_link,
       };
-      if (livro.google_id) payload.google_id = livro.google_id;
 
       await api.post("/favoritos", payload, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
@@ -119,7 +116,8 @@ export default function Lidos() {
       mostrarToast(`"${livro.titulo}" adicionado aos favoritos!`);
     } catch (err) {
       console.error("Erro ao favoritar:", err);
-      const mensagem = err?.response?.data?.detail || "Erro ao adicionar aos favoritos.";
+      const mensagem =
+        err?.response?.data?.detail || "Erro ao adicionar aos favoritos.";
       mostrarToast(mensagem);
     }
   };
@@ -153,7 +151,7 @@ export default function Lidos() {
         <div className="lidos-grid">
           {livros.map((livro) => (
             <div
-              key={livro.google_id ?? livro.id ?? livro.titulo}
+              key={livro.google_id || livro.titulo}
               className="lidos-card"
             >
               {livro.capa_url ? (
@@ -163,6 +161,7 @@ export default function Lidos() {
               )}
 
               <h3>{livro.titulo}</h3>
+
               {livro.autor && <p>{livro.autor}</p>}
               {livro.ano && <p>{livro.ano}</p>}
 
@@ -172,11 +171,20 @@ export default function Lidos() {
                 </button>
 
                 <button onClick={() => adicionarFavorito(livro)}>
-                  <img src={favoritarImg} alt="Favoritar" className="icon-btn" /> Favoritar
+                  <img
+                    src={favoritarImg}
+                    alt="Favoritar"
+                    className="icon-btn"
+                  />{" "}
+                  Favoritar
                 </button>
 
-                <button className="btn-remove-fav" onClick={() => setModalLivro(livro)}>
-                  <img src={removerImg} alt="Remover" className="icon-btn" /> Remover
+                <button
+                  className="btn-remove-fav"
+                  onClick={() => setModalLivro(livro)}
+                >
+                  <img src={removerImg} alt="Remover" className="icon-btn" />{" "}
+                  Remover
                 </button>
               </div>
             </div>
@@ -189,10 +197,16 @@ export default function Lidos() {
           <div className="modal">
             <p>Remover "{modalLivro.titulo}" dos lidos?</p>
             <div className="modal-buttons">
-              <button className="btn-confirm" onClick={() => remover(modalLivro)}>
+              <button
+                className="btn-confirm"
+                onClick={() => remover(modalLivro)}
+              >
                 Confirmar
               </button>
-              <button className="btn-cancel" onClick={() => setModalLivro(null)}>
+              <button
+                className="btn-cancel"
+                onClick={() => setModalLivro(null)}
+              >
                 Cancelar
               </button>
             </div>
@@ -200,7 +214,9 @@ export default function Lidos() {
         </div>
       )}
 
-      {toastMsg && <Toast message={toastMsg} onClose={() => setToastMsg(null)} />}
+      {toastMsg && (
+        <Toast message={toastMsg} onClose={() => setToastMsg(null)} />
+      )}
     </div>
   );
 }

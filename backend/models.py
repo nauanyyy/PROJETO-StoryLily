@@ -12,15 +12,18 @@ class LivroLido(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     titulo: str
     autor: Optional[str] = None
-    ano: Optional[int] = None
+    ano: Optional[str] = None
     capa_url: Optional[str] = None
+    google_id: Optional[str] = None
+
 
 class LivroFavorito(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     titulo: str
     autor: Optional[str] = None
-    ano: Optional[int] = None
+    ano: Optional[str] = None
     capa_url: Optional[str] = None
+    google_id: Optional[str] = None
 
 class LivroRecomendado(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

@@ -85,15 +85,25 @@ export default function Home() {
           </button>
 
           <div className="carousel">
-            {topLivros.length === 0 && <p className="carregando">Carregando...</p>}
+            {topLivros.length === 0 && (
+              <p className="carregando">Carregando...</p>
+            )}
 
             {topLivros.map((livro, i) => (
               <div className="top-card" key={i}>
                 <div className="top-card-image">
                   {livro.capa_url ? (
-                    <img src={livro.capa_url} alt={livro.titulo} className="top-card-img" />
+                    <img
+                      src={livro.capa_url}
+                      alt={livro.titulo}
+                      className="top-card-img"
+                    />
                   ) : (
-                    <img src={livroImg} alt="Livro placeholder" className="top-card-placeholder" />
+                    <img
+                      src={livroImg}
+                      alt="Livro placeholder"
+                      className="top-card-placeholder"
+                    />
                   )}
                 </div>
                 <h3>{livro.titulo}</h3>

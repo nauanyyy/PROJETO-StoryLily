@@ -3,40 +3,34 @@ import api from "../api/api";
 export async function abrirLivroComNotificacao(livro) {
   try {
     const res = await api.post("/livro/abrir", livro);
+
     const url = res.data?.url;
     if (url) {
       window.open(url, "_blank");
       return { opened: true, url };
     }
-    const local = gerarLinkLeitura(livro);
-    if (local) {
-      window.open(local, "_blank");
-      return { opened: true, url: local };
-    }
-    return { opened: false };
   } catch (err) {
-    const local = gerarLinkLeitura(livro);
-    if (local) {
-      window.open(local, "_blank");
-      return { opened: true, url: local };
-    }
-    return { opened: false, error: err };
+    console.warn("Erro ao chamar /livro/abrir:", err);
   }
+
+  // fallback
+  if (livro.preview_link) {
+    window.open(livro.preview_link, "_blank");
+    return { opened: true, url: livro.preview_link };
+  }
+
+  alert("Nenhum link de leitura disponível para este livro.");
+  return { opened: false };
 }
 
 export function gerarLinkLeitura(livro) {
   if (!livro) return null;
-  if (livro.key) return `https://openlibrary.org${livro.key}?mode=reading`;
-  if (livro.edition_key && Array.isArray(livro.edition_key) && livro.edition_key[0]) {
-    return `https://openlibrary.org/books/${livro.edition_key[0]}?mode=reading`;
-  }
-  if (livro.olid) return `https://openlibrary.org/books/${livro.olid}?mode=reading`;
-  if (livro.isbn && Array.isArray(livro.isbn) && livro.isbn[0]) {
-    return `https://openlibrary.org/isbn/${livro.isbn[0]}?mode=reading`;
-  }
+  if (livro.preview_link) return livro.preview_link;
+  if (livro.google_id)
+    return `https://books.google.com/books?id=${livro.google_id}`;
   if (livro.titulo || livro.title) {
     const t = encodeURIComponent(livro.titulo || livro.title);
-    return `https://openlibrary.org/search?q=${t}`;
+    return `https://www.google.com/search?q=${t}`;
   }
   return null;
 }
