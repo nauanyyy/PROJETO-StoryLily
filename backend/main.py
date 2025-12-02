@@ -152,27 +152,24 @@ def buscar(
         google_id = item.get("id")
         preview_link = volume.get("previewLink")
 
-        # 1️⃣ PRIMEIRA TENTATIVA: capa do Google Books
+        # PRIMEIRA TENTATIVA: Google Books
         capa_google = volume.get("imageLinks", {}).get("thumbnail")
 
-        # 2️⃣ SEGUNDA TENTATIVA: TMDB
+        # SEGUNDA TENTATIVA: TMDB
         capa_tmdb = buscar_capa_tmdb(titulo)
 
-        # 3️⃣ CAPA FINAL — ESSA LINHA É A CORREÇÃO QUE FALTAVA
+        # CAPA FINAL
         capa = capa_google or capa_tmdb or None
 
-        # SALVA EM RECOMENDADOS COM A CAPA CORRETA
+        # SALVA EM RECOMENDADOS
         livro_rec = session.exec(
             select(LivroRecomendado).where(LivroRecomendado.titulo == titulo)
         ).first()
 
         if livro_rec:
             livro_rec.count += 1
-
-            # garante que recomendados também tenham capa
             if not livro_rec.capa_url:
                 livro_rec.capa_url = capa
-
         else:
             livro_rec = LivroRecomendado(
                 titulo=titulo,
@@ -189,7 +186,7 @@ def buscar(
             "titulo": titulo,
             "autor": ", ".join(autores),
             "ano": ano_pub,
-            "capa_url": capa,  # ESSENCIAL PRO FRONTEND
+            "capa_url": capa,
             "preview_link": preview_link
         })
 
@@ -317,7 +314,7 @@ def deletar_favorito(identificador: str, session: Session = Depends(get_session)
 
 
 # ======================================
-# RECOMENDADOS (AGORA ENVIANDO CAPA)
+# RECOMENDADOS (ALTERAÇÃO FEITA AQUI ⤵)
 # ======================================
 @app.get("/recomendados", response_model=list[LivroRecomendadoSchema])
 def listar_recomendados(session: Session = Depends(get_session)):
@@ -330,7 +327,8 @@ def listar_recomendados(session: Session = Depends(get_session)):
             id=l.id,
             titulo=l.titulo,
             autor=l.autor,
-            capa_url=l.capa_url,  # 👈 ESSA LINHA É ESSENCIAL
+            capa_url=l.capa_url,
+            google_id=l.google_id,  # 👈 ALTERAÇÃO AQUI
             count=l.count
         )
         for l in livros
@@ -368,7 +366,7 @@ def limpar_notificacoes(session: Session = Depends(get_session)):
 
     session.commit()
 
-    return {"mensagem": "Todas as notificações foram apagadas ✔️"}
+    return {"mensagem": "Todas as notificaçõ‌es foram apagadas ✔️"}
 
 
 # ======================================

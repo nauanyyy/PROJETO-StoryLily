@@ -26,12 +26,15 @@ class LivroFavorito(SQLModel, table=True):
     google_id: Optional[str] = None
 
 class LivroRecomendado(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     titulo: str
-    autor: Optional[str] = None
-    ano: Optional[int] = None
-    capa_url: Optional[str] = None
-    count: int = Field(default=0, description="Número de recomendações")
+    autor: str | None = None
+    ano: str | None = None
+    capa_url: str | None = None
+    google_id: str | None = None   # 👈 OBRIGATÓRIO PARA FUNCIONAR NA LEITURA
+    count: int = 0
+
+
 
 class Notificacao(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)

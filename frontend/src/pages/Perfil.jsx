@@ -6,6 +6,8 @@ import "../styles/PageHeader.css";
 import "../styles/Index.css";
 import { useNavigate } from "react-router-dom";
 import perfilImg from "../assets/perfil.png";
+import solImg from "../assets/sol.png";
+import luaImg from "../assets/lua.png";
 
 export default function Perfil() {
   const [user, setUser] = useState(null);
@@ -65,7 +67,18 @@ export default function Perfil() {
     );
   }, []);
 
-  const logout = () => {
+  // ======================================================
+  // 🔥 LOGOUT QUE LIMPA AUTOMÁTICO AS NOTIFICAÇÕES
+  // ======================================================
+  const logout = async () => {
+    try {
+      await api.delete("/notificacoes/limpar", {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+    } catch (err) {
+      console.warn("Falha ao limpar notificações no logout:", err);
+    }
+
     localStorage.removeItem("token");
     navigate("/login");
   };
@@ -98,8 +111,14 @@ export default function Perfil() {
           <strong>Livros Lidos:</strong> {livrosLidosCount}
         </p>
 
-        <button className="theme-btn" onClick={toggleDarkMode}>
-          {darkMode ? "Modo Claro" : "Modo Escuro"}
+        {/* BOTÃO DE TEMA */}
+        <button className="theme-toggle" onClick={toggleDarkMode} aria-label="Toggle dark mode">
+          <img
+            src={darkMode ? luaImg : solImg}
+            alt={darkMode ? "Lua" : "Sol"}
+            className="theme-icon"
+            draggable={false}
+          />
         </button>
 
         <button className="logout-btn" onClick={logout}>

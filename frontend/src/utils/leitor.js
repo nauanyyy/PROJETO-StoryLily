@@ -13,10 +13,11 @@ export async function abrirLivroComNotificacao(livro) {
     console.warn("Erro ao chamar /livro/abrir:", err);
   }
 
-  // fallback
-  if (livro.preview_link) {
-    window.open(livro.preview_link, "_blank");
-    return { opened: true, url: livro.preview_link };
+  // Fallback — SEMPRE tentar Google Books direto pelo google_id
+  if (livro.google_id) {
+    const url = `https://books.google.com/books?id=${livro.google_id}&printsec=frontcover&source=gbs_ge_summary_r`;
+    window.open(url, "_blank");
+    return { opened: true, url };
   }
 
   alert("Nenhum link de leitura disponível para este livro.");
@@ -25,12 +26,17 @@ export async function abrirLivroComNotificacao(livro) {
 
 export function gerarLinkLeitura(livro) {
   if (!livro) return null;
-  if (livro.preview_link) return livro.preview_link;
+
+  // prioridade total para Google Books
   if (livro.google_id)
-    return `https://books.google.com/books?id=${livro.google_id}`;
+    return `https://books.google.com/books?id=${livro.google_id}&printsec=frontcover&source=gbs_ge_summary_r`;
+
+  if (livro.preview_link) return livro.preview_link;
+
   if (livro.titulo || livro.title) {
     const t = encodeURIComponent(livro.titulo || livro.title);
-    return `https://www.google.com/search?q=${t}`;
+    return `https://books.google.com/books?q=${t}`;
   }
+
   return null;
 }

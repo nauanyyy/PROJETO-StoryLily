@@ -10,6 +10,10 @@ import "../styles/PageHeader.css";
 export default function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState([]);
   const [toastMsg, setToastMsg] = useState(null);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
   const token = localStorage.getItem("token");
 
   const mostrarToast = (mensagem) => setToastMsg(mensagem);
@@ -34,6 +38,12 @@ export default function Notificacoes() {
 
   useEffect(() => {
     carregar();
+
+    // Aplica o tema no carregamento da página
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
   }, []);
 
   const limparNotificacoes = async () => {

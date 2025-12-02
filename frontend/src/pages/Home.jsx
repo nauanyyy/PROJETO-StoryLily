@@ -3,9 +3,14 @@ import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import Navbar from "../componentes/Navbar";
+
 import fogoImg from "../assets/fogo.png";
 import lupaImg from "../assets/lupa.png";
 import livroImg from "../assets/livro.png";
+
+// ✨ IMPORTANTE: mesma função usada em Biblioteca, Lidos e Favoritos
+import { abrirLivroComNotificacao } from "../utils/leitor";
+
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,6 +20,27 @@ export default function Home() {
     localStorage.getItem("darkMode") === "true"
   );
 
+  // ============================
+  // 📖 FUNÇÃO PARA ABRIR LIVRO
+  // ============================
+  const abrirLivro = async (livro) => {
+    const result = await abrirLivroComNotificacao(livro);
+
+    // se conseguiu abrir, não faz mais nada
+    if (result.opened) return;
+
+    // fallback mantendo sua rota de leitura
+    if (livro.google_id) {
+      navigate(`/leitura/${livro.google_id}`, { state: livro });
+      return;
+    }
+
+    alert("Este livro não possui visualização disponível.");
+  };
+
+  // ============================
+  // CARREGAR RECOMENDADOS
+  // ============================
   const carregarTop = async () => {
     try {
       const res = await api.get("/recomendados");
@@ -28,6 +54,9 @@ export default function Home() {
     carregarTop();
   }, []);
 
+  // ============================
+  // TROCA DE TEMA
+  // ============================
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -35,6 +64,9 @@ export default function Home() {
     );
   }, [darkMode]);
 
+  // ============================
+  // BUSCAR
+  // ============================
   const handleBusca = () => {
     if (busca.trim() !== "") {
       navigate(`/biblioteca?q=${encodeURIComponent(busca)}`);
@@ -44,7 +76,9 @@ export default function Home() {
   return (
     <div className={`home-root ${darkMode ? "dark" : ""}`}>
       <Navbar />
+
       <div className="home-main">
+        {/* BUSCA */}
         <div className="search-section">
           <h1>Busque por livros do seu interesse!</h1>
           <div className="search-form">
@@ -55,24 +89,28 @@ export default function Home() {
               onChange={(e) => setBusca(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleBusca()}
             />
+
             <img
               src={lupaImg}
               alt="Lupa"
               className="input-lupa"
               onClick={handleBusca}
             />
+
             <button className="btn-home-buscar" onClick={handleBusca}>
               Buscar
             </button>
           </div>
         </div>
 
+        {/* CARROSSEL */}
         <h2 className="carousel-title">
           <img src={fogoImg} alt="Fogo" className="title-fogo" />
           TOP 10 MAIS PROCURADOS
         </h2>
 
         <div className="carousel-wrap">
+          {/* SETA ESQUERDA */}
           <button
             className="arrow-btn left"
             onClick={() =>
@@ -101,17 +139,27 @@ export default function Home() {
                   ) : (
                     <img
                       src={livroImg}
-                      alt="Livro placeholder"
+                      alt="Capa padrão"
                       className="top-card-placeholder"
                     />
                   )}
                 </div>
+
                 <h3>{livro.titulo}</h3>
                 <p>{livro.autor || "Autor desconhecido"}</p>
+
+                {/* BOTÃO LER — FUNCIONANDO AGORA */}
+                <button
+                  className="btn-ler"
+                  onClick={() => abrirLivroComNotificacao(livro)}
+                >
+                  📖 Ler
+                </button>
               </div>
             ))}
           </div>
 
+          {/* SETA DIREITA */}
           <button
             className="arrow-btn right"
             onClick={() =>

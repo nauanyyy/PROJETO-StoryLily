@@ -11,7 +11,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
-  ); 
+  );
   const menuRef = useRef(null);
   const notificacoes = useNotificacoes();
 
@@ -46,25 +46,28 @@ export default function Navbar() {
             onClick={() => navigate("/home")}
           />
 
-          <div className="nav-buttons desktop-only" aria-label="Navegação principal">
+          <div className="nav-buttons desktop-only">
             <button onClick={() => navigate("/home")}>Página Inicial</button>
             <button onClick={() => navigate("/favoritos")}>Favoritos</button>
             <button onClick={() => navigate("/lidos")}>Lidos</button>
-            <button onClick={() => navigate("/estatisticas")}>Estatísticas</button> 
+            <button onClick={() => navigate("/estatisticas")}>Estatísticas</button>
             <button onClick={() => navigate("/dicas")}>Dicas</button>
           </div>
 
           <div className="nav-icons desktop-only">
+            {/* 🔔 Ícone de Notificação */}
             <div
               className="notif-wrapper"
               onClick={() => navigate("/notificacoes")}
               role="button"
-              aria-label="Notificações"
             >
               <img src={sinoImg} alt="Notificações" className="sino-img" />
-              {notificacoes && notificacoes.length > 0 && <span className="notif-badge"></span>}
+              {notificacoes && notificacoes.length > 0 && (
+                <span className="notif-badge"></span>
+              )}
             </div>
 
+            {/* 👤 Ícone do Perfil */}
             <img
               src={perfilImg}
               alt="Perfil"
@@ -84,6 +87,7 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* MENU MOBILE */}
       {menuOpen && (
         <div className="menu-overlay" onClick={() => setMenuOpen(false)}>
           <div
@@ -93,13 +97,27 @@ export default function Navbar() {
           >
             <h2>Menu</h2>
 
-            <button onClick={() => { navigate("/home"); setMenuOpen(false); }}>Página Inicial</button>
-            <button onClick={() => { navigate("/favoritos"); setMenuOpen(false); }}>Favoritos</button>
-            <button onClick={() => { navigate("/lidos"); setMenuOpen(false); }}>Lidos</button>
-            <button onClick={() => { navigate("/estatisticas"); setMenuOpen(false); }}>Estatísticas</button> 
-            <button onClick={() => { navigate("/dicas"); setMenuOpen(false); }}>Dicas</button>
-            <button onClick={() => { navigate("/notificacoes"); setMenuOpen(false); }}>Notificações</button>
-            <button onClick={() => { navigate("/perfil"); setMenuOpen(false); }}>Perfil</button>
+            <button onClick={() => { navigate("/home"); setMenuOpen(false); }}>
+              Página Inicial
+            </button>
+            <button onClick={() => { navigate("/favoritos"); setMenuOpen(false); }}>
+              Favoritos
+            </button>
+            <button onClick={() => { navigate("/lidos"); setMenuOpen(false); }}>
+              Lidos
+            </button>
+            <button onClick={() => { navigate("/estatisticas"); setMenuOpen(false); }}>
+              Estatísticas
+            </button>
+            <button onClick={() => { navigate("/dicas"); setMenuOpen(false); }}>
+              Dicas
+            </button>
+            <button onClick={() => { navigate("/notificacoes"); setMenuOpen(false); }}>
+              Notificações
+            </button>
+            <button onClick={() => { navigate("/perfil"); setMenuOpen(false); }}>
+              Perfil
+            </button>
 
             <button className="menu-fechar" onClick={() => setMenuOpen(false)}>
               Fechar

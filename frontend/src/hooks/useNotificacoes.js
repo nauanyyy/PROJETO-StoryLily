@@ -4,9 +4,19 @@ import api from "../api/api";
 export default function useNotificacoes(pollIntervalMs = 5000) {
   const [notificacoes, setNotificacoes] = useState([]);
 
+  const token = localStorage.getItem("token");
+
   const carregar = async () => {
     try {
-      const res = await api.get("/notificacoes/recentes");
+      // se não existe token → limpa imediatamente
+      if (!token) {
+        setNotificacoes([]);
+        return;
+      }
+
+      const res = await api.get("/notificacoes/recentes", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
       if (Array.isArray(res.data)) {
         setNotificacoes(res.data);
@@ -18,14 +28,21 @@ export default function useNotificacoes(pollIntervalMs = 5000) {
 
     } catch (err) {
       console.warn("Erro ao carregar notificações:", err);
+      setNotificacoes([]);
     }
   };
 
   useEffect(() => {
-    carregar(); 
+    // se logout pediu limpeza → limpa
+    if (localStorage.getItem("limparNotificacoesAgora") === "true") {
+      setNotificacoes([]);
+      localStorage.removeItem("limparNotificacoesAgora");
+    }
+
+    carregar();
     const id = setInterval(carregar, pollIntervalMs);
     return () => clearInterval(id);
-  }, []);
+  }, [token]); // << TOKEN no array, essencial!
 
-  return notificacoes; 
+  return notificacoes;
 }

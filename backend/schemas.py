@@ -60,10 +60,12 @@ class LivroRecomendadoSchema(BaseModel):
     autor: Optional[str] = None
     ano: Optional[int] = None
     capa_url: Optional[str] = None
+    google_id: Optional[str] = None   # <-- ADICIONE AQUI
     count: int = 0
 
     class Config:
         orm_mode = True
+
 
 class NotificacaoSchema(BaseModel):
     id: int
