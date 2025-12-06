@@ -153,7 +153,7 @@ export default function Home() {
                   className="btn-ler"
                   onClick={() => abrirLivroComNotificacao(livro)}
                 >
-                  📖 Ler
+                   Ler
                 </button>
               </div>
             ))}
